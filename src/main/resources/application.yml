@@ -1,0 +1,57 @@
+server:
+  port: 10087
+  servlet:
+    context-path: /bemServer
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      #注册中心的地址
+      defaultZone: http://172.21.29.55:7777/eureka/
+spring:
+  application:
+    name: bem-server
+  datasource:
+    url: jdbc:mysql://172.21.29.55:3306/titan-bem?serverTimezone=Asia/Shanghai
+    username: root
+    password: df6100
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  # activiti default configuration
+  activiti:
+    database-schema-update: true
+    #自动部署开关  有bug 改一个文件 也会全部重新部署
+    check-process-definitions: true
+    #自动扫描路径
+    process-definition-location-prefix: classpath:/processes/
+    #    process-definition-location-suffixes:
+    #      - **.bpmn
+    #      - **.bpmn20.xml
+    #历史数据保存级别 none activity audit full
+    #history-level: full
+    #asyncExectorActivate是指activiti在流程引擎启动时激活AsyncExecutor,异步:true-开启,false-关闭
+    async-executor-activate: false
+mybatis:
+  typeAliasesPackage: classpath*:com/bem/domain
+  mapperLocations: classpath*:mapper/*Mapper.xml
+  config-location: classpath:mybatis-config.xml
+
+mapper:
+  #公用接口类路径
+  mappers: com.bem.baseMapper.BemBaseMapper
+  identity: MYSQL
+
+pagehelper:
+  helper-dialect: MYSQL
+  params: count=countSql
+  reasonable: false
+  support-methods-arguments: true
+
+page:
+  pageNum: 10
+
+

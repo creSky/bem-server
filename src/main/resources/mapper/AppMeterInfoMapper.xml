@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bem.mapper.AppMeterInfoMapper">
+  <resultMap id="BaseResultMap" type="com.bem.domain.AppMeterInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="APP_ID" jdbcType="BIGINT" property="appId" />
+    <result column="METER_NO" jdbcType="VARCHAR" property="meterNo" />
+    <result column="METER_NAME" jdbcType="VARCHAR" property="meterName" />
+    <result column="SET_ADDRESS" jdbcType="VARCHAR" property="setAddress" />
+    <result column="PRICE_TYPE" jdbcType="SMALLINT" property="priceType" />
+    <result column="NEED_INDEX" jdbcType="INTEGER" property="needIndex" />
+    <result column="VOLT_LEVEL_TYPE" jdbcType="SMALLINT" property="voltLevelType" />
+    <result column="METER_TYPE" jdbcType="SMALLINT" property="meterType" />
+    <result column="METER_CLASS_TYPE" jdbcType="SMALLINT" property="meterClassType" />
+    <result column="MS_TYPE" jdbcType="SMALLINT" property="msType" />
+    <result column="ELEC_TYPE_CODE" jdbcType="SMALLINT" property="elecTypeCode" />
+    <result column="BASE_MONEY_FLAG" jdbcType="SMALLINT" property="baseMoneyFlag" />
+    <result column="COS_TYPE" jdbcType="SMALLINT" property="cosType" />
+    <result column="TRADE_TYPE" jdbcType="SMALLINT" property="tradeType" />
+    <result column="TS_TYPE" jdbcType="SMALLINT" property="tsType" />
+    <result column="TRANS_LOST_TYPE" jdbcType="SMALLINT" property="transLostType" />
+    <result column="TRANS_LOST_NUM" jdbcType="DECIMAL" property="transLostNum" />
+    <result column="Q_TRANS_LOST_NUM" jdbcType="DECIMAL" property="qTransLostNum" />
+    <result column="LINE_LOST_TYPE" jdbcType="SMALLINT" property="lineLostType" />
+    <result column="LINE_LOST_NUM" jdbcType="DECIMAL" property="lineLostNum" />
+    <result column="Q_LINE_LOST_NUM" jdbcType="DECIMAL" property="qLineLostNum" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="STATUS" jdbcType="SMALLINT" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_ID, METER_NO, METER_NAME, SET_ADDRESS, PRICE_TYPE, NEED_INDEX, VOLT_LEVEL_TYPE, 
+    METER_TYPE, METER_CLASS_TYPE, MS_TYPE, ELEC_TYPE_CODE, BASE_MONEY_FLAG, COS_TYPE, 
+    TRADE_TYPE, TS_TYPE, TRANS_LOST_TYPE, TRANS_LOST_NUM, Q_TRANS_LOST_NUM, LINE_LOST_TYPE, 
+    LINE_LOST_NUM, Q_LINE_LOST_NUM, CREATE_DATE, REMARK, STATUS
+  </sql>
+  <select id="selectByExample" parameterType="com.bem.domain.AppMeterInfoExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_METER_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.bem.domain.AppMeterInfoExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from APP_METER_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.bem.domain.AppMeterInfoExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from APP_METER_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_METER_INFO
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appId != null">
+        APP_ID = #{record.appId,jdbcType=BIGINT},
+      </if>
+      <if test="record.meterNo != null">
+        METER_NO = #{record.meterNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meterName != null">
+        METER_NAME = #{record.meterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.setAddress != null">
+        SET_ADDRESS = #{record.setAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceType != null">
+        PRICE_TYPE = #{record.priceType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.needIndex != null">
+        NEED_INDEX = #{record.needIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.voltLevelType != null">
+        VOLT_LEVEL_TYPE = #{record.voltLevelType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.meterType != null">
+        METER_TYPE = #{record.meterType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.meterClassType != null">
+        METER_CLASS_TYPE = #{record.meterClassType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.msType != null">
+        MS_TYPE = #{record.msType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.elecTypeCode != null">
+        ELEC_TYPE_CODE = #{record.elecTypeCode,jdbcType=SMALLINT},
+      </if>
+      <if test="record.baseMoneyFlag != null">
+        BASE_MONEY_FLAG = #{record.baseMoneyFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="record.cosType != null">
+        COS_TYPE = #{record.cosType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.tradeType != null">
+        TRADE_TYPE = #{record.tradeType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.tsType != null">
+        TS_TYPE = #{record.tsType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.transLostType != null">
+        TRANS_LOST_TYPE = #{record.transLostType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.transLostNum != null">
+        TRANS_LOST_NUM = #{record.transLostNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.qTransLostNum != null">
+        Q_TRANS_LOST_NUM = #{record.qTransLostNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lineLostType != null">
+        LINE_LOST_TYPE = #{record.lineLostType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.lineLostNum != null">
+        LINE_LOST_NUM = #{record.lineLostNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.qLineLostNum != null">
+        Q_LINE_LOST_NUM = #{record.qLineLostNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_METER_INFO
+    set ID = #{record.id,jdbcType=BIGINT},
+      APP_ID = #{record.appId,jdbcType=BIGINT},
+      METER_NO = #{record.meterNo,jdbcType=VARCHAR},
+      METER_NAME = #{record.meterName,jdbcType=VARCHAR},
+      SET_ADDRESS = #{record.setAddress,jdbcType=VARCHAR},
+      PRICE_TYPE = #{record.priceType,jdbcType=SMALLINT},
+      NEED_INDEX = #{record.needIndex,jdbcType=INTEGER},
+      VOLT_LEVEL_TYPE = #{record.voltLevelType,jdbcType=SMALLINT},
+      METER_TYPE = #{record.meterType,jdbcType=SMALLINT},
+      METER_CLASS_TYPE = #{record.meterClassType,jdbcType=SMALLINT},
+      MS_TYPE = #{record.msType,jdbcType=SMALLINT},
+      ELEC_TYPE_CODE = #{record.elecTypeCode,jdbcType=SMALLINT},
+      BASE_MONEY_FLAG = #{record.baseMoneyFlag,jdbcType=SMALLINT},
+      COS_TYPE = #{record.cosType,jdbcType=SMALLINT},
+      TRADE_TYPE = #{record.tradeType,jdbcType=SMALLINT},
+      TS_TYPE = #{record.tsType,jdbcType=SMALLINT},
+      TRANS_LOST_TYPE = #{record.transLostType,jdbcType=SMALLINT},
+      TRANS_LOST_NUM = #{record.transLostNum,jdbcType=DECIMAL},
+      Q_TRANS_LOST_NUM = #{record.qTransLostNum,jdbcType=DECIMAL},
+      LINE_LOST_TYPE = #{record.lineLostType,jdbcType=SMALLINT},
+      LINE_LOST_NUM = #{record.lineLostNum,jdbcType=DECIMAL},
+      Q_LINE_LOST_NUM = #{record.qLineLostNum,jdbcType=DECIMAL},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=SMALLINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+
+  <select id="getSiteSurveyMeterInfoTree" parameterType="java.lang.String" resultType="com.bem.domain.SiteSurveyTree">
+    SELECT
+    T.ID,
+    'TRUE' expand,
+    CONCAT('计量点_', T.METER_NO) title,
+    T.METER_NO sn,
+    '' loadChangeSign,
+    'JLPOINT' siteSurveyType
+    FROM
+    APP_METER_INFO T
+    WHERE
+    T.APP_ID=#{appId}
+  </select>
+</mapper>

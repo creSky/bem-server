@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bem.mapper.AppMeterRelMapper">
+  <resultMap id="BaseResultMap" type="com.bem.domain.AppMeterRel">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="APP_ID" jdbcType="BIGINT" property="appId" />
+    <result column="METER_ID" jdbcType="BIGINT" property="meterId" />
+    <result column="P_METER_ID" jdbcType="BIGINT" property="pMeterId" />
+    <result column="METER_RELATION_TYPE" jdbcType="SMALLINT" property="meterRelationType" />
+    <result column="METER_RELATION_VALUE" jdbcType="DECIMAL" property="meterRelationValue" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="STATUS" jdbcType="SMALLINT" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_ID, METER_ID, P_METER_ID, METER_RELATION_TYPE, METER_RELATION_VALUE, CREATE_DATE, 
+    UPDATE_DATE, STATUS
+  </sql>
+  <select id="selectByExample" parameterType="com.bem.domain.AppMeterRelExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_METER_REL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.bem.domain.AppMeterRelExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from APP_METER_REL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.bem.domain.AppMeterRelExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from APP_METER_REL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_METER_REL
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appId != null">
+        APP_ID = #{record.appId,jdbcType=BIGINT},
+      </if>
+      <if test="record.meterId != null">
+        METER_ID = #{record.meterId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pMeterId != null">
+        P_METER_ID = #{record.pMeterId,jdbcType=BIGINT},
+      </if>
+      <if test="record.meterRelationType != null">
+        METER_RELATION_TYPE = #{record.meterRelationType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.meterRelationValue != null">
+        METER_RELATION_VALUE = #{record.meterRelationValue,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_METER_REL
+    set ID = #{record.id,jdbcType=BIGINT},
+      APP_ID = #{record.appId,jdbcType=BIGINT},
+      METER_ID = #{record.meterId,jdbcType=BIGINT},
+      P_METER_ID = #{record.pMeterId,jdbcType=BIGINT},
+      METER_RELATION_TYPE = #{record.meterRelationType,jdbcType=SMALLINT},
+      METER_RELATION_VALUE = #{record.meterRelationValue,jdbcType=DECIMAL},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=SMALLINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/HighVoltageNew" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1554165080731" name="" targetNamespace="http://www.activiti.org/HighVoltageNew" typeLanguage="http://www.w3.org/2001/XMLSchema">
+  <process id="HighVoltageNew" isClosed="false" isExecutable="true" name="高压新装1.0" processType="None">
+    <startEvent id="startevent1" name="开始"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p1" name="申请登记"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p2" name="审批">
+      <documentation id="bem-f1-p2_D_1"><![CDATA[{rrrrrrrrrrrrrrrrrrr}]]></documentation>
+    </userTask>
+    <sequenceFlow id="flow2" sourceRef="startevent1" targetRef="bem-f1-p1"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p3" name="现场勘察"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p4" name="拟定供电方案"/>
+    <sequenceFlow id="flow4" sourceRef="bem-f1-p3" targetRef="bem-f1-p4"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p5" name="供电方案审批"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p6" name="录入工程信息"/>
+    <sequenceFlow id="flow6" sourceRef="bem-f1-p5" targetRef="bem-f1-p6"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p7" name="中间检查"/>
+    <sequenceFlow id="flow7" sourceRef="bem-f1-p6" targetRef="bem-f1-p7"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p8" name="竣工报验"/>
+    <sequenceFlow id="flow8" sourceRef="bem-f1-p7" targetRef="bem-f1-p8"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p9" name="竣工验收"/>
+    <sequenceFlow id="flow9" sourceRef="bem-f1-p8" targetRef="bem-f1-p9"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p11" name="录入装拆记录"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p12" name="签订供电合同"/>
+    <sequenceFlow id="flow12" sourceRef="bem-f1-p11" targetRef="bem-f1-p12"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p13" name="审批"/>
+    <sequenceFlow id="flow13" sourceRef="bem-f1-p12" targetRef="bem-f1-p13"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p14" name="接火送电"/>
+    <sequenceFlow id="flow14" sourceRef="bem-f1-p13" targetRef="bem-f1-p14"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p15" name="归档前资料审核"/>
+    <sequenceFlow id="flow15" sourceRef="bem-f1-p14" targetRef="bem-f1-p15"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p16" name="更新档案"/>
+    <sequenceFlow id="flow16" sourceRef="bem-f1-p15" targetRef="bem-f1-p16"/>
+    <endEvent id="endevent1" name="End"/>
+    <sequenceFlow id="flow17" sourceRef="bem-f1-p16" targetRef="endevent1"/>
+    <sequenceFlow id="flow18" sourceRef="bem-f1-p1" targetRef="bem-f1-p2"/>
+    <sequenceFlow id="flow20" sourceRef="bem-f1-p4" targetRef="bem-f1-p5"/>
+    <sequenceFlow id="flow23" sourceRef="bem-f1-p9" targetRef="bem-f1-p11"/>
+    <sequenceFlow id="flow24" sourceRef="bem-f1-p2" targetRef="bem-f1-p3"/>
+  </process>
+  <bpmndi:BPMNDiagram documentation="background=#FFFFFF;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+    <bpmndi:BPMNPlane bpmnElement="HighVoltageNew">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="Shape-startevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="32.0" y="85.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p1" id="Shape-bem-f1-p1">
+        <omgdc:Bounds height="55.0" width="105.0" x="132.0" y="75.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p2" id="Shape-bem-f1-p2">
+        <omgdc:Bounds height="55.0" width="105.0" x="282.0" y="75.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p3" id="Shape-bem-f1-p3">
+        <omgdc:Bounds height="55.0" width="105.0" x="460.0" y="75.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p4" id="Shape-bem-f1-p4">
+        <omgdc:Bounds height="55.0" width="105.0" x="582.0" y="75.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p5" id="Shape-bem-f1-p5">
+        <omgdc:Bounds height="55.0" width="105.0" x="732.0" y="75.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p6" id="Shape-bem-f1-p6">
+        <omgdc:Bounds height="55.0" width="105.0" x="730.0" y="310.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p7" id="Shape-bem-f1-p7">
+        <omgdc:Bounds height="55.0" width="105.0" x="582.0" y="310.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p8" id="Shape-bem-f1-p8">
+        <omgdc:Bounds height="55.0" width="105.0" x="432.0" y="310.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p9" id="Shape-bem-f1-p9">
+        <omgdc:Bounds height="55.0" width="105.0" x="280.0" y="310.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p11" id="Shape-bem-f1-p11">
+        <omgdc:Bounds height="55.0" width="105.0" x="132.0" y="400.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p12" id="Shape-bem-f1-p12">
+        <omgdc:Bounds height="55.0" width="105.0" x="282.0" y="400.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p13" id="Shape-bem-f1-p13">
+        <omgdc:Bounds height="55.0" width="105.0" x="432.0" y="400.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p14" id="Shape-bem-f1-p14">
+        <omgdc:Bounds height="55.0" width="105.0" x="582.0" y="400.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p15" id="Shape-bem-f1-p15">
+        <omgdc:Bounds height="55.0" width="105.0" x="732.0" y="400.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p16" id="Shape-bem-f1-p16">
+        <omgdc:Bounds height="55.0" width="105.0" x="734.0" y="490.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="Shape-endevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="617.0" y="500.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24" sourceElement="bem-f1-p2" targetElement="bem-f1-p3">
+        <omgdi:waypoint x="387.0" y="102.5"/>
+        <omgdi:waypoint x="460.0" y="102.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2" sourceElement="startevent1" targetElement="bem-f1-p1">
+        <omgdi:waypoint x="64.0" y="101.0"/>
+        <omgdi:waypoint x="132.0" y="102.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4" sourceElement="bem-f1-p3" targetElement="bem-f1-p4">
+        <omgdi:waypoint x="565.0" y="102.5"/>
+        <omgdi:waypoint x="582.0" y="102.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6" sourceElement="bem-f1-p5" targetElement="bem-f1-p6">
+        <omgdi:waypoint x="783.5" y="130.0"/>
+        <omgdi:waypoint x="783.5" y="310.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20" sourceElement="bem-f1-p4" targetElement="bem-f1-p5">
+        <omgdi:waypoint x="687.0" y="102.5"/>
+        <omgdi:waypoint x="732.0" y="102.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7" sourceElement="bem-f1-p6" targetElement="bem-f1-p7">
+        <omgdi:waypoint x="730.0" y="337.5"/>
+        <omgdi:waypoint x="687.0" y="337.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8" sourceElement="bem-f1-p7" targetElement="bem-f1-p8">
+        <omgdi:waypoint x="582.0" y="337.5"/>
+        <omgdi:waypoint x="537.0" y="337.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9" sourceElement="bem-f1-p8" targetElement="bem-f1-p9">
+        <omgdi:waypoint x="432.0" y="337.5"/>
+        <omgdi:waypoint x="385.0" y="337.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23" sourceElement="bem-f1-p9" targetElement="bem-f1-p11">
+        <omgdi:waypoint x="280.0" y="337.5"/>
+        <omgdi:waypoint x="237.0" y="427.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17" sourceElement="bem-f1-p16" targetElement="endevent1">
+        <omgdi:waypoint x="734.0" y="517.5"/>
+        <omgdi:waypoint x="649.0" y="516.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18" sourceElement="bem-f1-p1" targetElement="bem-f1-p2">
+        <omgdi:waypoint x="237.0" y="102.5"/>
+        <omgdi:waypoint x="282.0" y="102.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13" sourceElement="bem-f1-p12" targetElement="bem-f1-p13">
+        <omgdi:waypoint x="387.0" y="427.5"/>
+        <omgdi:waypoint x="432.0" y="427.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14" sourceElement="bem-f1-p13" targetElement="bem-f1-p14">
+        <omgdi:waypoint x="537.0" y="427.5"/>
+        <omgdi:waypoint x="582.0" y="427.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15" sourceElement="bem-f1-p14" targetElement="bem-f1-p15">
+        <omgdi:waypoint x="687.0" y="427.5"/>
+        <omgdi:waypoint x="732.0" y="427.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16" sourceElement="bem-f1-p15" targetElement="bem-f1-p16">
+        <omgdi:waypoint x="785.5" y="455.0"/>
+        <omgdi:waypoint x="785.5" y="490.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12" sourceElement="bem-f1-p11" targetElement="bem-f1-p12">
+        <omgdi:waypoint x="237.0" y="427.5"/>
+        <omgdi:waypoint x="282.0" y="427.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

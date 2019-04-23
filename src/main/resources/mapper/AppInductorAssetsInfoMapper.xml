@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bem.mapper.AppInductorAssetsInfoMapper">
+  <resultMap id="BaseResultMap" type="com.bem.domain.AppInductorAssetsInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="METER_ID" jdbcType="INTEGER" property="meterId" />
+    <result column="APP_ID" jdbcType="BIGINT" property="appId" />
+    <result column="LOAD_CHANGE_SIGN" jdbcType="INTEGER" property="loadChangeSign" />
+    <result column="INDUCTOR_ASSETS_NO" jdbcType="VARCHAR" property="inductorAssetsNo" />
+    <result column="INDUCTOR_TYPE" jdbcType="SMALLINT" property="inductorType" />
+    <result column="CHG_MAN" jdbcType="INTEGER" property="chgMan" />
+    <result column="CHG_DATE" jdbcType="DATE" property="chgDate" />
+    <result column="CHG_ADDRESS" jdbcType="VARCHAR" property="chgAddress" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, METER_ID, APP_ID, LOAD_CHANGE_SIGN, INDUCTOR_ASSETS_NO, INDUCTOR_TYPE, CHG_MAN, 
+    CHG_DATE, CHG_ADDRESS
+  </sql>
+  <select id="selectByExample" parameterType="com.bem.domain.AppInductorAssetsInfoExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_INDUCTOR_ASSETS_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.bem.domain.AppInductorAssetsInfoExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from APP_INDUCTOR_ASSETS_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.bem.domain.AppInductorAssetsInfoExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from APP_INDUCTOR_ASSETS_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_INDUCTOR_ASSETS_INFO
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.meterId != null">
+        METER_ID = #{record.meterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.appId != null">
+        APP_ID = #{record.appId,jdbcType=BIGINT},
+      </if>
+      <if test="record.loadChangeSign != null">
+        LOAD_CHANGE_SIGN = #{record.loadChangeSign,jdbcType=INTEGER},
+      </if>
+      <if test="record.inductorAssetsNo != null">
+        INDUCTOR_ASSETS_NO = #{record.inductorAssetsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inductorType != null">
+        INDUCTOR_TYPE = #{record.inductorType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.chgMan != null">
+        CHG_MAN = #{record.chgMan,jdbcType=INTEGER},
+      </if>
+      <if test="record.chgDate != null">
+        CHG_DATE = #{record.chgDate,jdbcType=DATE},
+      </if>
+      <if test="record.chgAddress != null">
+        CHG_ADDRESS = #{record.chgAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_INDUCTOR_ASSETS_INFO
+    set ID = #{record.id,jdbcType=BIGINT},
+      METER_ID = #{record.meterId,jdbcType=INTEGER},
+      APP_ID = #{record.appId,jdbcType=BIGINT},
+      LOAD_CHANGE_SIGN = #{record.loadChangeSign,jdbcType=INTEGER},
+      INDUCTOR_ASSETS_NO = #{record.inductorAssetsNo,jdbcType=VARCHAR},
+      INDUCTOR_TYPE = #{record.inductorType,jdbcType=SMALLINT},
+      CHG_MAN = #{record.chgMan,jdbcType=INTEGER},
+      CHG_DATE = #{record.chgDate,jdbcType=DATE},
+      CHG_ADDRESS = #{record.chgAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+
+  <select id="getSiteSurveyIndtTree" parameterType="java.lang.String" resultType="com.bem.domain.SiteSurveyTree">
+    SELECT
+    T.ID,
+    'TRUE' expand,
+    CONCAT('互感器_', T.INDUCTOR_ASSETS_NO) title,
+    T.INDUCTOR_ASSETS_NO sn,
+    T.LOAD_CHANGE_SIGN loadChangeSign,
+    T.METER_ID pId,
+    'INDT' siteSurveyType
+    FROM
+    APP_INDUCTOR_ASSETS_INFO T
+    WHERE
+    T.APP_ID=#{appId}
+  </select>
+</mapper>

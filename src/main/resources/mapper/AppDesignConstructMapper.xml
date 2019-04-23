@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bem.mapper.AppDesignConstructMapper">
+  <resultMap id="BaseResultMap" type="com.bem.domain.AppDesignConstruct">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+    <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+    <result column="QUAL_NO" jdbcType="VARCHAR" property="qualNo" />
+    <result column="DEPT_LEVEL" jdbcType="INTEGER" property="deptLevel" />
+    <result column="CARD_LIMIT" jdbcType="DATE" property="cardLimit" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, DEPT_CODE, DEPT_NAME, QUAL_NO, DEPT_LEVEL, CARD_LIMIT, TYPE
+  </sql>
+  <select id="selectByExample" parameterType="com.bem.domain.AppDesignConstructExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_DESIGN_CONSTRUCT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.bem.domain.AppDesignConstructExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from APP_DESIGN_CONSTRUCT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.bem.domain.AppDesignConstructExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from APP_DESIGN_CONSTRUCT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_DESIGN_CONSTRUCT
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.deptCode != null">
+        DEPT_CODE = #{record.deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptName != null">
+        DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualNo != null">
+        QUAL_NO = #{record.qualNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptLevel != null">
+        DEPT_LEVEL = #{record.deptLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.cardLimit != null">
+        CARD_LIMIT = #{record.cardLimit,jdbcType=DATE},
+      </if>
+      <if test="record.type != null">
+        TYPE = #{record.type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_DESIGN_CONSTRUCT
+    set ID = #{record.id,jdbcType=BIGINT},
+      DEPT_CODE = #{record.deptCode,jdbcType=VARCHAR},
+      DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+      QUAL_NO = #{record.qualNo,jdbcType=VARCHAR},
+      DEPT_LEVEL = #{record.deptLevel,jdbcType=INTEGER},
+      CARD_LIMIT = #{record.cardLimit,jdbcType=DATE},
+      TYPE = #{record.type,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <select id="getDesignComstruct" parameterType="java.lang.String" resultType="com.bem.domain.AppDesignConstruct" useCache="true">
+    select
+    A.ID,
+    A.DEPT_NAME deptName,
+    A.DEPT_CODE deptCode,
+    A.QUAL_NO qualNo,
+    A.DEPT_LEVEL deptLevel,
+    A.CARD_LIMIT cardLimit,
+    A.TYPE
+    from APP_DESIGN_CONSTRUCT A
+    <where>
+      and type = #{type}
+    </where>
+  </select>
+</mapper>

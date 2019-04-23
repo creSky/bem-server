@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bem.mapper.AppMidCheckReportMapper">
+  <resultMap id="BaseResultMap" type="com.bem.domain.AppMidCheckReport">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="APP_ID" jdbcType="BIGINT" property="appId" />
+    <result column="CHECK_MANAGER" jdbcType="VARCHAR" property="checkManager" />
+    <result column="MID_CHK_DATE" jdbcType="TIMESTAMP" property="midChkDate" />
+    <result column="CHECK_DEPT" jdbcType="INTEGER" property="checkDept" />
+    <result column="MID_CHK_MAN" jdbcType="INTEGER" property="midChkMan" />
+    <result column="CHECK_PASS_SIGN" jdbcType="INTEGER" property="checkPassSign" />
+    <result column="CONSTRUCTION_DEPT_CODE" jdbcType="INTEGER" property="constructionDeptCode" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+    <result column="PROJECT_MANAGER" jdbcType="VARCHAR" property="projectManager" />
+    <result column="USER_CHK_DATE" jdbcType="TIMESTAMP" property="userChkDate" />
+    <result column="USER_CHK_RESULT" jdbcType="VARCHAR" property="userChkResult" />
+    <result column="CHECK_RESULT" jdbcType="VARCHAR" property="checkResult" />
+    <result column="REMAIN_FAULT" jdbcType="VARCHAR" property="remainFault" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_ID, CHECK_MANAGER, MID_CHK_DATE, CHECK_DEPT, MID_CHK_MAN, CHECK_PASS_SIGN, 
+    CONSTRUCTION_DEPT_CODE, PROJECT_NAME, PROJECT_MANAGER, USER_CHK_DATE, USER_CHK_RESULT, 
+    CHECK_RESULT, REMAIN_FAULT
+  </sql>
+  <select id="selectByExample" parameterType="com.bem.domain.AppMidCheckReportExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_MID_CHECK_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.bem.domain.AppMidCheckReportExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from APP_MID_CHECK_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.bem.domain.AppMidCheckReportExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from APP_MID_CHECK_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_MID_CHECK_REPORT
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appId != null">
+        APP_ID = #{record.appId,jdbcType=BIGINT},
+      </if>
+      <if test="record.checkManager != null">
+        CHECK_MANAGER = #{record.checkManager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.midChkDate != null">
+        MID_CHK_DATE = #{record.midChkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkDept != null">
+        CHECK_DEPT = #{record.checkDept,jdbcType=INTEGER},
+      </if>
+      <if test="record.midChkMan != null">
+        MID_CHK_MAN = #{record.midChkMan,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkPassSign != null">
+        CHECK_PASS_SIGN = #{record.checkPassSign,jdbcType=INTEGER},
+      </if>
+      <if test="record.constructionDeptCode != null">
+        CONSTRUCTION_DEPT_CODE = #{record.constructionDeptCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectName != null">
+        PROJECT_NAME = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectManager != null">
+        PROJECT_MANAGER = #{record.projectManager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userChkDate != null">
+        USER_CHK_DATE = #{record.userChkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userChkResult != null">
+        USER_CHK_RESULT = #{record.userChkResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkResult != null">
+        CHECK_RESULT = #{record.checkResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remainFault != null">
+        REMAIN_FAULT = #{record.remainFault,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_MID_CHECK_REPORT
+    set ID = #{record.id,jdbcType=BIGINT},
+      APP_ID = #{record.appId,jdbcType=BIGINT},
+      CHECK_MANAGER = #{record.checkManager,jdbcType=VARCHAR},
+      MID_CHK_DATE = #{record.midChkDate,jdbcType=TIMESTAMP},
+      CHECK_DEPT = #{record.checkDept,jdbcType=INTEGER},
+      MID_CHK_MAN = #{record.midChkMan,jdbcType=INTEGER},
+      CHECK_PASS_SIGN = #{record.checkPassSign,jdbcType=INTEGER},
+      CONSTRUCTION_DEPT_CODE = #{record.constructionDeptCode,jdbcType=INTEGER},
+      PROJECT_NAME = #{record.projectName,jdbcType=VARCHAR},
+      PROJECT_MANAGER = #{record.projectManager,jdbcType=VARCHAR},
+      USER_CHK_DATE = #{record.userChkDate,jdbcType=TIMESTAMP},
+      USER_CHK_RESULT = #{record.userChkResult,jdbcType=VARCHAR},
+      CHECK_RESULT = #{record.checkResult,jdbcType=VARCHAR},
+      REMAIN_FAULT = #{record.remainFault,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

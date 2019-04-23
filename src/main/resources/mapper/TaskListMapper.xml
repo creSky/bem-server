@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bem.mapper.TaskListMapper">
+    <select id="selectCustomerByApp" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+        A.ID id,
+        APP_NO appNo,
+        CUSTOMER_NO customerNo,
+        CUSTOMER_NAME customerName,
+        CUSTOMER_NAME_SPELL customerNoSpell,
+        ADDRESS address,
+        ADDRESS_SPELL addressSpell,
+        CARD_TYPE cardType,
+        CARD_NO cardNo,
+        LINK_MAN linkMan,
+        CONTACT_INFORMATION contactInformation,
+        REMARK remark,
+        STATUS status，
+        V.ID taskId,
+        V.PROC_INST_ID processInstanceId,
+        V.EXECUTION_ID executionId,
+        V.NAME name,
+        V.TASK_DEF_KEY taskDefKey,
+        V.CREATE_TIME createTime,
+        V.GROUP_ID groupId,
+        V.USER_ID userId,
+        V.BUSINESS_KEY businessKey
+        from V_TASKLIST V,APP_CUSTOMER_INFO A
+        WHERE V.BUSINESS_KEY = A.APP_NO
+        AND (V.USER_ID = #{userId}
+        <if test="roleIds != null and roleIds.trim().length()>0">
+            OR V.GROUP_ID IN
+            <foreach collection="roleIds.split(',')" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        )
+    </select>
+
+    <select id="selectUserByApp" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+        A.ID id,
+        APP_NO appNo,
+        TEMPLATE_ID templateId,
+        CUSTOMER_ID customerId,
+        USER_NO userNo,
+        USER_NAME userName,
+        ADDRESS address,
+        BUSINESS_PLACE_CODE businessPlaceCode,
+        WRITE_SECT_NO writeSectNo,
+        ALL_CAPACITY allCapacity,
+        TRADE_TYPE tradeType,
+        ELEC_TYPE elecType,
+        VOLT_LEVEL_TYPE voltLevelType,
+        MS_MODE_TYPE msModeType,
+        LOAD_TYPE loadType,
+        IS_HIGH_TYPE isHighType,
+        TEMP_TYPE tempType,
+        CREDIT_RANK_TYPE creditRankType,
+        WRITE_TYPE writeType,
+        USER_TYPE userType,
+        REMARK remark,
+        STATUS status,
+        V.ID taskId,
+        V.PROC_INST_ID processInstanceId,
+        V.EXECUTION_ID executionId,
+        V.NAME name,
+        V.TASK_DEF_KEY taskDefKey,
+        V.CREATE_TIME createTime,
+        V.GROUP_ID groupId,
+        V.USER_ID userId,
+        V.BUSINESS_KEY businessKey
+        from V_TASKLIST V,APP_USER_INFO A
+        WHERE V.BUSINESS_KEY = A.APP_NO
+        AND (V.USER_ID = #{userId}
+        <if test="roleIds != null and roleIds.trim().length()>0">
+            OR V.GROUP_ID IN
+            <foreach collection="roleIds.split(',')" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        )
+    </select>
+</mapper>

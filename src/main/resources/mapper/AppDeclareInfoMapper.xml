@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bem.mapper.AppDeclareInfoMapper">
+  <resultMap id="BaseResultMap" type="com.bem.domain.AppDeclareInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="APP_ID" jdbcType="BIGINT" property="appId" />
+    <result column="PROJECT_CODE" jdbcType="VARCHAR" property="projectCode" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+    <result column="PRO_DIMENSION" jdbcType="INTEGER" property="proDimension" />
+    <result column="SG_CAPACITY" jdbcType="VARCHAR" property="sgCapacity" />
+    <result column="SG_CLASSIFIED" jdbcType="INTEGER" property="sgClassified" />
+    <result column="PERSON_DEPUTY" jdbcType="VARCHAR" property="personDeputy" />
+    <result column="PROJECT_MANAGER" jdbcType="VARCHAR" property="projectManager" />
+    <result column="PROJECT_TYPE" jdbcType="INTEGER" property="projectType" />
+    <result column="CIVIL_DESIGN_CODE" jdbcType="VARCHAR" property="civilDesignCode" />
+    <result column="CIVIL_DESIGN_NO" jdbcType="VARCHAR" property="civilDesignNo" />
+    <result column="CIVIL_DESIGN_LEVEL" jdbcType="INTEGER" property="civilDesignLevel" />
+    <result column="CIVIL_DESIGN_LIMIT" jdbcType="DATE" property="civilDesignLimit" />
+    <result column="CIVIL_DESIGN_PASS" jdbcType="VARCHAR" property="civilDesignPass" />
+    <result column="CIVIL_CONST_CODE" jdbcType="VARCHAR" property="civilConstCode" />
+    <result column="CIVIL_CONST_NO" jdbcType="VARCHAR" property="civilConstNo" />
+    <result column="CIVIL_CONST_LEVEL" jdbcType="INTEGER" property="civilConstLevel" />
+    <result column="CIVIL_CONST_LIMIT" jdbcType="DATE" property="civilConstLimit" />
+    <result column="CIVIL_CONST_PASS" jdbcType="VARCHAR" property="civilConstPass" />
+    <result column="ENERGY_DESIGN_CODE" jdbcType="VARCHAR" property="energyDesignCode" />
+    <result column="ENERGY_DESIGN_NO" jdbcType="VARCHAR" property="energyDesignNo" />
+    <result column="ENERGY_DESIGN_LEVEL" jdbcType="INTEGER" property="energyDesignLevel" />
+    <result column="ENERGY_DESIGN_LIMIT" jdbcType="DATE" property="energyDesignLimit" />
+    <result column="ENERGY_DESIGN_PASS" jdbcType="VARCHAR" property="energyDesignPass" />
+    <result column="ENERGY_CONST_CODE" jdbcType="VARCHAR" property="energyConstCode" />
+    <result column="ENERGY_CONST_NO" jdbcType="VARCHAR" property="energyConstNo" />
+    <result column="ENERGY_CONST_LEVEL" jdbcType="INTEGER" property="energyConstLevel" />
+    <result column="ENERGY_CONSTD_LIMIT" jdbcType="DATE" property="energyConstdLimit" />
+    <result column="ENERGY_CONST_PASS" jdbcType="VARCHAR" property="energyConstPass" />
+    <result column="PRJ_CHANGE_INFO" jdbcType="VARCHAR" property="prjChangeInfo" />
+    <result column="PRJ_COST_INFO" jdbcType="VARCHAR" property="prjCostInfo" />
+    <result column="PRJ_QUALITY_INFO" jdbcType="VARCHAR" property="prjQualityInfo" />
+    <result column="DECLARE_DATE" jdbcType="DATE" property="declareDate" />
+    <result column="DECLARE_MAN" jdbcType="VARCHAR" property="declareMan" />
+    <result column="TEL" jdbcType="VARCHAR" property="tel" />
+    <result column="START_DATE" jdbcType="DATE" property="startDate" />
+    <result column="BUILD_CONTENT" jdbcType="VARCHAR" property="buildContent" />
+    <result column="END_DATE" jdbcType="DATE" property="endDate" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_ID, PROJECT_CODE, PROJECT_NAME, PRO_DIMENSION, SG_CAPACITY, SG_CLASSIFIED, 
+    PERSON_DEPUTY, PROJECT_MANAGER, PROJECT_TYPE, CIVIL_DESIGN_CODE, CIVIL_DESIGN_NO, 
+    CIVIL_DESIGN_LEVEL, CIVIL_DESIGN_LIMIT, CIVIL_DESIGN_PASS, CIVIL_CONST_CODE, CIVIL_CONST_NO, 
+    CIVIL_CONST_LEVEL, CIVIL_CONST_LIMIT, CIVIL_CONST_PASS, ENERGY_DESIGN_CODE, ENERGY_DESIGN_NO, 
+    ENERGY_DESIGN_LEVEL, ENERGY_DESIGN_LIMIT, ENERGY_DESIGN_PASS, ENERGY_CONST_CODE, 
+    ENERGY_CONST_NO, ENERGY_CONST_LEVEL, ENERGY_CONSTD_LIMIT, ENERGY_CONST_PASS, PRJ_CHANGE_INFO, 
+    PRJ_COST_INFO, PRJ_QUALITY_INFO, DECLARE_DATE, DECLARE_MAN, TEL, START_DATE, BUILD_CONTENT, 
+    END_DATE, REMARK
+  </sql>
+  <select id="selectByExample" parameterType="com.bem.domain.AppDeclareInfoExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_DECLARE_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.bem.domain.AppDeclareInfoExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from APP_DECLARE_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.bem.domain.AppDeclareInfoExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from APP_DECLARE_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_DECLARE_INFO
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appId != null">
+        APP_ID = #{record.appId,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectCode != null">
+        PROJECT_CODE = #{record.projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectName != null">
+        PROJECT_NAME = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proDimension != null">
+        PRO_DIMENSION = #{record.proDimension,jdbcType=INTEGER},
+      </if>
+      <if test="record.sgCapacity != null">
+        SG_CAPACITY = #{record.sgCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sgClassified != null">
+        SG_CLASSIFIED = #{record.sgClassified,jdbcType=INTEGER},
+      </if>
+      <if test="record.personDeputy != null">
+        PERSON_DEPUTY = #{record.personDeputy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectManager != null">
+        PROJECT_MANAGER = #{record.projectManager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectType != null">
+        PROJECT_TYPE = #{record.projectType,jdbcType=INTEGER},
+      </if>
+      <if test="record.civilDesignCode != null">
+        CIVIL_DESIGN_CODE = #{record.civilDesignCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.civilDesignNo != null">
+        CIVIL_DESIGN_NO = #{record.civilDesignNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.civilDesignLevel != null">
+        CIVIL_DESIGN_LEVEL = #{record.civilDesignLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.civilDesignLimit != null">
+        CIVIL_DESIGN_LIMIT = #{record.civilDesignLimit,jdbcType=DATE},
+      </if>
+      <if test="record.civilDesignPass != null">
+        CIVIL_DESIGN_PASS = #{record.civilDesignPass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.civilConstCode != null">
+        CIVIL_CONST_CODE = #{record.civilConstCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.civilConstNo != null">
+        CIVIL_CONST_NO = #{record.civilConstNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.civilConstLevel != null">
+        CIVIL_CONST_LEVEL = #{record.civilConstLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.civilConstLimit != null">
+        CIVIL_CONST_LIMIT = #{record.civilConstLimit,jdbcType=DATE},
+      </if>
+      <if test="record.civilConstPass != null">
+        CIVIL_CONST_PASS = #{record.civilConstPass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.energyDesignCode != null">
+        ENERGY_DESIGN_CODE = #{record.energyDesignCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.energyDesignNo != null">
+        ENERGY_DESIGN_NO = #{record.energyDesignNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.energyDesignLevel != null">
+        ENERGY_DESIGN_LEVEL = #{record.energyDesignLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.energyDesignLimit != null">
+        ENERGY_DESIGN_LIMIT = #{record.energyDesignLimit,jdbcType=DATE},
+      </if>
+      <if test="record.energyDesignPass != null">
+        ENERGY_DESIGN_PASS = #{record.energyDesignPass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.energyConstCode != null">
+        ENERGY_CONST_CODE = #{record.energyConstCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.energyConstNo != null">
+        ENERGY_CONST_NO = #{record.energyConstNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.energyConstLevel != null">
+        ENERGY_CONST_LEVEL = #{record.energyConstLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.energyConstdLimit != null">
+        ENERGY_CONSTD_LIMIT = #{record.energyConstdLimit,jdbcType=DATE},
+      </if>
+      <if test="record.energyConstPass != null">
+        ENERGY_CONST_PASS = #{record.energyConstPass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prjChangeInfo != null">
+        PRJ_CHANGE_INFO = #{record.prjChangeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prjCostInfo != null">
+        PRJ_COST_INFO = #{record.prjCostInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prjQualityInfo != null">
+        PRJ_QUALITY_INFO = #{record.prjQualityInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.declareDate != null">
+        DECLARE_DATE = #{record.declareDate,jdbcType=DATE},
+      </if>
+      <if test="record.declareMan != null">
+        DECLARE_MAN = #{record.declareMan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null">
+        TEL = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startDate != null">
+        START_DATE = #{record.startDate,jdbcType=DATE},
+      </if>
+      <if test="record.buildContent != null">
+        BUILD_CONTENT = #{record.buildContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endDate != null">
+        END_DATE = #{record.endDate,jdbcType=DATE},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_DECLARE_INFO
+    set ID = #{record.id,jdbcType=BIGINT},
+      APP_ID = #{record.appId,jdbcType=BIGINT},
+      PROJECT_CODE = #{record.projectCode,jdbcType=VARCHAR},
+      PROJECT_NAME = #{record.projectName,jdbcType=VARCHAR},
+      PRO_DIMENSION = #{record.proDimension,jdbcType=INTEGER},
+      SG_CAPACITY = #{record.sgCapacity,jdbcType=VARCHAR},
+      SG_CLASSIFIED = #{record.sgClassified,jdbcType=INTEGER},
+      PERSON_DEPUTY = #{record.personDeputy,jdbcType=VARCHAR},
+      PROJECT_MANAGER = #{record.projectManager,jdbcType=VARCHAR},
+      PROJECT_TYPE = #{record.projectType,jdbcType=INTEGER},
+      CIVIL_DESIGN_CODE = #{record.civilDesignCode,jdbcType=VARCHAR},
+      CIVIL_DESIGN_NO = #{record.civilDesignNo,jdbcType=VARCHAR},
+      CIVIL_DESIGN_LEVEL = #{record.civilDesignLevel,jdbcType=INTEGER},
+      CIVIL_DESIGN_LIMIT = #{record.civilDesignLimit,jdbcType=DATE},
+      CIVIL_DESIGN_PASS = #{record.civilDesignPass,jdbcType=VARCHAR},
+      CIVIL_CONST_CODE = #{record.civilConstCode,jdbcType=VARCHAR},
+      CIVIL_CONST_NO = #{record.civilConstNo,jdbcType=VARCHAR},
+      CIVIL_CONST_LEVEL = #{record.civilConstLevel,jdbcType=INTEGER},
+      CIVIL_CONST_LIMIT = #{record.civilConstLimit,jdbcType=DATE},
+      CIVIL_CONST_PASS = #{record.civilConstPass,jdbcType=VARCHAR},
+      ENERGY_DESIGN_CODE = #{record.energyDesignCode,jdbcType=VARCHAR},
+      ENERGY_DESIGN_NO = #{record.energyDesignNo,jdbcType=VARCHAR},
+      ENERGY_DESIGN_LEVEL = #{record.energyDesignLevel,jdbcType=INTEGER},
+      ENERGY_DESIGN_LIMIT = #{record.energyDesignLimit,jdbcType=DATE},
+      ENERGY_DESIGN_PASS = #{record.energyDesignPass,jdbcType=VARCHAR},
+      ENERGY_CONST_CODE = #{record.energyConstCode,jdbcType=VARCHAR},
+      ENERGY_CONST_NO = #{record.energyConstNo,jdbcType=VARCHAR},
+      ENERGY_CONST_LEVEL = #{record.energyConstLevel,jdbcType=INTEGER},
+      ENERGY_CONSTD_LIMIT = #{record.energyConstdLimit,jdbcType=DATE},
+      ENERGY_CONST_PASS = #{record.energyConstPass,jdbcType=VARCHAR},
+      PRJ_CHANGE_INFO = #{record.prjChangeInfo,jdbcType=VARCHAR},
+      PRJ_COST_INFO = #{record.prjCostInfo,jdbcType=VARCHAR},
+      PRJ_QUALITY_INFO = #{record.prjQualityInfo,jdbcType=VARCHAR},
+      DECLARE_DATE = #{record.declareDate,jdbcType=DATE},
+      DECLARE_MAN = #{record.declareMan,jdbcType=VARCHAR},
+      TEL = #{record.tel,jdbcType=VARCHAR},
+      START_DATE = #{record.startDate,jdbcType=DATE},
+      BUILD_CONTENT = #{record.buildContent,jdbcType=VARCHAR},
+      END_DATE = #{record.endDate,jdbcType=DATE},
+      REMARK = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
