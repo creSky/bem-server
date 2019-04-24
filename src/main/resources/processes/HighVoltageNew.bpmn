@@ -3,7 +3,7 @@
   <process id="HighVoltageNew" isClosed="false" isExecutable="true" name="高压新装1.0" processType="None">
     <startEvent id="startevent1" name="开始"/>
     <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p1" name="申请登记"/>
-    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p2" name="审批">
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p2" name="申请登记-审批">
       <documentation id="bem-f1-p2_D_1"><![CDATA[{rrrrrrrrrrrrrrrrrrr}]]></documentation>
     </userTask>
     <sequenceFlow id="flow2" sourceRef="startevent1" targetRef="bem-f1-p1"/>
