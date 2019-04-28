@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bem.mapper.AppFileMapper">
+  <resultMap id="BaseResultMap" type="com.bem.domain.AppFile">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="APP_ID" jdbcType="BIGINT" property="appId" />
+    <result column="TASK_ID" jdbcType="VARCHAR" property="taskId" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="FILE_PATH" jdbcType="VARCHAR" property="filePath" />
+    <result column="FILE_SIZE" jdbcType="BIGINT" property="fileSize" />
+    <result column="UPLOAD_DATE" jdbcType="TIMESTAMP" property="uploadDate" />
+    <result column="UPLOAD_MAN_ID" jdbcType="VARCHAR" property="uploadManId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_ID, TASK_ID, FILE_NAME, FILE_PATH, FILE_SIZE, UPLOAD_DATE, UPLOAD_MAN_ID
+  </sql>
+  <select id="selectByExample" parameterType="com.bem.domain.AppFileExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_FILE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.bem.domain.AppFileExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from APP_FILE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.bem.domain.AppFileExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from APP_FILE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_FILE
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appId != null">
+        APP_ID = #{record.appId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskId != null">
+        TASK_ID = #{record.taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileName != null">
+        FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filePath != null">
+        FILE_PATH = #{record.filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileSize != null">
+        FILE_SIZE = #{record.fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="record.uploadDate != null">
+        UPLOAD_DATE = #{record.uploadDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uploadManId != null">
+        UPLOAD_MAN_ID = #{record.uploadManId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_FILE
+    set ID = #{record.id,jdbcType=BIGINT},
+      APP_ID = #{record.appId,jdbcType=BIGINT},
+      TASK_ID = #{record.taskId,jdbcType=VARCHAR},
+      FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
+      FILE_PATH = #{record.filePath,jdbcType=VARCHAR},
+      FILE_SIZE = #{record.fileSize,jdbcType=BIGINT},
+      UPLOAD_DATE = #{record.uploadDate,jdbcType=TIMESTAMP},
+      UPLOAD_MAN_ID = #{record.uploadManId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
