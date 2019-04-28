@@ -744,6 +744,66 @@ public class AppPassAdviceExample {
             addCriterion("ARGEE_ONAME not between", value1, value2, "argeeOname");
             return (Criteria) this;
         }
+
+        public Criteria andHavaProjectIsNull() {
+            addCriterion("HAVA_PROJECT is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectIsNotNull() {
+            addCriterion("HAVA_PROJECT is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectEqualTo(Integer value) {
+            addCriterion("HAVA_PROJECT =", value, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectNotEqualTo(Integer value) {
+            addCriterion("HAVA_PROJECT <>", value, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectGreaterThan(Integer value) {
+            addCriterion("HAVA_PROJECT >", value, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectGreaterThanOrEqualTo(Integer value) {
+            addCriterion("HAVA_PROJECT >=", value, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectLessThan(Integer value) {
+            addCriterion("HAVA_PROJECT <", value, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectLessThanOrEqualTo(Integer value) {
+            addCriterion("HAVA_PROJECT <=", value, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectIn(List<Integer> values) {
+            addCriterion("HAVA_PROJECT in", values, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectNotIn(List<Integer> values) {
+            addCriterion("HAVA_PROJECT not in", values, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectBetween(Integer value1, Integer value2) {
+            addCriterion("HAVA_PROJECT between", value1, value2, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectNotBetween(Integer value1, Integer value2) {
+            addCriterion("HAVA_PROJECT not between", value1, value2, "havaProject");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -21,6 +21,24 @@ public class AppReplyAdvice {
     private String replyAdvice;
 
     /**
+     * 是否通过
+     */
+    @Column(name = "IS_ACCESS")
+    private Integer isAccess;
+
+    /**
+     * 有无工程
+     */
+    @Column(name = "HAVA_PROJECT")
+    private Integer havaProject;
+
+    /**
+     * 是否答复
+     */
+    @Column(name = "IS_ANSWER")
+    private Integer isAnswer;
+
+    /**
      * @return ID
      */
     public Long getId() {
@@ -68,5 +86,59 @@ public class AppReplyAdvice {
      */
     public void setReplyAdvice(String replyAdvice) {
         this.replyAdvice = replyAdvice == null ? null : replyAdvice.trim();
+    }
+
+    /**
+     * 获取是否通过
+     *
+     * @return IS_ACCESS - 是否通过
+     */
+    public Integer getIsAccess() {
+        return isAccess;
+    }
+
+    /**
+     * 设置是否通过
+     *
+     * @param isAccess 是否通过
+     */
+    public void setIsAccess(Integer isAccess) {
+        this.isAccess = isAccess;
+    }
+
+    /**
+     * 获取有无工程
+     *
+     * @return HAVA_PROJECT - 有无工程
+     */
+    public Integer getHavaProject() {
+        return havaProject;
+    }
+
+    /**
+     * 设置有无工程
+     *
+     * @param havaProject 有无工程
+     */
+    public void setHavaProject(Integer havaProject) {
+        this.havaProject = havaProject;
+    }
+
+    /**
+     * 获取是否答复
+     *
+     * @return IS_ANSWER - 是否答复
+     */
+    public Integer getIsAnswer() {
+        return isAnswer;
+    }
+
+    /**
+     * 设置是否答复
+     *
+     * @param isAnswer 是否答复
+     */
+    public void setIsAnswer(Integer isAnswer) {
+        this.isAnswer = isAnswer;
     }
 }

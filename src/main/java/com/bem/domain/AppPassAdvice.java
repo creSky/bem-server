@@ -64,6 +64,12 @@ public class AppPassAdvice {
     private String argeeOname;
 
     /**
+     * 是否有工程
+     */
+    @Column(name = "HAVA_PROJECT")
+    private Integer havaProject;
+
+    /**
      * @return ID
      */
     public Long getId() {
@@ -237,5 +243,23 @@ public class AppPassAdvice {
      */
     public void setArgeeOname(String argeeOname) {
         this.argeeOname = argeeOname == null ? null : argeeOname.trim();
+    }
+
+    /**
+     * 获取是否有工程
+     *
+     * @return HAVA_PROJECT - 是否有工程
+     */
+    public Integer getHavaProject() {
+        return havaProject;
+    }
+
+    /**
+     * 设置是否有工程
+     *
+     * @param havaProject 是否有工程
+     */
+    public void setHavaProject(Integer havaProject) {
+        this.havaProject = havaProject;
     }
 }

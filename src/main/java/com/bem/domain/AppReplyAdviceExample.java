@@ -293,6 +293,186 @@ public class AppReplyAdviceExample {
             addCriterion("REPLY_ADVICE not between", value1, value2, "replyAdvice");
             return (Criteria) this;
         }
+
+        public Criteria andIsAccessIsNull() {
+            addCriterion("IS_ACCESS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccessIsNotNull() {
+            addCriterion("IS_ACCESS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccessEqualTo(Integer value) {
+            addCriterion("IS_ACCESS =", value, "isAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccessNotEqualTo(Integer value) {
+            addCriterion("IS_ACCESS <>", value, "isAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccessGreaterThan(Integer value) {
+            addCriterion("IS_ACCESS >", value, "isAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccessGreaterThanOrEqualTo(Integer value) {
+            addCriterion("IS_ACCESS >=", value, "isAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccessLessThan(Integer value) {
+            addCriterion("IS_ACCESS <", value, "isAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccessLessThanOrEqualTo(Integer value) {
+            addCriterion("IS_ACCESS <=", value, "isAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccessIn(List<Integer> values) {
+            addCriterion("IS_ACCESS in", values, "isAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccessNotIn(List<Integer> values) {
+            addCriterion("IS_ACCESS not in", values, "isAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccessBetween(Integer value1, Integer value2) {
+            addCriterion("IS_ACCESS between", value1, value2, "isAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccessNotBetween(Integer value1, Integer value2) {
+            addCriterion("IS_ACCESS not between", value1, value2, "isAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectIsNull() {
+            addCriterion("HAVA_PROJECT is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectIsNotNull() {
+            addCriterion("HAVA_PROJECT is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectEqualTo(Integer value) {
+            addCriterion("HAVA_PROJECT =", value, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectNotEqualTo(Integer value) {
+            addCriterion("HAVA_PROJECT <>", value, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectGreaterThan(Integer value) {
+            addCriterion("HAVA_PROJECT >", value, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectGreaterThanOrEqualTo(Integer value) {
+            addCriterion("HAVA_PROJECT >=", value, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectLessThan(Integer value) {
+            addCriterion("HAVA_PROJECT <", value, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectLessThanOrEqualTo(Integer value) {
+            addCriterion("HAVA_PROJECT <=", value, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectIn(List<Integer> values) {
+            addCriterion("HAVA_PROJECT in", values, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectNotIn(List<Integer> values) {
+            addCriterion("HAVA_PROJECT not in", values, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectBetween(Integer value1, Integer value2) {
+            addCriterion("HAVA_PROJECT between", value1, value2, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andHavaProjectNotBetween(Integer value1, Integer value2) {
+            addCriterion("HAVA_PROJECT not between", value1, value2, "havaProject");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnswerIsNull() {
+            addCriterion("IS_ANSWER is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnswerIsNotNull() {
+            addCriterion("IS_ANSWER is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnswerEqualTo(Integer value) {
+            addCriterion("IS_ANSWER =", value, "isAnswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnswerNotEqualTo(Integer value) {
+            addCriterion("IS_ANSWER <>", value, "isAnswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnswerGreaterThan(Integer value) {
+            addCriterion("IS_ANSWER >", value, "isAnswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnswerGreaterThanOrEqualTo(Integer value) {
+            addCriterion("IS_ANSWER >=", value, "isAnswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnswerLessThan(Integer value) {
+            addCriterion("IS_ANSWER <", value, "isAnswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnswerLessThanOrEqualTo(Integer value) {
+            addCriterion("IS_ANSWER <=", value, "isAnswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnswerIn(List<Integer> values) {
+            addCriterion("IS_ANSWER in", values, "isAnswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnswerNotIn(List<Integer> values) {
+            addCriterion("IS_ANSWER not in", values, "isAnswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnswerBetween(Integer value1, Integer value2) {
+            addCriterion("IS_ANSWER between", value1, value2, "isAnswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnswerNotBetween(Integer value1, Integer value2) {
+            addCriterion("IS_ANSWER not between", value1, value2, "isAnswer");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

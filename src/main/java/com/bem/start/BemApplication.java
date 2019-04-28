@@ -14,6 +14,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @ComponentScan(basePackages={"com.bem"})
 @MapperScan("com.bem.mapper")
+@EnableTransactionManagement
 public class BemApplication {
     @Bean
     @LoadBalanced

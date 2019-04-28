@@ -27,6 +27,7 @@
     <result column="USER_TYPE" jdbcType="SMALLINT" property="userType" />
     <result column="REMARK" jdbcType="VARCHAR" property="remark" />
     <result column="STATUS" jdbcType="SMALLINT" property="status" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -99,7 +100,7 @@
     ID, APP_NO, TEMPLATE_ID, CUSTOMER_ID, USER_NO, USER_NAME, ADDRESS, BUSINESS_PLACE_CODE, 
     WRITE_SECT_NO, ALL_CAPACITY, TRADE_TYPE, ELEC_TYPE, VOLT_LEVEL_TYPE, MS_MODE_TYPE, 
     LOAD_TYPE, IS_HIGH_TYPE, TEMP_TYPE, CREDIT_RANK_TYPE, WRITE_TYPE, USER_TYPE, REMARK, 
-    STATUS
+    STATUS, CREATE_DATE
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppUserInfoExample" resultMap="BaseResultMap">
     <!--
@@ -208,6 +209,9 @@
       <if test="record.status != null">
         STATUS = #{record.status,jdbcType=SMALLINT},
       </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -239,7 +243,8 @@
       WRITE_TYPE = #{record.writeType,jdbcType=SMALLINT},
       USER_TYPE = #{record.userType,jdbcType=SMALLINT},
       REMARK = #{record.remark,jdbcType=VARCHAR},
-      STATUS = #{record.status,jdbcType=SMALLINT}
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

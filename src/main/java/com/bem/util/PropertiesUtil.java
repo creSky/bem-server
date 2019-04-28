@@ -15,7 +15,7 @@ public class PropertiesUtil {
      */
     public static String getValue(String name){
         try {
-            InputStream in = PropertiesUtil.class.getResourceAsStream("/url.properties");
+            InputStream in = PropertiesUtil.class.getResourceAsStream("/param.properties");
             BufferedReader bf = new BufferedReader(new InputStreamReader(in));
             _prop.load(bf);
         }catch (IOException e){

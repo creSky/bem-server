@@ -10,6 +10,7 @@ import com.bem.service.ActivitiService;
 import com.bem.util.BemCommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,9 +40,12 @@ public class AppBaseInfoController {
     public RestultContent getAppBaseInfo(@RequestBody(required = false) String appBaseInfoJson) throws Exception {
         JSONObject jsonObject = JSONObject.parseObject(appBaseInfoJson);
         RestultContent restultContent = new RestultContent();
-
-        /*AppBaseInfo appBaseInfo = appBaseInfoMapper.selectByPrimaryKey(jsonObject.getString("appId"));
-        restultContent.setData(appBaseInfo);*/
+        AppUserInfo appUserInfo = appUserInfoMapper.selectByPrimaryKey(jsonObject.getString("appId"));
+        AppCustomerInfo appCustomerInfo = appCustomerInfoMapper.selectByPrimaryKey(jsonObject.getString("appId"));
+        Map<String, Object> returnMap = new HashMap<>();
+        returnMap.put("user", appUserInfo);
+        returnMap.put("customer", appCustomerInfo);
+        restultContent.setData(returnMap);
         restultContent.setStatus(200);
         return restultContent;
     }
@@ -71,6 +75,7 @@ public class AppBaseInfoController {
      */
     @RequestMapping("/save")
     @ResponseBody
+    @Transactional
     public RestultContent save(@RequestBody(required = false) String appBaseInfoJson) throws Exception {
         JSONObject appBaseInfoObject = JSONObject.parseObject(appBaseInfoJson);
         //客户
@@ -79,7 +84,7 @@ public class AppBaseInfoController {
         AppUserInfo appUserInfo = JSONObject.parseObject(appBaseInfoObject.getString("user"), AppUserInfo.class);
         RestultContent restultContent = new RestultContent();
 
-        String appNo=BemCommonUtil.createAppNo();
+        String appNo = BemCommonUtil.createAppNo();
 
         //判断客户是否存在
         boolean isExists = appCustomerInfoMapper.existsWithPrimaryKey(appCustomerInfo);
@@ -91,19 +96,20 @@ public class AppBaseInfoController {
         }
 
         //判断用电户是否存在
-         isExists = appUserInfoMapper.existsWithPrimaryKey(appUserInfo);
+        isExists = appUserInfoMapper.existsWithPrimaryKey(appUserInfo);
         if (isExists) {
             appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
         } else {
+            appUserInfo.setId(appCustomerInfo.getId());
             appUserInfo.setAppNo(appNo);
             appUserInfo.setCustomerId(appCustomerInfo.getId());
             appUserInfoMapper.insertSelective(appUserInfo);
             //启动流程
             activitiService.start(appUserInfo.getTemplateId().toString(), appUserInfo.getAppNo());
         }
-        Map<String,Object> appBaseInfo=new HashMap<>();
-        appBaseInfo.put("customer",appCustomerInfo);
-        appBaseInfo.put("user",appUserInfo);
+        Map<String, Object> appBaseInfo = new HashMap<>();
+        appBaseInfo.put("customer", appCustomerInfo);
+        appBaseInfo.put("user", appUserInfo);
         restultContent.setData(appBaseInfo);
         restultContent.setStatus(200);
         return restultContent;

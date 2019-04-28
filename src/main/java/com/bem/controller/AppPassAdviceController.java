@@ -6,6 +6,7 @@ import com.bem.domain.AppPassAdvice;
 import com.bem.domain.AppPassAdviceExample;
 import com.bem.mapper.AppPassAdviceMapper;
 import com.bem.service.ActivitiService;
+import com.bem.util.BemCommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -65,7 +66,7 @@ public class AppPassAdviceController {
         RestultContent restultContent = new RestultContent();
         boolean isExist = appPassAdviceMapper.existsWithPrimaryKey(appPassAdvice);
         appPassAdvice.setArgeeDate(new Date());
-        appPassAdvice.setArgeeOid(JSONObject.parseObject(appPassAdviceJson).get("userId").toString());
+        appPassAdvice.setArgeeOid(BemCommonUtil.getOpeartorId(appPassAdviceJson));
         if (isExist) {
             appPassAdviceMapper.updateByPrimaryKeySelective(appPassAdvice);
         } else {

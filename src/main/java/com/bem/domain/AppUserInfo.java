@@ -1,6 +1,7 @@
 package com.bem.domain;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "APP_USER_INFO")
@@ -126,11 +127,20 @@ public class AppUserInfo {
     @Column(name = "USER_TYPE")
     private Short userType;
 
+    /**
+     * 备注
+     */
     @Column(name = "REMARK")
     private String remark;
 
     @Column(name = "STATUS")
     private Short status;
+
+    /**
+     * 创建时间（短信通知依据时间）
+     */
+    @Column(name = "CREATE_DATE")
+    private Date createDate;
 
     /**
      * 获取ID
@@ -493,14 +503,18 @@ public class AppUserInfo {
     }
 
     /**
-     * @return REMARK
+     * 获取备注
+     *
+     * @return REMARK - 备注
      */
     public String getRemark() {
         return remark;
     }
 
     /**
-     * @param remark
+     * 设置备注
+     *
+     * @param remark 备注
      */
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
@@ -518,5 +532,23 @@ public class AppUserInfo {
      */
     public void setStatus(Short status) {
         this.status = status;
+    }
+
+    /**
+     * 获取创建时间（短信通知依据时间）
+     *
+     * @return CREATE_DATE - 创建时间（短信通知依据时间）
+     */
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    /**
+     * 设置创建时间（短信通知依据时间）
+     *
+     * @param createDate 创建时间（短信通知依据时间）
+     */
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }

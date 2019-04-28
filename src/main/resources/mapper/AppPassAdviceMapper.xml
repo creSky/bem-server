@@ -15,6 +15,7 @@
     <result column="ARGEE_OID" jdbcType="VARCHAR" property="argeeOid" />
     <result column="ARGEE_DATE" jdbcType="TIMESTAMP" property="argeeDate" />
     <result column="ARGEE_ONAME" jdbcType="VARCHAR" property="argeeOname" />
+    <result column="HAVA_PROJECT" jdbcType="INTEGER" property="havaProject" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -85,7 +86,7 @@
       WARNING - @mbg.generated
     -->
     ID, APP_ID, TASK_ID, PASS_ADVICE, ARGEE_FLAG, PROCESS_INSTANCE_ID, CREATE_DATE, ARGEE_OID, 
-    ARGEE_DATE, ARGEE_ONAME
+    ARGEE_DATE, ARGEE_ONAME, HAVA_PROJECT
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppPassAdviceExample" resultMap="BaseResultMap">
     <!--
@@ -158,6 +159,9 @@
       <if test="record.argeeOname != null">
         ARGEE_ONAME = #{record.argeeOname,jdbcType=VARCHAR},
       </if>
+      <if test="record.havaProject != null">
+        HAVA_PROJECT = #{record.havaProject,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,7 +181,8 @@
       CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
       ARGEE_OID = #{record.argeeOid,jdbcType=VARCHAR},
       ARGEE_DATE = #{record.argeeDate,jdbcType=TIMESTAMP},
-      ARGEE_ONAME = #{record.argeeOname,jdbcType=VARCHAR}
+      ARGEE_ONAME = #{record.argeeOname,jdbcType=VARCHAR},
+      HAVA_PROJECT = #{record.havaProject,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

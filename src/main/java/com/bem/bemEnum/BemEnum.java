@@ -8,8 +8,8 @@ package com.bem.bemEnum;
  */
 public enum BemEnum {
     BemEnum0("0","HighVoltageNewV1"),
-    BemEnum1("1","HighVoltageNew"),
-    BemEnum2("2","HighVoltageNew");
+    BemEnum1("1","LowVoltageNewV1"),
+    BemEnum2("2","LowVoltageNewV1");
 
     // 防止字段值被修改，增加的字段也统一final表示常量
     private final String key;
