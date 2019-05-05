@@ -12,7 +12,7 @@
     <result column="ARGEE_FLAG" jdbcType="SMALLINT" property="argeeFlag" />
     <result column="PROCESS_INSTANCE_ID" jdbcType="DECIMAL" property="processInstanceId" />
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="ARGEE_OID" jdbcType="VARCHAR" property="argeeOid" />
+    <result column="ARGEE_OID" jdbcType="INTEGER" property="argeeOid" />
     <result column="ARGEE_DATE" jdbcType="TIMESTAMP" property="argeeDate" />
     <result column="ARGEE_ONAME" jdbcType="VARCHAR" property="argeeOname" />
     <result column="HAVA_PROJECT" jdbcType="INTEGER" property="havaProject" />
@@ -151,7 +151,7 @@
         CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.argeeOid != null">
-        ARGEE_OID = #{record.argeeOid,jdbcType=VARCHAR},
+        ARGEE_OID = #{record.argeeOid,jdbcType=INTEGER},
       </if>
       <if test="record.argeeDate != null">
         ARGEE_DATE = #{record.argeeDate,jdbcType=TIMESTAMP},
@@ -179,7 +179,7 @@
       ARGEE_FLAG = #{record.argeeFlag,jdbcType=SMALLINT},
       PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
       CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
-      ARGEE_OID = #{record.argeeOid,jdbcType=VARCHAR},
+      ARGEE_OID = #{record.argeeOid,jdbcType=INTEGER},
       ARGEE_DATE = #{record.argeeDate,jdbcType=TIMESTAMP},
       ARGEE_ONAME = #{record.argeeOname,jdbcType=VARCHAR},
       HAVA_PROJECT = #{record.havaProject,jdbcType=INTEGER}

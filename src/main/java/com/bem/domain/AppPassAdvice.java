@@ -49,7 +49,7 @@ public class AppPassAdvice {
      * 审批人id
      */
     @Column(name = "ARGEE_OID")
-    private String argeeOid;
+    private Integer argeeOid;
 
     /**
      * 审批时间
@@ -196,7 +196,7 @@ public class AppPassAdvice {
      *
      * @return ARGEE_OID - 审批人id
      */
-    public String getArgeeOid() {
+    public Integer getArgeeOid() {
         return argeeOid;
     }
 
@@ -205,8 +205,8 @@ public class AppPassAdvice {
      *
      * @param argeeOid 审批人id
      */
-    public void setArgeeOid(String argeeOid) {
-        this.argeeOid = argeeOid == null ? null : argeeOid.trim();
+    public void setArgeeOid(Integer argeeOid) {
+        this.argeeOid = argeeOid;
     }
 
     /**

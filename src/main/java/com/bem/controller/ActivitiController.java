@@ -2,27 +2,26 @@ package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bem.common.RestultContent;
+import com.bem.domain.AppDispatch;
+import com.bem.domain.AppDispatchExample;
+import com.bem.domain.AppPassAdvice;
+import com.bem.domain.AppPassAdviceExample;
+import com.bem.mapper.AppDispatchMapper;
+import com.bem.mapper.AppPassAdviceMapper;
 import com.bem.service.ActivitiService;
 import com.bem.service.TaskListService;
 import com.bem.util.BemCommonUtil;
-import com.bem.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author ：zjd
@@ -40,7 +39,10 @@ public class ActivitiController {
     private ActivitiService activitiService;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private AppPassAdviceMapper appPassAdviceMapper;
+
+    @Autowired
+    private AppDispatchMapper appDispatchMapper;
 
     @RequestMapping(value = "/getTaskList")
     @ResponseBody
@@ -50,7 +52,8 @@ public class ActivitiController {
         Map<String, Object> userMap = new HashMap<>();
         //获得用户信息
         userMap.put("userId", BemCommonUtil.getOpeartorId(userRightJson));
-        userMap.put("roleIds",BemCommonUtil.getOpeartorRoleIds(userRightJson));
+        //userMap.put("roleIds","1");
+        userMap.put("roleIds", BemCommonUtil.getOpeartorRoleIds(userRightJson));
         taskMap = taskListService.selectUserByApp(userMap);
 
         // System.out.println(result);
@@ -71,6 +74,30 @@ public class ActivitiController {
         RestultContent restultContent = new RestultContent();
         Map<String, Object> candidate = new HashMap<>();
         candidate.put("candidate", BemCommonUtil.getOpeartorId(submitJson));
+
+        //查看有无工程
+        if ("bem-f1-p2".equals(jsonObject.get("taskDefKey"))) {
+            AppPassAdviceExample appPassAdviceExample = new AppPassAdviceExample();
+            com.bem.domain.AppPassAdviceExample.Criteria appPassAdvicecriteria = appPassAdviceExample.createCriteria();
+            appPassAdvicecriteria.andAppIdEqualTo(jsonObject.getString("appId")).
+                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+            List<AppPassAdvice> appPassAdvices = appPassAdviceMapper.selectByExample(appPassAdviceExample);
+            candidate.put("havaProject", 0 == appPassAdvices.size() ? null : appPassAdvices.get(0).getHavaProject());
+        }
+
+        //派工 设置下个环节办理人
+        if ("bem-f1-p20".equals(jsonObject.get("taskDefKey"))) {
+            AppDispatchExample appDispatchExample = new AppDispatchExample();
+            com.bem.domain.AppDispatchExample.Criteria appDispatchcriteria = appDispatchExample.createCriteria();
+            appDispatchcriteria.andAppIdEqualTo(jsonObject.getString("appId")).
+                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+            List<AppDispatch> appDispatches = appDispatchMapper.selectByExample(appDispatchExample);
+            if(0<appDispatches.size()){
+                candidate.put("dispatchMan",
+                        appDispatches.stream().map(p ->p.getDispatchMan().toString()).collect(Collectors.toList()));
+            }
+        }
+        //提交
         activitiService.compleTask(jsonObject.getString("taskId"), candidate);
         restultContent.setStatus(200);
         return restultContent;

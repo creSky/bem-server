@@ -555,62 +555,52 @@ public class AppPassAdviceExample {
             return (Criteria) this;
         }
 
-        public Criteria andArgeeOidEqualTo(String value) {
+        public Criteria andArgeeOidEqualTo(Integer value) {
             addCriterion("ARGEE_OID =", value, "argeeOid");
             return (Criteria) this;
         }
 
-        public Criteria andArgeeOidNotEqualTo(String value) {
+        public Criteria andArgeeOidNotEqualTo(Integer value) {
             addCriterion("ARGEE_OID <>", value, "argeeOid");
             return (Criteria) this;
         }
 
-        public Criteria andArgeeOidGreaterThan(String value) {
+        public Criteria andArgeeOidGreaterThan(Integer value) {
             addCriterion("ARGEE_OID >", value, "argeeOid");
             return (Criteria) this;
         }
 
-        public Criteria andArgeeOidGreaterThanOrEqualTo(String value) {
+        public Criteria andArgeeOidGreaterThanOrEqualTo(Integer value) {
             addCriterion("ARGEE_OID >=", value, "argeeOid");
             return (Criteria) this;
         }
 
-        public Criteria andArgeeOidLessThan(String value) {
+        public Criteria andArgeeOidLessThan(Integer value) {
             addCriterion("ARGEE_OID <", value, "argeeOid");
             return (Criteria) this;
         }
 
-        public Criteria andArgeeOidLessThanOrEqualTo(String value) {
+        public Criteria andArgeeOidLessThanOrEqualTo(Integer value) {
             addCriterion("ARGEE_OID <=", value, "argeeOid");
             return (Criteria) this;
         }
 
-        public Criteria andArgeeOidLike(String value) {
-            addCriterion("ARGEE_OID like", value, "argeeOid");
-            return (Criteria) this;
-        }
-
-        public Criteria andArgeeOidNotLike(String value) {
-            addCriterion("ARGEE_OID not like", value, "argeeOid");
-            return (Criteria) this;
-        }
-
-        public Criteria andArgeeOidIn(List<String> values) {
+        public Criteria andArgeeOidIn(List<Integer> values) {
             addCriterion("ARGEE_OID in", values, "argeeOid");
             return (Criteria) this;
         }
 
-        public Criteria andArgeeOidNotIn(List<String> values) {
+        public Criteria andArgeeOidNotIn(List<Integer> values) {
             addCriterion("ARGEE_OID not in", values, "argeeOid");
             return (Criteria) this;
         }
 
-        public Criteria andArgeeOidBetween(String value1, String value2) {
+        public Criteria andArgeeOidBetween(Integer value1, Integer value2) {
             addCriterion("ARGEE_OID between", value1, value2, "argeeOid");
             return (Criteria) this;
         }
 
-        public Criteria andArgeeOidNotBetween(String value1, String value2) {
+        public Criteria andArgeeOidNotBetween(Integer value1, Integer value2) {
             addCriterion("ARGEE_OID not between", value1, value2, "argeeOid");
             return (Criteria) this;
         }

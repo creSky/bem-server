@@ -5,6 +5,7 @@ import com.bem.bemEnum.BemEnum;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.runtime.ProcessInstanceQuery;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -138,4 +140,27 @@ public class ActivitiService {
         return runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
 
     }
+
+    /**
+     * 查询历史流程
+     * @return
+     */
+    public List<HistoricProcessInstance> getHistoricInstance(){
+        List<HistoricProcessInstance> list = processEngine.getHistoryService()
+                .createHistoricProcessInstanceQuery()
+                .orderByProcessInstanceStartTime().asc()//排序
+                .list();
+        return list;
+    }
+
+    /**
+     * 设置办理人
+     * @param taskId
+     * @param taskAssignee
+     * @return
+     */
+    public void addCandidateUser(String taskId ,String taskAssignee) throws Exception {
+        taskService.addCandidateUser(taskId,taskAssignee);
+    }
+
 }

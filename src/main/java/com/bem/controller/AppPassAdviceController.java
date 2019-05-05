@@ -36,16 +36,15 @@ public class AppPassAdviceController {
     @RequestMapping("/getAppPassAdvice")
     @ResponseBody
     public RestultContent getAppPassAdvice(@RequestBody String appPassAdviceJson) throws Exception {
-        String userId=JSONObject.parseObject(appPassAdviceJson).get("userId").toString();
+        String userId=BemCommonUtil.getOpeartorId(appPassAdviceJson);
         AppPassAdvice appPassAdvice = JSONObject.parseObject(appPassAdviceJson, AppPassAdvice.class);
         List<AppPassAdvice> returnAppPassAdvice = new ArrayList<>();
         RestultContent restultContent = new RestultContent();
         AppPassAdviceExample appPassAdviceExample = new AppPassAdviceExample();
         com.bem.domain.AppPassAdviceExample.Criteria criteria = appPassAdviceExample.createCriteria();
         criteria.andAppIdEqualTo(appPassAdvice.getAppId()).
-                andTaskIdEqualTo(appPassAdvice.getTaskId()).
                 andProcessInstanceIdEqualTo(appPassAdvice.getProcessInstanceId()).
-                andArgeeOidEqualTo(userId);
+                andArgeeOidEqualTo(new Integer(userId));
         returnAppPassAdvice = appPassAdviceMapper.selectByExample(appPassAdviceExample);
         restultContent.setStatus(200);
         if(null!=returnAppPassAdvice && returnAppPassAdvice.size()>0){
@@ -66,7 +65,7 @@ public class AppPassAdviceController {
         RestultContent restultContent = new RestultContent();
         boolean isExist = appPassAdviceMapper.existsWithPrimaryKey(appPassAdvice);
         appPassAdvice.setArgeeDate(new Date());
-        appPassAdvice.setArgeeOid(BemCommonUtil.getOpeartorId(appPassAdviceJson));
+        appPassAdvice.setArgeeOid(new Integer(BemCommonUtil.getOpeartorId(appPassAdviceJson)));
         if (isExist) {
             appPassAdviceMapper.updateByPrimaryKeySelective(appPassAdvice);
         } else {

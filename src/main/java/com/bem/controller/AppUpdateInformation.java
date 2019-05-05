@@ -6,6 +6,7 @@ import com.bem.domain.*;
 import com.bem.mapper.*;
 import com.bem.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController("/appUpdateInformation")
+@Controller
+@RequestMapping("/appUpdateInformation")
 public class AppUpdateInformation {
     @Autowired
     private AppUserInfoMapper appUserInfoMapper;
@@ -85,7 +87,7 @@ public class AppUpdateInformation {
         postData.put("inductorAssetsInfo", appInductorAssetsInfos);
 
         //发送到cim 更新档案
-        String result = restTemplate.postForObject("http://CIM-SERVER/cimServer/inductorAssets?method=method=insertMeter", postData, String.class);
+        String result = restTemplate.postForObject(PropertiesUtil.getValue("bemAddReceive"), postData, String.class);
 
         return null;
     }
