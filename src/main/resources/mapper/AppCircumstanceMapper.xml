@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bem.mapper.AppCircumstanceMapper">
+  <resultMap id="BaseResultMap" type="com.bem.domain.AppCircumstance">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="APP_ID" jdbcType="VARCHAR" property="appId" />
+    <result column="TASK_ID" jdbcType="INTEGER" property="taskId" />
+    <result column="PROCESS_INSTANCE_ID" jdbcType="DECIMAL" property="processInstanceId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="CREATE_MAN" jdbcType="INTEGER" property="createMan" />
+    <result column="IS_ACCESS" jdbcType="INTEGER" property="isAccess" />
+    <result column="ACCESS_REMARK" jdbcType="VARCHAR" property="accessRemark" />
+    <result column="HAVA_PROJECT" jdbcType="INTEGER" property="havaProject" />
+    <result column="PROJECT_REMARK" jdbcType="VARCHAR" property="projectRemark" />
+    <result column="IS_ANSWER" jdbcType="INTEGER" property="isAnswer" />
+    <result column="ANSWER_REMARK" jdbcType="VARCHAR" property="answerRemark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_ID, TASK_ID, PROCESS_INSTANCE_ID, CREATE_DATE, CREATE_MAN, IS_ACCESS, ACCESS_REMARK, 
+    HAVA_PROJECT, PROJECT_REMARK, IS_ANSWER, ANSWER_REMARK
+  </sql>
+  <select id="selectByExample" parameterType="com.bem.domain.AppCircumstanceExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_CIRCUMSTANCE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.bem.domain.AppCircumstanceExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from APP_CIRCUMSTANCE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.bem.domain.AppCircumstanceExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from APP_CIRCUMSTANCE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_CIRCUMSTANCE
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appId != null">
+        APP_ID = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskId != null">
+        TASK_ID = #{record.taskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.processInstanceId != null">
+        PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createMan != null">
+        CREATE_MAN = #{record.createMan,jdbcType=INTEGER},
+      </if>
+      <if test="record.isAccess != null">
+        IS_ACCESS = #{record.isAccess,jdbcType=INTEGER},
+      </if>
+      <if test="record.accessRemark != null">
+        ACCESS_REMARK = #{record.accessRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.havaProject != null">
+        HAVA_PROJECT = #{record.havaProject,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectRemark != null">
+        PROJECT_REMARK = #{record.projectRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAnswer != null">
+        IS_ANSWER = #{record.isAnswer,jdbcType=INTEGER},
+      </if>
+      <if test="record.answerRemark != null">
+        ANSWER_REMARK = #{record.answerRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_CIRCUMSTANCE
+    set ID = #{record.id,jdbcType=BIGINT},
+      APP_ID = #{record.appId,jdbcType=VARCHAR},
+      TASK_ID = #{record.taskId,jdbcType=INTEGER},
+      PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      CREATE_MAN = #{record.createMan,jdbcType=INTEGER},
+      IS_ACCESS = #{record.isAccess,jdbcType=INTEGER},
+      ACCESS_REMARK = #{record.accessRemark,jdbcType=VARCHAR},
+      HAVA_PROJECT = #{record.havaProject,jdbcType=INTEGER},
+      PROJECT_REMARK = #{record.projectRemark,jdbcType=VARCHAR},
+      IS_ANSWER = #{record.isAnswer,jdbcType=INTEGER},
+      ANSWER_REMARK = #{record.answerRemark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
