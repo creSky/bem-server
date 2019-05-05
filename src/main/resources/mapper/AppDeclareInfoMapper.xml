@@ -45,6 +45,7 @@
     <result column="BUILD_CONTENT" jdbcType="VARCHAR" property="buildContent" />
     <result column="END_DATE" jdbcType="DATE" property="endDate" />
     <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="DESIGN_TYPE" jdbcType="INTEGER" property="designType" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -121,7 +122,7 @@
     ENERGY_DESIGN_LEVEL, ENERGY_DESIGN_LIMIT, ENERGY_DESIGN_PASS, ENERGY_CONST_CODE, 
     ENERGY_CONST_NO, ENERGY_CONST_LEVEL, ENERGY_CONSTD_LIMIT, ENERGY_CONST_PASS, PRJ_CHANGE_INFO, 
     PRJ_COST_INFO, PRJ_QUALITY_INFO, DECLARE_DATE, DECLARE_MAN, TEL, START_DATE, BUILD_CONTENT, 
-    END_DATE, REMARK
+    END_DATE, REMARK, DESIGN_TYPE
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppDeclareInfoExample" resultMap="BaseResultMap">
     <!--
@@ -284,6 +285,9 @@
       <if test="record.remark != null">
         REMARK = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.designType != null">
+        DESIGN_TYPE = #{record.designType,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -333,7 +337,8 @@
       START_DATE = #{record.startDate,jdbcType=DATE},
       BUILD_CONTENT = #{record.buildContent,jdbcType=VARCHAR},
       END_DATE = #{record.endDate,jdbcType=DATE},
-      REMARK = #{record.remark,jdbcType=VARCHAR}
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      DESIGN_TYPE = #{record.designType,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

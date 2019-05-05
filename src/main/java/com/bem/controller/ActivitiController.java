@@ -2,10 +2,8 @@ package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bem.common.RestultContent;
-import com.bem.domain.AppDispatch;
-import com.bem.domain.AppDispatchExample;
-import com.bem.domain.AppPassAdvice;
-import com.bem.domain.AppPassAdviceExample;
+import com.bem.domain.*;
+import com.bem.mapper.AppCircumstanceMapper;
 import com.bem.mapper.AppDispatchMapper;
 import com.bem.mapper.AppPassAdviceMapper;
 import com.bem.service.ActivitiService;
@@ -43,6 +41,10 @@ public class ActivitiController {
 
     @Autowired
     private AppDispatchMapper appDispatchMapper;
+
+
+    @Autowired
+    private AppCircumstanceMapper appCircumstanceMapper;
 
     @RequestMapping(value = "/getTaskList")
     @ResponseBody
@@ -82,7 +84,7 @@ public class ActivitiController {
             appPassAdvicecriteria.andAppIdEqualTo(jsonObject.getString("appId")).
                     andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
             List<AppPassAdvice> appPassAdvices = appPassAdviceMapper.selectByExample(appPassAdviceExample);
-            candidate.put("havaProject", 0 == appPassAdvices.size() ? null : appPassAdvices.get(0).getHavaProject());
+            candidate.put("haveProject", 0 == appPassAdvices.size() ? null : appPassAdvices.get(0).getHavaProject());
         }
 
         //派工 设置下个环节办理人
@@ -96,6 +98,20 @@ public class ActivitiController {
                 candidate.put("dispatchMan",
                         appDispatches.stream().map(p ->p.getDispatchMan().toString()).collect(Collectors.toList()));
             }
+        }
+        //现场情况说明
+        if ("bem-f1-p19".equals(jsonObject.get("taskDefKey"))) {
+            AppCircumstanceExample appCircumstanceExample = new AppCircumstanceExample();
+            com.bem.domain.AppCircumstanceExample.Criteria appCircumstancecriteria =
+                    appCircumstanceExample.createCriteria();
+            appCircumstancecriteria.andAppIdEqualTo(jsonObject.getString("appId")).
+                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+            List<AppCircumstance> appCircumstances = appCircumstanceMapper.selectByExample(appCircumstanceExample);
+            candidate.put("haveProject", 0 == appCircumstances.size() ? null :
+                    appCircumstances.get(0).getHavaProject());
+            candidate.put("isAccess", 0 == appCircumstances.size() ? null : appCircumstances.get(0).getIsAccess());
+            candidate.put("isAnswer", 0 == appCircumstances.size() ? null : appCircumstances.get(0).getIsAnswer());
+
         }
         //提交
         activitiService.compleTask(jsonObject.getString("taskId"), candidate);

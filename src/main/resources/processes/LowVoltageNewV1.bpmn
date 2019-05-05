@@ -17,10 +17,10 @@
     <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway1" name="Exclusive Gateway"/>
     <sequenceFlow id="flow33" sourceRef="bem-f1-p2" targetRef="exclusivegateway1"/>
     <sequenceFlow id="flow34" name="同意" sourceRef="exclusivegateway1" targetRef="bem-f1-p3">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${havaProject==1}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${haveProject==1}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow35" name="不同意" sourceRef="exclusivegateway1" targetRef="bem-f1-p17">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${havaProject==0}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${haveProject==0}]]></conditionExpression>
     </sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram documentation="background=#FFFFFF;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">

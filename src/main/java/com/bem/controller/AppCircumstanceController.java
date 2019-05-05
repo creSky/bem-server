@@ -22,6 +22,8 @@ import java.util.List;
 
 /**
  * 勘察情况说明
+ * 是否可行
+ *
  */
 @Controller
 @RequestMapping("/appCircumstance")

@@ -2771,6 +2771,66 @@ public class AppDeclareInfoExample {
             addCriterion("REMARK not between", value1, value2, "remark");
             return (Criteria) this;
         }
+
+        public Criteria andDesignTypeIsNull() {
+            addCriterion("DESIGN_TYPE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDesignTypeIsNotNull() {
+            addCriterion("DESIGN_TYPE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDesignTypeEqualTo(Integer value) {
+            addCriterion("DESIGN_TYPE =", value, "designType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDesignTypeNotEqualTo(Integer value) {
+            addCriterion("DESIGN_TYPE <>", value, "designType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDesignTypeGreaterThan(Integer value) {
+            addCriterion("DESIGN_TYPE >", value, "designType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDesignTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("DESIGN_TYPE >=", value, "designType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDesignTypeLessThan(Integer value) {
+            addCriterion("DESIGN_TYPE <", value, "designType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDesignTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("DESIGN_TYPE <=", value, "designType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDesignTypeIn(List<Integer> values) {
+            addCriterion("DESIGN_TYPE in", values, "designType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDesignTypeNotIn(List<Integer> values) {
+            addCriterion("DESIGN_TYPE not in", values, "designType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDesignTypeBetween(Integer value1, Integer value2) {
+            addCriterion("DESIGN_TYPE between", value1, value2, "designType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDesignTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("DESIGN_TYPE not between", value1, value2, "designType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

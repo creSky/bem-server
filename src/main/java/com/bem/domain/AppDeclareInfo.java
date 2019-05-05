@@ -244,6 +244,12 @@ public class AppDeclareInfo {
     private String remark;
 
     /**
+     * 设计类型
+     */
+    @Column(name = "DESIGN_TYPE")
+    private Integer designType;
+
+    /**
      * @return ID
      */
     public Long getId() {
@@ -957,5 +963,23 @@ public class AppDeclareInfo {
      */
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    /**
+     * 获取设计类型
+     *
+     * @return DESIGN_TYPE - 设计类型
+     */
+    public Integer getDesignType() {
+        return designType;
+    }
+
+    /**
+     * 设置设计类型
+     *
+     * @param designType 设计类型
+     */
+    public void setDesignType(Integer designType) {
+        this.designType = designType;
     }
 }
