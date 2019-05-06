@@ -30,6 +30,7 @@
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
     <result column="REMARK" jdbcType="VARCHAR" property="remark" />
     <result column="STATUS" jdbcType="SMALLINT" property="status" />
+    <result column="TRANS_ASSETS_NO" jdbcType="VARCHAR" property="transAssetsNo" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -102,7 +103,7 @@
     ID, APP_ID, METER_NO, METER_NAME, SET_ADDRESS, PRICE_TYPE, NEED_INDEX, VOLT_LEVEL_TYPE, 
     METER_TYPE, METER_CLASS_TYPE, MS_TYPE, ELEC_TYPE_CODE, BASE_MONEY_FLAG, COS_TYPE, 
     TRADE_TYPE, TS_TYPE, TRANS_LOST_TYPE, TRANS_LOST_NUM, Q_TRANS_LOST_NUM, LINE_LOST_TYPE, 
-    LINE_LOST_NUM, Q_LINE_LOST_NUM, CREATE_DATE, REMARK, STATUS
+    LINE_LOST_NUM, Q_LINE_LOST_NUM, CREATE_DATE, REMARK, STATUS, TRANS_ASSETS_NO
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppMeterInfoExample" resultMap="BaseResultMap">
     <!--
@@ -220,6 +221,9 @@
       <if test="record.status != null">
         STATUS = #{record.status,jdbcType=SMALLINT},
       </if>
+      <if test="record.transAssetsNo != null">
+        TRANS_ASSETS_NO = #{record.transAssetsNo,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -254,7 +258,8 @@
       Q_LINE_LOST_NUM = #{record.qLineLostNum,jdbcType=DECIMAL},
       CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
       REMARK = #{record.remark,jdbcType=VARCHAR},
-      STATUS = #{record.status,jdbcType=SMALLINT}
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      TRANS_ASSETS_NO = #{record.transAssetsNo,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

@@ -152,6 +152,12 @@ public class AppMeterInfo {
     private Short status;
 
     /**
+     * 变压器资产编号
+     */
+    @Column(name = "TRANS_ASSETS_NO")
+    private String transAssetsNo;
+
+    /**
      * 获取ID
      *
      * @return ID - ID
@@ -591,5 +597,23 @@ public class AppMeterInfo {
      */
     public void setStatus(Short status) {
         this.status = status;
+    }
+
+    /**
+     * 获取变压器资产编号
+     *
+     * @return TRANS_ASSETS_NO - 变压器资产编号
+     */
+    public String getTransAssetsNo() {
+        return transAssetsNo;
+    }
+
+    /**
+     * 设置变压器资产编号
+     *
+     * @param transAssetsNo 变压器资产编号
+     */
+    public void setTransAssetsNo(String transAssetsNo) {
+        this.transAssetsNo = transAssetsNo == null ? null : transAssetsNo.trim();
     }
 }

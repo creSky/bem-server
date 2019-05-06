@@ -1645,6 +1645,76 @@ public class AppMeterInfoExample {
             addCriterion("STATUS not between", value1, value2, "status");
             return (Criteria) this;
         }
+
+        public Criteria andTransAssetsNoIsNull() {
+            addCriterion("TRANS_ASSETS_NO is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoIsNotNull() {
+            addCriterion("TRANS_ASSETS_NO is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoEqualTo(String value) {
+            addCriterion("TRANS_ASSETS_NO =", value, "transAssetsNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoNotEqualTo(String value) {
+            addCriterion("TRANS_ASSETS_NO <>", value, "transAssetsNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoGreaterThan(String value) {
+            addCriterion("TRANS_ASSETS_NO >", value, "transAssetsNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoGreaterThanOrEqualTo(String value) {
+            addCriterion("TRANS_ASSETS_NO >=", value, "transAssetsNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoLessThan(String value) {
+            addCriterion("TRANS_ASSETS_NO <", value, "transAssetsNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoLessThanOrEqualTo(String value) {
+            addCriterion("TRANS_ASSETS_NO <=", value, "transAssetsNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoLike(String value) {
+            addCriterion("TRANS_ASSETS_NO like", value, "transAssetsNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoNotLike(String value) {
+            addCriterion("TRANS_ASSETS_NO not like", value, "transAssetsNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoIn(List<String> values) {
+            addCriterion("TRANS_ASSETS_NO in", values, "transAssetsNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoNotIn(List<String> values) {
+            addCriterion("TRANS_ASSETS_NO not in", values, "transAssetsNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoBetween(String value1, String value2) {
+            addCriterion("TRANS_ASSETS_NO between", value1, value2, "transAssetsNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransAssetsNoNotBetween(String value1, String value2) {
+            addCriterion("TRANS_ASSETS_NO not between", value1, value2, "transAssetsNo");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
