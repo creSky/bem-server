@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.common.BaseMapper;
 
+
 @Mapper
 @Component
 public interface AppDeclareInfoMapper extends BaseMapper<AppDeclareInfo> {
