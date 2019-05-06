@@ -2,12 +2,12 @@ package com.bem.mapper;
 
 import com.bem.domain.AppDeclareInfo;
 import com.bem.domain.AppDeclareInfoExample;
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.common.BaseMapper;
+
+import java.util.List;
 
 
 @Mapper
