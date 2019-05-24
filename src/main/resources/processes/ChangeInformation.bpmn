@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/HighVoltageNew" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1558686676794" name="" targetNamespace="http://www.activiti.org/HighVoltageNew" typeLanguage="http://www.w3.org/2001/XMLSchema">
-  <process id="ChangeInformation" isClosed="false" isExecutable="true" name="低压居民（住宅用电）" processType="None">
+  <process id="ChangeInformation" isClosed="false" isExecutable="true" name="更名过户" processType="None">
     <startEvent id="startevent1" name="开始"/>
     <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p1" name="申请登记"/>
     <sequenceFlow id="flow2" sourceRef="startevent1" targetRef="bem-f1-p1"/>
