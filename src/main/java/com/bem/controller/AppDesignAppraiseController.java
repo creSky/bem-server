@@ -52,6 +52,7 @@ public class AppDesignAppraiseController {
 
         returnMaps.put("appFiles", appFiles);
         returnMaps.put("appDesignAppraise", appDesignAppraise);
+        System.out.println("1111");
 
         restultContent.setStatus(200);
         restultContent.setData(returnMaps);
