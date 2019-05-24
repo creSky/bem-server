@@ -1,43 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/HighVoltageNew" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1557020631807" name="" targetNamespace="http://www.activiti.org/HighVoltageNew" typeLanguage="http://www.w3.org/2001/XMLSchema">
-  <process id="HighVoltageNewV1" isClosed="false" isExecutable="true" name="高压新装1.0" processType="None">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/HighVoltageNew" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1558685415152" name="" targetNamespace="http://www.activiti.org/HighVoltageNew" typeLanguage="http://www.w3.org/2001/XMLSchema">
+  <process id="HighVoltageNewV1" isClosed="false" isExecutable="true" name="高压新装" processType="None">
     <startEvent id="startevent1" name="开始"/>
     <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p1" name="申请登记"/>
     <sequenceFlow id="flow2" sourceRef="startevent1" targetRef="bem-f1-p1"/>
-    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p3" name="装表接电"/>
-    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p16" name="更新档案"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p19" name="现场勘察及供电方案答复"/>
+    <sequenceFlow id="flow3" sourceRef="bem-f1-p1" targetRef="bem-f1-p19"/>
+    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p9" name="竣工检验和装表接电"/>
+    <sequenceFlow id="flow4" sourceRef="bem-f1-p19" targetRef="bem-f1-p9"/>
     <endEvent id="endevent1" name="End"/>
-    <sequenceFlow id="flow17" sourceRef="bem-f1-p16" targetRef="endevent1"/>
-    <sequenceFlow id="flow26" sourceRef="bem-f1-p1" targetRef="bem-f1-p20"/>
-    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p20" name="勘察派工"/>
-    <sequenceFlow id="flow31" sourceRef="bem-f1-p3" targetRef="bem-f1-p16"/>
-    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p6" name="录入工程信息"/>
-    <userTask activiti:candidateUsers="${dispatchMan}" activiti:exclusive="true" id="bem-f1-p19" name="现场勘察说明情况"/>
-    <sequenceFlow id="flow33" sourceRef="bem-f1-p20" targetRef="bem-f1-p19"/>
-    <endEvent id="endevent3" name="End"/>
-    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p18" name="设计审核"/>
-    <userTask activiti:candidateGroups="1" activiti:exclusive="true" id="bem-f1-p7" name="竣工查验"/>
-    <sequenceFlow id="flow40" sourceRef="bem-f1-p7" targetRef="bem-f1-p3"/>
-    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway1" name="ExclusiveGateway"/>
-    <sequenceFlow id="_3" sourceRef="bem-f1-p19" targetRef="exclusivegateway1"/>
-    <sequenceFlow id="_4" name="允许接入 有工程" sourceRef="exclusivegateway1" targetRef="bem-f1-p6">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isAccess==1 && haveProject==1}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_5" name="允许接入 有工程" sourceRef="exclusivegateway1" targetRef="bem-f1-p3">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isAccess==1 && haveProject==1}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_6" name="不允许接入" sourceRef="exclusivegateway1" targetRef="endevent3">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isAccess==0}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_7" sourceRef="bem-f1-p18" targetRef="bem-f1-p7"/>
-    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway2" name="ExclusiveGateway"/>
-    <sequenceFlow id="_9" name="典型设计" sourceRef="exclusivegateway2" targetRef="bem-f1-p18">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${designType==1}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_10" name="非典型设计" sourceRef="exclusivegateway2" targetRef="bem-f1-p7">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${designType==0}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_11" sourceRef="bem-f1-p6" targetRef="exclusivegateway2"/>
+    <sequenceFlow id="flow5" sourceRef="bem-f1-p9" targetRef="endevent1"/>
   </process>
   <bpmndi:BPMNDiagram documentation="background=#FFFFFF;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
     <bpmndi:BPMNPlane bpmnElement="HighVoltageNewV1">
@@ -53,79 +25,24 @@
           <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="bem-f1-p3" id="Shape-bem-f1-p3">
-        <omgdc:Bounds height="55.0" width="105.0" x="550.0" y="365.0"/>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p19" id="Shape-bem-f1-p19">
+        <omgdc:Bounds height="55.0" width="105.0" x="270.0" y="190.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="bem-f1-p16" id="Shape-bem-f1-p16">
-        <omgdc:Bounds height="55.0" width="105.0" x="550.0" y="465.0"/>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p9" id="Shape-bem-f1-p9">
+        <omgdc:Bounds height="55.0" width="105.0" x="440.0" y="190.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endevent1" id="Shape-endevent1">
-        <omgdc:Bounds height="32.0" width="32.0" x="585.0" y="564.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="bem-f1-p20" id="Shape-bem-f1-p20">
-        <omgdc:Bounds height="55.0" width="105.0" x="250.0" y="190.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="bem-f1-p6" id="Shape-bem-f1-p6">
-        <omgdc:Bounds height="55.0" width="105.0" x="800.0" y="190.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="bem-f1-p19" id="Shape-bem-f1-p19">
-        <omgdc:Bounds height="55.0" width="105.0" x="410.0" y="190.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent3" id="Shape-endevent3">
-        <omgdc:Bounds height="32.0" width="32.0" x="463.0" y="69.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="bem-f1-p18" id="Shape-bem-f1-p18">
-        <omgdc:Bounds height="55.0" width="105.0" x="1195.0" y="195.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="bem-f1-p7" id="Shape-bem-f1-p7">
-        <omgdc:Bounds height="55.0" width="105.0" x="995.0" y="370.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="Shape-exclusivegateway1" isMarkerVisible="false">
         <omgdc:Bounds height="32.0" width="32.0" x="590.0" y="200.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="Shape-exclusivegateway2" isMarkerVisible="false">
-        <omgdc:Bounds height="32.0" width="32.0" x="1005.0" y="190.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26" sourceElement="bem-f1-p1" targetElement="bem-f1-p20">
-        <omgdi:waypoint x="204.0" y="217.5"/>
-        <omgdi:waypoint x="250.0" y="217.5"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2" sourceElement="startevent1" targetElement="bem-f1-p1">
         <omgdi:waypoint x="31.0" y="216.0"/>
         <omgdi:waypoint x="99.0" y="217.5"/>
@@ -133,90 +50,25 @@
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow40" id="BPMNEdge_flow40" sourceElement="bem-f1-p7" targetElement="bem-f1-p3">
-        <omgdi:waypoint x="995.0" y="397.5"/>
-        <omgdi:waypoint x="655.0" y="392.5"/>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3" sourceElement="bem-f1-p1" targetElement="bem-f1-p19">
+        <omgdi:waypoint x="204.0" y="217.5"/>
+        <omgdi:waypoint x="270.0" y="217.5"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17" sourceElement="bem-f1-p16" targetElement="endevent1">
-        <omgdi:waypoint x="601.0" y="520.0"/>
-        <omgdi:waypoint x="601.0" y="564.0"/>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4" sourceElement="bem-f1-p19" targetElement="bem-f1-p9">
+        <omgdi:waypoint x="375.0" y="217.5"/>
+        <omgdi:waypoint x="440.0" y="217.5"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_3" id="BPMNEdge__3" sourceElement="bem-f1-p19" targetElement="_2">
-        <omgdi:waypoint x="515.0" y="217.5"/>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5" sourceElement="bem-f1-p9" targetElement="endevent1">
+        <omgdi:waypoint x="545.0" y="217.5"/>
         <omgdi:waypoint x="590.0" y="216.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_4" id="BPMNEdge__4" sourceElement="_2" targetElement="bem-f1-p6">
-        <omgdi:waypoint x="622.0" y="216.0"/>
-        <omgdi:waypoint x="800.0" y="217.5"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-2.0" width="-7.0" x="0.0" y="1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_5" id="BPMNEdge__5" sourceElement="_2" targetElement="bem-f1-p3">
-        <omgdi:waypoint x="606.0" y="232.0"/>
-        <omgdi:waypoint x="606.0" y="365.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_6" id="BPMNEdge__6" sourceElement="_2" targetElement="endevent3">
-        <omgdi:waypoint x="605.0" y="201.0"/>
-        <omgdi:waypoint x="605.0" y="140.0"/>
-        <omgdi:waypoint x="495.0" y="85.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-10.0" width="1.0" x="0.0" y="8.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31" sourceElement="bem-f1-p3" targetElement="bem-f1-p16">
-        <omgdi:waypoint x="602.5" y="420.0"/>
-        <omgdi:waypoint x="602.5" y="465.0"/>
-        <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_7" id="BPMNEdge__7" sourceElement="bem-f1-p18" targetElement="bem-f1-p7">
-        <omgdi:waypoint x="1245.0" y="250.0"/>
-        <omgdi:waypoint x="1245.0" y="320.0"/>
-        <omgdi:waypoint x="1100.0" y="397.5"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow33" id="BPMNEdge_flow33" sourceElement="bem-f1-p20" targetElement="bem-f1-p19">
-        <omgdi:waypoint x="355.0" y="217.5"/>
-        <omgdi:waypoint x="410.0" y="217.5"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_9" id="BPMNEdge__9" sourceElement="_8" targetElement="bem-f1-p18">
-        <omgdi:waypoint x="1037.0" y="206.0"/>
-        <omgdi:waypoint x="1195.0" y="222.5"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_11" id="BPMNEdge__11" sourceElement="bem-f1-p6" targetElement="_8">
-        <omgdi:waypoint x="905.0" y="217.5"/>
-        <omgdi:waypoint x="1005.0" y="206.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_10" id="BPMNEdge__10" sourceElement="_8" targetElement="bem-f1-p7">
-        <omgdi:waypoint x="1021.0" y="222.0"/>
-        <omgdi:waypoint x="1021.0" y="370.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
