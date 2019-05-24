@@ -44,7 +44,7 @@ public class AppUpdateInformation {
 
     @ResponseBody
     @RequestMapping("/update")
-    public RestultContent update(@RequestBody(required = false) String appIdJson) {
+    public String update(@RequestBody(required = false) String appIdJson) {
         String appId = JSONObject.parseObject(appIdJson).getString("appId");
         //组装用户信息
         AppUserInfo appUserInfo = appUserInfoMapper.selectByPrimaryKey(appId);
@@ -89,7 +89,7 @@ public class AppUpdateInformation {
         //发送到cim 更新档案
         String result = restTemplate.postForObject(PropertiesUtil.getValue("bemAddReceive"), postData, String.class);
 
-        return null;
+        return result;
     }
 
 }

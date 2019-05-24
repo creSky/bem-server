@@ -13,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class FileUtil {
     /**
@@ -38,7 +40,7 @@ public class FileUtil {
         if (!file.isEmpty()) {
 
             // 构建上传文件的存放路径
-            String path = request.getServletContext().getRealPath(PropertiesUtil.getValue("fileFoler"));
+            String path = request.getServletContext().getRealPath("")+PropertiesUtil.getValue("fileFoler");
             System.out.println("path = " + path);
 
             // 获取上传的文件名称，并结合存放路径，构建新的文件名称
@@ -50,14 +52,15 @@ public class FileUtil {
                 filepath.getParentFile().mkdirs();
             }
             // 将上传文件保存到目标文件目录
-            file.transferTo(new File(path + File.separator + filename));
-            System.out.println("文件路径=" + path + File.separator + filename);
+            file.transferTo(new File(path + File.separator + getFileNameNew()));
+            System.out.println("文件路径=" + path + File.separator + getFileNameNew());
 
             //返回文件实体
             AppFile appFile=new AppFile();
             appFile.setFileName(filename);
-            appFile.setFilePath(path + File.separator + filename);
-            appFile.setFileSize(file.getSize() / 1024 / 1024);
+            appFile.setFilePath(path);
+            //appFile.setSaveName(getFileNameNew());
+            //appFile.setFileSize(file.getSize() / 1024);
             appFile.setUploadDate(new Date());
             return appFile;
         } else {
@@ -115,4 +118,15 @@ public class FileUtil {
             }
         }
     }
+
+    /**
+     * 重新命名文件
+     * 毫秒数+随机数
+     * @return
+     */
+    public static String getFileNameNew() {
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        return fmt.format(new Date())+"_"+UUID.randomUUID().toString();
+    }
+
 }

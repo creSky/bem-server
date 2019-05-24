@@ -93,6 +93,7 @@
             <version>2.1.5</version>
         </dependency>
 
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -126,7 +127,7 @@
                     <dependency>
                         <groupId> mysql</groupId>
                         <artifactId> mysql-connector-java</artifactId>
-                        <version>8.0.15</version>
+                        <version>5.1.30</version>
                     </dependency>
                     <dependency>
                         <groupId>org.mybatis.generator</groupId>
@@ -139,6 +140,7 @@
                         <version>3.5.2</version>
                     </dependency>
                 </dependencies>
+
                 <executions>
                     <execution>
                         <id>Generate MyBatis Artifacts</id>

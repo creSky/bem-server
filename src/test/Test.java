@@ -7,6 +7,8 @@ import java.util.*;
 
 public class Test {
     public static void main(String[] args) throws ParseException {
-        System.out.println(PropertiesUtil.getValue("fileFoler"));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+        System.out.println(sdf.format(new Date()));
     }
 }

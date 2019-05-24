@@ -6,7 +6,9 @@
       WARNING - @mbg.generated
     -->
     <id column="ID" jdbcType="BIGINT" property="id" />
-    <result column="APP_ID" jdbcType="BIGINT" property="appId" />
+    <result column="APP_ID" jdbcType="VARCHAR" property="appId" />
+    <result column="TASK_ID" jdbcType="INTEGER" property="taskId" />
+    <result column="PROCESS_INSTANCE_ID" jdbcType="DECIMAL" property="processInstanceId" />
     <result column="PROJECT_CODE" jdbcType="VARCHAR" property="projectCode" />
     <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
     <result column="PRO_DIMENSION" jdbcType="INTEGER" property="proDimension" />
@@ -115,11 +117,11 @@
     <!--
       WARNING - @mbg.generated
     -->
-    ID, APP_ID, PROJECT_CODE, PROJECT_NAME, PRO_DIMENSION, SG_CAPACITY, SG_CLASSIFIED, 
-    PERSON_DEPUTY, PROJECT_MANAGER, PROJECT_TYPE, CIVIL_DESIGN_CODE, CIVIL_DESIGN_NO, 
-    CIVIL_DESIGN_LEVEL, CIVIL_DESIGN_LIMIT, CIVIL_DESIGN_PASS, CIVIL_CONST_CODE, CIVIL_CONST_NO, 
-    CIVIL_CONST_LEVEL, CIVIL_CONST_LIMIT, CIVIL_CONST_PASS, ENERGY_DESIGN_CODE, ENERGY_DESIGN_NO, 
-    ENERGY_DESIGN_LEVEL, ENERGY_DESIGN_LIMIT, ENERGY_DESIGN_PASS, ENERGY_CONST_CODE, 
+    ID, APP_ID, TASK_ID, PROCESS_INSTANCE_ID, PROJECT_CODE, PROJECT_NAME, PRO_DIMENSION, 
+    SG_CAPACITY, SG_CLASSIFIED, PERSON_DEPUTY, PROJECT_MANAGER, PROJECT_TYPE, CIVIL_DESIGN_CODE, 
+    CIVIL_DESIGN_NO, CIVIL_DESIGN_LEVEL, CIVIL_DESIGN_LIMIT, CIVIL_DESIGN_PASS, CIVIL_CONST_CODE, 
+    CIVIL_CONST_NO, CIVIL_CONST_LEVEL, CIVIL_CONST_LIMIT, CIVIL_CONST_PASS, ENERGY_DESIGN_CODE, 
+    ENERGY_DESIGN_NO, ENERGY_DESIGN_LEVEL, ENERGY_DESIGN_LIMIT, ENERGY_DESIGN_PASS, ENERGY_CONST_CODE, 
     ENERGY_CONST_NO, ENERGY_CONST_LEVEL, ENERGY_CONSTD_LIMIT, ENERGY_CONST_PASS, PRJ_CHANGE_INFO, 
     PRJ_COST_INFO, PRJ_QUALITY_INFO, DECLARE_DATE, DECLARE_MAN, TEL, START_DATE, BUILD_CONTENT, 
     END_DATE, REMARK, DESIGN_TYPE
@@ -169,7 +171,13 @@
         ID = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.appId != null">
-        APP_ID = #{record.appId,jdbcType=BIGINT},
+        APP_ID = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskId != null">
+        TASK_ID = #{record.taskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.processInstanceId != null">
+        PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
       </if>
       <if test="record.projectCode != null">
         PROJECT_CODE = #{record.projectCode,jdbcType=VARCHAR},
@@ -299,7 +307,9 @@
     -->
     update APP_DECLARE_INFO
     set ID = #{record.id,jdbcType=BIGINT},
-      APP_ID = #{record.appId,jdbcType=BIGINT},
+      APP_ID = #{record.appId,jdbcType=VARCHAR},
+      TASK_ID = #{record.taskId,jdbcType=INTEGER},
+      PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
       PROJECT_CODE = #{record.projectCode,jdbcType=VARCHAR},
       PROJECT_NAME = #{record.projectName,jdbcType=VARCHAR},
       PRO_DIMENSION = #{record.proDimension,jdbcType=INTEGER},

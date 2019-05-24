@@ -25,22 +25,16 @@ public class AppFile {
     private String taskId;
 
     /**
-     * 文件名
-     */
-    @Column(name = "FILE_NAME")
-    private String fileName;
-
-    /**
      * 文件路径
      */
     @Column(name = "FILE_PATH")
     private String filePath;
 
     /**
-     * 文件大小
+     * 文件名
      */
-    @Column(name = "FILE_SIZE")
-    private Long fileSize;
+    @Column(name = "FILE_NAME")
+    private String fileName;
 
     /**
      * 上传日期
@@ -53,6 +47,12 @@ public class AppFile {
      */
     @Column(name = "UPLOAD_MAN_ID")
     private String uploadManId;
+
+    /**
+     *  文件类型
+     */
+    @Column(name = "FILE_TYPE")
+    private String fileType;
 
     /**
      * 获取主键id
@@ -109,24 +109,6 @@ public class AppFile {
     }
 
     /**
-     * 获取文件名
-     *
-     * @return FILE_NAME - 文件名
-     */
-    public String getFileName() {
-        return fileName;
-    }
-
-    /**
-     * 设置文件名
-     *
-     * @param fileName 文件名
-     */
-    public void setFileName(String fileName) {
-        this.fileName = fileName == null ? null : fileName.trim();
-    }
-
-    /**
      * 获取文件路径
      *
      * @return FILE_PATH - 文件路径
@@ -145,21 +127,21 @@ public class AppFile {
     }
 
     /**
-     * 获取文件大小
+     * 获取文件名
      *
-     * @return FILE_SIZE - 文件大小
+     * @return FILE_NAME - 文件名
      */
-    public Long getFileSize() {
-        return fileSize;
+    public String getFileName() {
+        return fileName;
     }
 
     /**
-     * 设置文件大小
+     * 设置文件名
      *
-     * @param fileSize 文件大小
+     * @param fileName 文件名
      */
-    public void setFileSize(Long fileSize) {
-        this.fileSize = fileSize;
+    public void setFileName(String fileName) {
+        this.fileName = fileName == null ? null : fileName.trim();
     }
 
     /**
@@ -196,5 +178,23 @@ public class AppFile {
      */
     public void setUploadManId(String uploadManId) {
         this.uploadManId = uploadManId == null ? null : uploadManId.trim();
+    }
+
+    /**
+     * 获取 文件类型
+     *
+     * @return FILE_TYPE -  文件类型
+     */
+    public String getFileType() {
+        return fileType;
+    }
+
+    /**
+     * 设置 文件类型
+     *
+     * @param fileType  文件类型
+     */
+    public void setFileType(String fileType) {
+        this.fileType = fileType == null ? null : fileType.trim();
     }
 }

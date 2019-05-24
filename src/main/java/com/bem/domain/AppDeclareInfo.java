@@ -13,7 +13,19 @@ public class AppDeclareInfo {
      * 工作单ID
      */
     @Column(name = "APP_ID")
-    private Long appId;
+    private String appId;
+
+    /**
+     * 环节号
+     */
+    @Column(name = "TASK_ID")
+    private Integer taskId;
+
+    /**
+     * 实例号
+     */
+    @Column(name = "PROCESS_INSTANCE_ID")
+    private Long processInstanceId;
 
     /**
      * 工程编号
@@ -268,7 +280,7 @@ public class AppDeclareInfo {
      *
      * @return APP_ID - 工作单ID
      */
-    public Long getAppId() {
+    public String getAppId() {
         return appId;
     }
 
@@ -277,8 +289,44 @@ public class AppDeclareInfo {
      *
      * @param appId 工作单ID
      */
-    public void setAppId(Long appId) {
-        this.appId = appId;
+    public void setAppId(String appId) {
+        this.appId = appId == null ? null : appId.trim();
+    }
+
+    /**
+     * 获取环节号
+     *
+     * @return TASK_ID - 环节号
+     */
+    public Integer getTaskId() {
+        return taskId;
+    }
+
+    /**
+     * 设置环节号
+     *
+     * @param taskId 环节号
+     */
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
+    }
+
+    /**
+     * 获取实例号
+     *
+     * @return PROCESS_INSTANCE_ID - 实例号
+     */
+    public Long getProcessInstanceId() {
+        return processInstanceId;
+    }
+
+    /**
+     * 设置实例号
+     *
+     * @param processInstanceId 实例号
+     */
+    public void setProcessInstanceId(Long processInstanceId) {
+        this.processInstanceId = processInstanceId;
     }
 
     /**

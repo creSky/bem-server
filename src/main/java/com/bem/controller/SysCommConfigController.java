@@ -34,7 +34,7 @@ public class SysCommConfigController {
         return sysCommConfigMapper.select(sysCommConfig);
 */
         final PageInfo<SysCommConfig> pageInfo =
-                PageHelper.startPage(1, page.getPageNum()).doSelectPageInfo(() -> this.sysCommConfigMapper.selectAll());
+                PageHelper.startPage(sysCommConfig.getPageNum(), page.getPageNum()).doSelectPageInfo(() -> this.sysCommConfigMapper.selectAll());
         logger.info("[lambda写法] - [分页信息] - [{}]", pageInfo.toString());
     }
 

@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.bem.common.RestultContent;
 import com.bem.domain.*;
 import com.bem.mapper.AppCircumstanceMapper;
+import com.bem.mapper.AppDeclareInfoMapper;
 import com.bem.mapper.AppDispatchMapper;
 import com.bem.mapper.AppPassAdviceMapper;
 import com.bem.service.ActivitiService;
 import com.bem.service.TaskListService;
 import com.bem.util.BemCommonUtil;
+import org.activiti.engine.history.HistoricActivityInstance;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,6 +48,10 @@ public class ActivitiController {
 
     @Autowired
     private AppCircumstanceMapper appCircumstanceMapper;
+
+    @Autowired
+    private AppDeclareInfoMapper appDeclareInfoMapper;
+
 
     @RequestMapping(value = "/getTaskList")
     @ResponseBody
@@ -94,9 +101,9 @@ public class ActivitiController {
             appDispatchcriteria.andAppIdEqualTo(jsonObject.getString("appId")).
                     andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
             List<AppDispatch> appDispatches = appDispatchMapper.selectByExample(appDispatchExample);
-            if(0<appDispatches.size()){
+            if (0 < appDispatches.size()) {
                 candidate.put("dispatchMan",
-                        appDispatches.stream().map(p ->p.getDispatchMan().toString()).collect(Collectors.toList()));
+                        appDispatches.stream().map(p -> p.getDispatchMan().toString()).collect(Collectors.toList()));
             }
         }
         //现场情况说明
@@ -113,11 +120,42 @@ public class ActivitiController {
             candidate.put("isAnswer", 0 == appCircumstances.size() ? null : appCircumstances.get(0).getIsAnswer());
 
         }
+
+        //录入工程信息
+        if ("bem-f1-p6".equals(jsonObject.get("taskDefKey"))) {
+            AppDeclareInfoExample appDeclareInfoExample = new AppDeclareInfoExample();
+            com.bem.domain.AppDeclareInfoExample.Criteria appDeclareInfoExampleCriteria =
+                    appDeclareInfoExample.createCriteria();
+            appDeclareInfoExampleCriteria.andAppIdEqualTo(jsonObject.getString("appId")).
+                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+            List<AppDeclareInfo> appDeclareInfos = appDeclareInfoMapper.selectByExample(appDeclareInfoExample);
+            candidate.put("designType", 0 == appDeclareInfos.size() ? null :appDeclareInfos.get(0).getDesignType());
+
+        }
         //提交
         activitiService.compleTask(jsonObject.getString("taskId"), candidate);
         restultContent.setStatus(200);
         return restultContent;
     }
+
+    /**
+     * 某一次流程执行了多少步
+     */
+    @RequestMapping("/queryHistoricActivitiInstance")
+    @ResponseBody
+    public void queryHistoricActivitiInstance() {
+        activitiService.queryHistoricActivitiInstance("17501");
+    }
+
+    /**
+     * 某一次流程的执行经历的多少任务
+     */
+    @RequestMapping("/queryHistoricTask")
+    @ResponseBody
+    public void queryHistoricTask() {
+        activitiService.queryHistoricTask("17501");
+    }
+
 
 
 }

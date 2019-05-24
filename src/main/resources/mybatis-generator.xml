@@ -22,7 +22,7 @@
 
         <!--数据库连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://172.21.29.55:3306/titan-bem" userId="root"
+                        connectionURL="jdbc:mysql://172.20.100.30:3306/titan-bem" userId="root"
                         password="df6100">
         </jdbcConnection>
         <!--默认false Java type resolver will always use java.math.BigDecimal if
@@ -50,7 +50,7 @@
         </javaClientGenerator>
 
         <!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等 -->
-        <table tableName="APP_DECLARE_INFO" domainObjectName="AppDeclareInfo"  />
+        <table tableName="APP_FILE" domainObjectName="AppFile"  />
 
     </context>
 </generatorConfiguration>

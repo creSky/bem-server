@@ -202,53 +202,183 @@ public class AppDeclareInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andAppIdEqualTo(Long value) {
+        public Criteria andAppIdEqualTo(String value) {
             addCriterion("APP_ID =", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppIdNotEqualTo(Long value) {
+        public Criteria andAppIdNotEqualTo(String value) {
             addCriterion("APP_ID <>", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppIdGreaterThan(Long value) {
+        public Criteria andAppIdGreaterThan(String value) {
             addCriterion("APP_ID >", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppIdGreaterThanOrEqualTo(Long value) {
+        public Criteria andAppIdGreaterThanOrEqualTo(String value) {
             addCriterion("APP_ID >=", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppIdLessThan(Long value) {
+        public Criteria andAppIdLessThan(String value) {
             addCriterion("APP_ID <", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppIdLessThanOrEqualTo(Long value) {
+        public Criteria andAppIdLessThanOrEqualTo(String value) {
             addCriterion("APP_ID <=", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppIdIn(List<Long> values) {
+        public Criteria andAppIdLike(String value) {
+            addCriterion("APP_ID like", value, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdNotLike(String value) {
+            addCriterion("APP_ID not like", value, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdIn(List<String> values) {
             addCriterion("APP_ID in", values, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppIdNotIn(List<Long> values) {
+        public Criteria andAppIdNotIn(List<String> values) {
             addCriterion("APP_ID not in", values, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppIdBetween(Long value1, Long value2) {
+        public Criteria andAppIdBetween(String value1, String value2) {
             addCriterion("APP_ID between", value1, value2, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppIdNotBetween(Long value1, Long value2) {
+        public Criteria andAppIdNotBetween(String value1, String value2) {
             addCriterion("APP_ID not between", value1, value2, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdIsNull() {
+            addCriterion("TASK_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdIsNotNull() {
+            addCriterion("TASK_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdEqualTo(Integer value) {
+            addCriterion("TASK_ID =", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdNotEqualTo(Integer value) {
+            addCriterion("TASK_ID <>", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdGreaterThan(Integer value) {
+            addCriterion("TASK_ID >", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("TASK_ID >=", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdLessThan(Integer value) {
+            addCriterion("TASK_ID <", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdLessThanOrEqualTo(Integer value) {
+            addCriterion("TASK_ID <=", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdIn(List<Integer> values) {
+            addCriterion("TASK_ID in", values, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdNotIn(List<Integer> values) {
+            addCriterion("TASK_ID not in", values, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdBetween(Integer value1, Integer value2) {
+            addCriterion("TASK_ID between", value1, value2, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("TASK_ID not between", value1, value2, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdIsNull() {
+            addCriterion("PROCESS_INSTANCE_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdIsNotNull() {
+            addCriterion("PROCESS_INSTANCE_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdEqualTo(Long value) {
+            addCriterion("PROCESS_INSTANCE_ID =", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdNotEqualTo(Long value) {
+            addCriterion("PROCESS_INSTANCE_ID <>", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdGreaterThan(Long value) {
+            addCriterion("PROCESS_INSTANCE_ID >", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("PROCESS_INSTANCE_ID >=", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdLessThan(Long value) {
+            addCriterion("PROCESS_INSTANCE_ID <", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdLessThanOrEqualTo(Long value) {
+            addCriterion("PROCESS_INSTANCE_ID <=", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdIn(List<Long> values) {
+            addCriterion("PROCESS_INSTANCE_ID in", values, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdNotIn(List<Long> values) {
+            addCriterion("PROCESS_INSTANCE_ID not in", values, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdBetween(Long value1, Long value2) {
+            addCriterion("PROCESS_INSTANCE_ID between", value1, value2, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdNotBetween(Long value1, Long value2) {
+            addCriterion("PROCESS_INSTANCE_ID not between", value1, value2, "processInstanceId");
             return (Criteria) this;
         }
 

@@ -1,9 +1,11 @@
 package com.bem.domain;
 
+import com.github.pagehelper.PageInfo;
+
 import javax.persistence.*;
 
 @Table(name = "SYSTEM_COMMON_CONFIG")
-public class SysCommConfig {
+public class SysCommConfig extends PageInfo {
     @Id
     @Column(name = "ID")
     private Long id;

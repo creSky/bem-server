@@ -54,7 +54,7 @@ public class SiteSurveyController {
      */
     @ResponseBody
     @RequestMapping("/getSiteSurveyTree")
-    public RestultContent getSiteSurveyTree(@RequestBody String siteSurveyTreeJson) throws Exception {
+    public RestultContent getSiteSurveyTree(@RequestBody(required = false) String siteSurveyTreeJson) throws Exception {
         //返回实体
         RestultContent restultContent = new RestultContent();
 

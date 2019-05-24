@@ -8,11 +8,11 @@
     <id column="ID" jdbcType="BIGINT" property="id" />
     <result column="APP_ID" jdbcType="BIGINT" property="appId" />
     <result column="TASK_ID" jdbcType="VARCHAR" property="taskId" />
-    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
     <result column="FILE_PATH" jdbcType="VARCHAR" property="filePath" />
-    <result column="FILE_SIZE" jdbcType="BIGINT" property="fileSize" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
     <result column="UPLOAD_DATE" jdbcType="TIMESTAMP" property="uploadDate" />
     <result column="UPLOAD_MAN_ID" jdbcType="VARCHAR" property="uploadManId" />
+    <result column="FILE_TYPE" jdbcType="VARCHAR" property="fileType" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -82,7 +82,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    ID, APP_ID, TASK_ID, FILE_NAME, FILE_PATH, FILE_SIZE, UPLOAD_DATE, UPLOAD_MAN_ID
+    ID, APP_ID, TASK_ID, FILE_PATH, FILE_NAME, UPLOAD_DATE, UPLOAD_MAN_ID, FILE_TYPE
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppFileExample" resultMap="BaseResultMap">
     <!--
@@ -134,20 +134,20 @@
       <if test="record.taskId != null">
         TASK_ID = #{record.taskId,jdbcType=VARCHAR},
       </if>
-      <if test="record.fileName != null">
-        FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
-      </if>
       <if test="record.filePath != null">
         FILE_PATH = #{record.filePath,jdbcType=VARCHAR},
       </if>
-      <if test="record.fileSize != null">
-        FILE_SIZE = #{record.fileSize,jdbcType=BIGINT},
+      <if test="record.fileName != null">
+        FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
       </if>
       <if test="record.uploadDate != null">
         UPLOAD_DATE = #{record.uploadDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.uploadManId != null">
         UPLOAD_MAN_ID = #{record.uploadManId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileType != null">
+        FILE_TYPE = #{record.fileType,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -162,11 +162,11 @@
     set ID = #{record.id,jdbcType=BIGINT},
       APP_ID = #{record.appId,jdbcType=BIGINT},
       TASK_ID = #{record.taskId,jdbcType=VARCHAR},
-      FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
       FILE_PATH = #{record.filePath,jdbcType=VARCHAR},
-      FILE_SIZE = #{record.fileSize,jdbcType=BIGINT},
+      FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
       UPLOAD_DATE = #{record.uploadDate,jdbcType=TIMESTAMP},
-      UPLOAD_MAN_ID = #{record.uploadManId,jdbcType=VARCHAR}
+      UPLOAD_MAN_ID = #{record.uploadManId,jdbcType=VARCHAR},
+      FILE_TYPE = #{record.fileType,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
