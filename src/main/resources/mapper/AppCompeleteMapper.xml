@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bem.mapper.AppCompeleteMapper">
+  <resultMap id="BaseResultMap" type="com.bem.domain.AppCompelete">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="APP_ID" jdbcType="VARCHAR" property="appId" />
+    <result column="TASK_ID" jdbcType="INTEGER" property="taskId" />
+    <result column="PROCESS_INSTANCE_ID" jdbcType="DECIMAL" property="processInstanceId" />
+    <result column="ASSEM_MAN" jdbcType="VARCHAR" property="assemMan" />
+    <result column="ASSEM_DATE" jdbcType="TIMESTAMP" property="assemDate" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="SUBMIT_DATE" jdbcType="TIMESTAMP" property="submitDate" />
+    <result column="DESIGN_TYPE" jdbcType="INTEGER" property="designType" />
+    <result column="IS_DESIGN" jdbcType="INTEGER" property="isDesign" />
+    <result column="DESIGN_REMARK" jdbcType="VARCHAR" property="designRemark" />
+    <result column="DESIGN_COMPANY" jdbcType="VARCHAR" property="designCompany" />
+    <result column="CONSTRUCTION_NAME" jdbcType="VARCHAR" property="constructionName" />
+    <result column="CONSTRUCTION_DATE" jdbcType="TIMESTAMP" property="constructionDate" />
+    <result column="COMPLETE_MAN" jdbcType="VARCHAR" property="completeMan" />
+    <result column="COMPLETE_DATE" jdbcType="TIMESTAMP" property="completeDate" />
+    <result column="IS_COMPLETE" jdbcType="INTEGER" property="isComplete" />
+    <result column="COMPLETE_REMARK" jdbcType="VARCHAR" property="completeRemark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_ID, TASK_ID, PROCESS_INSTANCE_ID, ASSEM_MAN, ASSEM_DATE, CREATE_DATE, SUBMIT_DATE, 
+    DESIGN_TYPE, IS_DESIGN, DESIGN_REMARK, DESIGN_COMPANY, CONSTRUCTION_NAME, CONSTRUCTION_DATE, 
+    COMPLETE_MAN, COMPLETE_DATE, IS_COMPLETE, COMPLETE_REMARK
+  </sql>
+  <select id="selectByExample" parameterType="com.bem.domain.AppCompeleteExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_COMPELETE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.bem.domain.AppCompeleteExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from APP_COMPELETE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.bem.domain.AppCompeleteExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from APP_COMPELETE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_COMPELETE
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appId != null">
+        APP_ID = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskId != null">
+        TASK_ID = #{record.taskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.processInstanceId != null">
+        PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.assemMan != null">
+        ASSEM_MAN = #{record.assemMan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assemDate != null">
+        ASSEM_DATE = #{record.assemDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.submitDate != null">
+        SUBMIT_DATE = #{record.submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.designType != null">
+        DESIGN_TYPE = #{record.designType,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDesign != null">
+        IS_DESIGN = #{record.isDesign,jdbcType=INTEGER},
+      </if>
+      <if test="record.designRemark != null">
+        DESIGN_REMARK = #{record.designRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.designCompany != null">
+        DESIGN_COMPANY = #{record.designCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.constructionName != null">
+        CONSTRUCTION_NAME = #{record.constructionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.constructionDate != null">
+        CONSTRUCTION_DATE = #{record.constructionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.completeMan != null">
+        COMPLETE_MAN = #{record.completeMan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.completeDate != null">
+        COMPLETE_DATE = #{record.completeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isComplete != null">
+        IS_COMPLETE = #{record.isComplete,jdbcType=INTEGER},
+      </if>
+      <if test="record.completeRemark != null">
+        COMPLETE_REMARK = #{record.completeRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_COMPELETE
+    set ID = #{record.id,jdbcType=BIGINT},
+      APP_ID = #{record.appId,jdbcType=VARCHAR},
+      TASK_ID = #{record.taskId,jdbcType=INTEGER},
+      PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
+      ASSEM_MAN = #{record.assemMan,jdbcType=VARCHAR},
+      ASSEM_DATE = #{record.assemDate,jdbcType=TIMESTAMP},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      SUBMIT_DATE = #{record.submitDate,jdbcType=TIMESTAMP},
+      DESIGN_TYPE = #{record.designType,jdbcType=INTEGER},
+      IS_DESIGN = #{record.isDesign,jdbcType=INTEGER},
+      DESIGN_REMARK = #{record.designRemark,jdbcType=VARCHAR},
+      DESIGN_COMPANY = #{record.designCompany,jdbcType=VARCHAR},
+      CONSTRUCTION_NAME = #{record.constructionName,jdbcType=VARCHAR},
+      CONSTRUCTION_DATE = #{record.constructionDate,jdbcType=TIMESTAMP},
+      COMPLETE_MAN = #{record.completeMan,jdbcType=VARCHAR},
+      COMPLETE_DATE = #{record.completeDate,jdbcType=TIMESTAMP},
+      IS_COMPLETE = #{record.isComplete,jdbcType=INTEGER},
+      COMPLETE_REMARK = #{record.completeRemark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
