@@ -40,13 +40,13 @@ public class AppCircumstance {
     private Integer createMan;
 
     /**
-     * 是否具备接入条件
+     * 是否具备供电条件
      */
     @Column(name = "IS_ACCESS")
     private Integer isAccess;
 
     /**
-     * 接入条件说明
+     * 供电条件说明
      */
     @Column(name = "ACCESS_REMARK")
     private String accessRemark;
@@ -74,6 +74,66 @@ public class AppCircumstance {
      */
     @Column(name = "ANSWER_REMARK")
     private String answerRemark;
+
+    /**
+     * 勘察人
+     */
+    @Column(name = "CIRCUMSTANCE_MAN")
+    private String circumstanceMan;
+
+    /**
+     * 勘察时间
+     */
+    @Column(name = "CIRCUMSTANCE_DATE")
+    private Date circumstanceDate;
+
+    /**
+     * 勘察情况说明
+     */
+    @Column(name = "CIRCUMSTANCE_REMARK")
+    private String circumstanceRemark;
+
+    /**
+     * 供电方案交付用户时间
+     */
+    @Column(name = "POWER_SUPPLY_DATE")
+    private Date powerSupplyDate;
+
+    /**
+     * 供电方案说明
+     */
+    @Column(name = "POWER_SUPPLY_EXPLAIN")
+    private String powerSupplyExplain;
+
+    /**
+     * 供电方案是否通过
+     */
+    @Column(name = "POWER_SUPPLY_ACCESS")
+    private Integer powerSupplyAccess;
+
+    /**
+     * 供电方案是否通过说明
+     */
+    @Column(name = "POWER_SUPPLY_REMARK")
+    private String powerSupplyRemark;
+
+    /**
+     * 是否具备销户/换表/改类/更名条件
+     */
+    @Column(name = "IS_COMMON")
+    private Integer isCommon;
+
+    /**
+     * 是否具备销户/换表/改类/更名条件说明
+     */
+    @Column(name = "COMMON_REMARK")
+    private String commonRemark;
+
+    /**
+     * 提交日期
+     */
+    @Column(name = "SUBMIT_DATE")
+    private Date submitDate;
 
     /**
      * @return ID
@@ -180,36 +240,36 @@ public class AppCircumstance {
     }
 
     /**
-     * 获取是否具备接入条件
+     * 获取是否具备供电条件
      *
-     * @return IS_ACCESS - 是否具备接入条件
+     * @return IS_ACCESS - 是否具备供电条件
      */
     public Integer getIsAccess() {
         return isAccess;
     }
 
     /**
-     * 设置是否具备接入条件
+     * 设置是否具备供电条件
      *
-     * @param isAccess 是否具备接入条件
+     * @param isAccess 是否具备供电条件
      */
     public void setIsAccess(Integer isAccess) {
         this.isAccess = isAccess;
     }
 
     /**
-     * 获取接入条件说明
+     * 获取供电条件说明
      *
-     * @return ACCESS_REMARK - 接入条件说明
+     * @return ACCESS_REMARK - 供电条件说明
      */
     public String getAccessRemark() {
         return accessRemark;
     }
 
     /**
-     * 设置接入条件说明
+     * 设置供电条件说明
      *
-     * @param accessRemark 接入条件说明
+     * @param accessRemark 供电条件说明
      */
     public void setAccessRemark(String accessRemark) {
         this.accessRemark = accessRemark == null ? null : accessRemark.trim();
@@ -285,5 +345,185 @@ public class AppCircumstance {
      */
     public void setAnswerRemark(String answerRemark) {
         this.answerRemark = answerRemark == null ? null : answerRemark.trim();
+    }
+
+    /**
+     * 获取勘察人
+     *
+     * @return CIRCUMSTANCE_MAN - 勘察人
+     */
+    public String getCircumstanceMan() {
+        return circumstanceMan;
+    }
+
+    /**
+     * 设置勘察人
+     *
+     * @param circumstanceMan 勘察人
+     */
+    public void setCircumstanceMan(String circumstanceMan) {
+        this.circumstanceMan = circumstanceMan == null ? null : circumstanceMan.trim();
+    }
+
+    /**
+     * 获取勘察时间
+     *
+     * @return CIRCUMSTANCE_DATE - 勘察时间
+     */
+    public Date getCircumstanceDate() {
+        return circumstanceDate;
+    }
+
+    /**
+     * 设置勘察时间
+     *
+     * @param circumstanceDate 勘察时间
+     */
+    public void setCircumstanceDate(Date circumstanceDate) {
+        this.circumstanceDate = circumstanceDate;
+    }
+
+    /**
+     * 获取勘察情况说明
+     *
+     * @return CIRCUMSTANCE_REMARK - 勘察情况说明
+     */
+    public String getCircumstanceRemark() {
+        return circumstanceRemark;
+    }
+
+    /**
+     * 设置勘察情况说明
+     *
+     * @param circumstanceRemark 勘察情况说明
+     */
+    public void setCircumstanceRemark(String circumstanceRemark) {
+        this.circumstanceRemark = circumstanceRemark == null ? null : circumstanceRemark.trim();
+    }
+
+    /**
+     * 获取供电方案交付用户时间
+     *
+     * @return POWER_SUPPLY_DATE - 供电方案交付用户时间
+     */
+    public Date getPowerSupplyDate() {
+        return powerSupplyDate;
+    }
+
+    /**
+     * 设置供电方案交付用户时间
+     *
+     * @param powerSupplyDate 供电方案交付用户时间
+     */
+    public void setPowerSupplyDate(Date powerSupplyDate) {
+        this.powerSupplyDate = powerSupplyDate;
+    }
+
+    /**
+     * 获取供电方案说明
+     *
+     * @return POWER_SUPPLY_EXPLAIN - 供电方案说明
+     */
+    public String getPowerSupplyExplain() {
+        return powerSupplyExplain;
+    }
+
+    /**
+     * 设置供电方案说明
+     *
+     * @param powerSupplyExplain 供电方案说明
+     */
+    public void setPowerSupplyExplain(String powerSupplyExplain) {
+        this.powerSupplyExplain = powerSupplyExplain == null ? null : powerSupplyExplain.trim();
+    }
+
+    /**
+     * 获取供电方案是否通过
+     *
+     * @return POWER_SUPPLY_ACCESS - 供电方案是否通过
+     */
+    public Integer getPowerSupplyAccess() {
+        return powerSupplyAccess;
+    }
+
+    /**
+     * 设置供电方案是否通过
+     *
+     * @param powerSupplyAccess 供电方案是否通过
+     */
+    public void setPowerSupplyAccess(Integer powerSupplyAccess) {
+        this.powerSupplyAccess = powerSupplyAccess;
+    }
+
+    /**
+     * 获取供电方案是否通过说明
+     *
+     * @return POWER_SUPPLY_REMARK - 供电方案是否通过说明
+     */
+    public String getPowerSupplyRemark() {
+        return powerSupplyRemark;
+    }
+
+    /**
+     * 设置供电方案是否通过说明
+     *
+     * @param powerSupplyRemark 供电方案是否通过说明
+     */
+    public void setPowerSupplyRemark(String powerSupplyRemark) {
+        this.powerSupplyRemark = powerSupplyRemark == null ? null : powerSupplyRemark.trim();
+    }
+
+    /**
+     * 获取是否具备销户/换表/改类/更名条件
+     *
+     * @return IS_COMMON - 是否具备销户/换表/改类/更名条件
+     */
+    public Integer getIsCommon() {
+        return isCommon;
+    }
+
+    /**
+     * 设置是否具备销户/换表/改类/更名条件
+     *
+     * @param isCommon 是否具备销户/换表/改类/更名条件
+     */
+    public void setIsCommon(Integer isCommon) {
+        this.isCommon = isCommon;
+    }
+
+    /**
+     * 获取是否具备销户/换表/改类/更名条件说明
+     *
+     * @return COMMON_REMARK - 是否具备销户/换表/改类/更名条件说明
+     */
+    public String getCommonRemark() {
+        return commonRemark;
+    }
+
+    /**
+     * 设置是否具备销户/换表/改类/更名条件说明
+     *
+     * @param commonRemark 是否具备销户/换表/改类/更名条件说明
+     */
+    public void setCommonRemark(String commonRemark) {
+        this.commonRemark = commonRemark == null ? null : commonRemark.trim();
+    }
+
+    /**
+     * 获取提交日期
+     *
+     * @return SUBMIT_DATE - 提交日期
+     */
+    public Date getSubmitDate() {
+        return submitDate;
+    }
+
+    /**
+     * 设置提交日期
+     *
+     * @param submitDate 提交日期
+     */
+    public void setSubmitDate(Date submitDate) {
+        this.submitDate = submitDate;
     }
 }

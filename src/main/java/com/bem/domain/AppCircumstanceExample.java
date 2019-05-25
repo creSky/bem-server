@@ -864,6 +864,656 @@ public class AppCircumstanceExample {
             addCriterion("ANSWER_REMARK not between", value1, value2, "answerRemark");
             return (Criteria) this;
         }
+
+        public Criteria andCircumstanceManIsNull() {
+            addCriterion("CIRCUMSTANCE_MAN is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManIsNotNull() {
+            addCriterion("CIRCUMSTANCE_MAN is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManEqualTo(String value) {
+            addCriterion("CIRCUMSTANCE_MAN =", value, "circumstanceMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManNotEqualTo(String value) {
+            addCriterion("CIRCUMSTANCE_MAN <>", value, "circumstanceMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManGreaterThan(String value) {
+            addCriterion("CIRCUMSTANCE_MAN >", value, "circumstanceMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManGreaterThanOrEqualTo(String value) {
+            addCriterion("CIRCUMSTANCE_MAN >=", value, "circumstanceMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManLessThan(String value) {
+            addCriterion("CIRCUMSTANCE_MAN <", value, "circumstanceMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManLessThanOrEqualTo(String value) {
+            addCriterion("CIRCUMSTANCE_MAN <=", value, "circumstanceMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManLike(String value) {
+            addCriterion("CIRCUMSTANCE_MAN like", value, "circumstanceMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManNotLike(String value) {
+            addCriterion("CIRCUMSTANCE_MAN not like", value, "circumstanceMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManIn(List<String> values) {
+            addCriterion("CIRCUMSTANCE_MAN in", values, "circumstanceMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManNotIn(List<String> values) {
+            addCriterion("CIRCUMSTANCE_MAN not in", values, "circumstanceMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManBetween(String value1, String value2) {
+            addCriterion("CIRCUMSTANCE_MAN between", value1, value2, "circumstanceMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceManNotBetween(String value1, String value2) {
+            addCriterion("CIRCUMSTANCE_MAN not between", value1, value2, "circumstanceMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceDateIsNull() {
+            addCriterion("CIRCUMSTANCE_DATE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceDateIsNotNull() {
+            addCriterion("CIRCUMSTANCE_DATE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceDateEqualTo(Date value) {
+            addCriterion("CIRCUMSTANCE_DATE =", value, "circumstanceDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceDateNotEqualTo(Date value) {
+            addCriterion("CIRCUMSTANCE_DATE <>", value, "circumstanceDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceDateGreaterThan(Date value) {
+            addCriterion("CIRCUMSTANCE_DATE >", value, "circumstanceDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("CIRCUMSTANCE_DATE >=", value, "circumstanceDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceDateLessThan(Date value) {
+            addCriterion("CIRCUMSTANCE_DATE <", value, "circumstanceDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceDateLessThanOrEqualTo(Date value) {
+            addCriterion("CIRCUMSTANCE_DATE <=", value, "circumstanceDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceDateIn(List<Date> values) {
+            addCriterion("CIRCUMSTANCE_DATE in", values, "circumstanceDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceDateNotIn(List<Date> values) {
+            addCriterion("CIRCUMSTANCE_DATE not in", values, "circumstanceDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceDateBetween(Date value1, Date value2) {
+            addCriterion("CIRCUMSTANCE_DATE between", value1, value2, "circumstanceDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceDateNotBetween(Date value1, Date value2) {
+            addCriterion("CIRCUMSTANCE_DATE not between", value1, value2, "circumstanceDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkIsNull() {
+            addCriterion("CIRCUMSTANCE_REMARK is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkIsNotNull() {
+            addCriterion("CIRCUMSTANCE_REMARK is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkEqualTo(String value) {
+            addCriterion("CIRCUMSTANCE_REMARK =", value, "circumstanceRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkNotEqualTo(String value) {
+            addCriterion("CIRCUMSTANCE_REMARK <>", value, "circumstanceRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkGreaterThan(String value) {
+            addCriterion("CIRCUMSTANCE_REMARK >", value, "circumstanceRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("CIRCUMSTANCE_REMARK >=", value, "circumstanceRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkLessThan(String value) {
+            addCriterion("CIRCUMSTANCE_REMARK <", value, "circumstanceRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkLessThanOrEqualTo(String value) {
+            addCriterion("CIRCUMSTANCE_REMARK <=", value, "circumstanceRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkLike(String value) {
+            addCriterion("CIRCUMSTANCE_REMARK like", value, "circumstanceRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkNotLike(String value) {
+            addCriterion("CIRCUMSTANCE_REMARK not like", value, "circumstanceRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkIn(List<String> values) {
+            addCriterion("CIRCUMSTANCE_REMARK in", values, "circumstanceRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkNotIn(List<String> values) {
+            addCriterion("CIRCUMSTANCE_REMARK not in", values, "circumstanceRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkBetween(String value1, String value2) {
+            addCriterion("CIRCUMSTANCE_REMARK between", value1, value2, "circumstanceRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCircumstanceRemarkNotBetween(String value1, String value2) {
+            addCriterion("CIRCUMSTANCE_REMARK not between", value1, value2, "circumstanceRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyDateIsNull() {
+            addCriterion("POWER_SUPPLY_DATE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyDateIsNotNull() {
+            addCriterion("POWER_SUPPLY_DATE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyDateEqualTo(Date value) {
+            addCriterion("POWER_SUPPLY_DATE =", value, "powerSupplyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyDateNotEqualTo(Date value) {
+            addCriterion("POWER_SUPPLY_DATE <>", value, "powerSupplyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyDateGreaterThan(Date value) {
+            addCriterion("POWER_SUPPLY_DATE >", value, "powerSupplyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("POWER_SUPPLY_DATE >=", value, "powerSupplyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyDateLessThan(Date value) {
+            addCriterion("POWER_SUPPLY_DATE <", value, "powerSupplyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyDateLessThanOrEqualTo(Date value) {
+            addCriterion("POWER_SUPPLY_DATE <=", value, "powerSupplyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyDateIn(List<Date> values) {
+            addCriterion("POWER_SUPPLY_DATE in", values, "powerSupplyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyDateNotIn(List<Date> values) {
+            addCriterion("POWER_SUPPLY_DATE not in", values, "powerSupplyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyDateBetween(Date value1, Date value2) {
+            addCriterion("POWER_SUPPLY_DATE between", value1, value2, "powerSupplyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyDateNotBetween(Date value1, Date value2) {
+            addCriterion("POWER_SUPPLY_DATE not between", value1, value2, "powerSupplyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainIsNull() {
+            addCriterion("POWER_SUPPLY_EXPLAIN is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainIsNotNull() {
+            addCriterion("POWER_SUPPLY_EXPLAIN is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainEqualTo(String value) {
+            addCriterion("POWER_SUPPLY_EXPLAIN =", value, "powerSupplyExplain");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainNotEqualTo(String value) {
+            addCriterion("POWER_SUPPLY_EXPLAIN <>", value, "powerSupplyExplain");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainGreaterThan(String value) {
+            addCriterion("POWER_SUPPLY_EXPLAIN >", value, "powerSupplyExplain");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainGreaterThanOrEqualTo(String value) {
+            addCriterion("POWER_SUPPLY_EXPLAIN >=", value, "powerSupplyExplain");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainLessThan(String value) {
+            addCriterion("POWER_SUPPLY_EXPLAIN <", value, "powerSupplyExplain");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainLessThanOrEqualTo(String value) {
+            addCriterion("POWER_SUPPLY_EXPLAIN <=", value, "powerSupplyExplain");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainLike(String value) {
+            addCriterion("POWER_SUPPLY_EXPLAIN like", value, "powerSupplyExplain");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainNotLike(String value) {
+            addCriterion("POWER_SUPPLY_EXPLAIN not like", value, "powerSupplyExplain");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainIn(List<String> values) {
+            addCriterion("POWER_SUPPLY_EXPLAIN in", values, "powerSupplyExplain");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainNotIn(List<String> values) {
+            addCriterion("POWER_SUPPLY_EXPLAIN not in", values, "powerSupplyExplain");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainBetween(String value1, String value2) {
+            addCriterion("POWER_SUPPLY_EXPLAIN between", value1, value2, "powerSupplyExplain");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyExplainNotBetween(String value1, String value2) {
+            addCriterion("POWER_SUPPLY_EXPLAIN not between", value1, value2, "powerSupplyExplain");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyAccessIsNull() {
+            addCriterion("POWER_SUPPLY_ACCESS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyAccessIsNotNull() {
+            addCriterion("POWER_SUPPLY_ACCESS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyAccessEqualTo(Integer value) {
+            addCriterion("POWER_SUPPLY_ACCESS =", value, "powerSupplyAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyAccessNotEqualTo(Integer value) {
+            addCriterion("POWER_SUPPLY_ACCESS <>", value, "powerSupplyAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyAccessGreaterThan(Integer value) {
+            addCriterion("POWER_SUPPLY_ACCESS >", value, "powerSupplyAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyAccessGreaterThanOrEqualTo(Integer value) {
+            addCriterion("POWER_SUPPLY_ACCESS >=", value, "powerSupplyAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyAccessLessThan(Integer value) {
+            addCriterion("POWER_SUPPLY_ACCESS <", value, "powerSupplyAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyAccessLessThanOrEqualTo(Integer value) {
+            addCriterion("POWER_SUPPLY_ACCESS <=", value, "powerSupplyAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyAccessIn(List<Integer> values) {
+            addCriterion("POWER_SUPPLY_ACCESS in", values, "powerSupplyAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyAccessNotIn(List<Integer> values) {
+            addCriterion("POWER_SUPPLY_ACCESS not in", values, "powerSupplyAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyAccessBetween(Integer value1, Integer value2) {
+            addCriterion("POWER_SUPPLY_ACCESS between", value1, value2, "powerSupplyAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyAccessNotBetween(Integer value1, Integer value2) {
+            addCriterion("POWER_SUPPLY_ACCESS not between", value1, value2, "powerSupplyAccess");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkIsNull() {
+            addCriterion("POWER_SUPPLY_REMARK is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkIsNotNull() {
+            addCriterion("POWER_SUPPLY_REMARK is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkEqualTo(String value) {
+            addCriterion("POWER_SUPPLY_REMARK =", value, "powerSupplyRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkNotEqualTo(String value) {
+            addCriterion("POWER_SUPPLY_REMARK <>", value, "powerSupplyRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkGreaterThan(String value) {
+            addCriterion("POWER_SUPPLY_REMARK >", value, "powerSupplyRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("POWER_SUPPLY_REMARK >=", value, "powerSupplyRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkLessThan(String value) {
+            addCriterion("POWER_SUPPLY_REMARK <", value, "powerSupplyRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkLessThanOrEqualTo(String value) {
+            addCriterion("POWER_SUPPLY_REMARK <=", value, "powerSupplyRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkLike(String value) {
+            addCriterion("POWER_SUPPLY_REMARK like", value, "powerSupplyRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkNotLike(String value) {
+            addCriterion("POWER_SUPPLY_REMARK not like", value, "powerSupplyRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkIn(List<String> values) {
+            addCriterion("POWER_SUPPLY_REMARK in", values, "powerSupplyRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkNotIn(List<String> values) {
+            addCriterion("POWER_SUPPLY_REMARK not in", values, "powerSupplyRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkBetween(String value1, String value2) {
+            addCriterion("POWER_SUPPLY_REMARK between", value1, value2, "powerSupplyRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andPowerSupplyRemarkNotBetween(String value1, String value2) {
+            addCriterion("POWER_SUPPLY_REMARK not between", value1, value2, "powerSupplyRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommonIsNull() {
+            addCriterion("IS_COMMON is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommonIsNotNull() {
+            addCriterion("IS_COMMON is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommonEqualTo(Integer value) {
+            addCriterion("IS_COMMON =", value, "isCommon");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommonNotEqualTo(Integer value) {
+            addCriterion("IS_COMMON <>", value, "isCommon");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommonGreaterThan(Integer value) {
+            addCriterion("IS_COMMON >", value, "isCommon");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommonGreaterThanOrEqualTo(Integer value) {
+            addCriterion("IS_COMMON >=", value, "isCommon");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommonLessThan(Integer value) {
+            addCriterion("IS_COMMON <", value, "isCommon");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommonLessThanOrEqualTo(Integer value) {
+            addCriterion("IS_COMMON <=", value, "isCommon");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommonIn(List<Integer> values) {
+            addCriterion("IS_COMMON in", values, "isCommon");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommonNotIn(List<Integer> values) {
+            addCriterion("IS_COMMON not in", values, "isCommon");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommonBetween(Integer value1, Integer value2) {
+            addCriterion("IS_COMMON between", value1, value2, "isCommon");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommonNotBetween(Integer value1, Integer value2) {
+            addCriterion("IS_COMMON not between", value1, value2, "isCommon");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkIsNull() {
+            addCriterion("COMMON_REMARK is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkIsNotNull() {
+            addCriterion("COMMON_REMARK is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkEqualTo(String value) {
+            addCriterion("COMMON_REMARK =", value, "commonRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkNotEqualTo(String value) {
+            addCriterion("COMMON_REMARK <>", value, "commonRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkGreaterThan(String value) {
+            addCriterion("COMMON_REMARK >", value, "commonRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("COMMON_REMARK >=", value, "commonRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkLessThan(String value) {
+            addCriterion("COMMON_REMARK <", value, "commonRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkLessThanOrEqualTo(String value) {
+            addCriterion("COMMON_REMARK <=", value, "commonRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkLike(String value) {
+            addCriterion("COMMON_REMARK like", value, "commonRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkNotLike(String value) {
+            addCriterion("COMMON_REMARK not like", value, "commonRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkIn(List<String> values) {
+            addCriterion("COMMON_REMARK in", values, "commonRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkNotIn(List<String> values) {
+            addCriterion("COMMON_REMARK not in", values, "commonRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkBetween(String value1, String value2) {
+            addCriterion("COMMON_REMARK between", value1, value2, "commonRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommonRemarkNotBetween(String value1, String value2) {
+            addCriterion("COMMON_REMARK not between", value1, value2, "commonRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateIsNull() {
+            addCriterion("SUBMIT_DATE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateIsNotNull() {
+            addCriterion("SUBMIT_DATE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateEqualTo(Date value) {
+            addCriterion("SUBMIT_DATE =", value, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateNotEqualTo(Date value) {
+            addCriterion("SUBMIT_DATE <>", value, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateGreaterThan(Date value) {
+            addCriterion("SUBMIT_DATE >", value, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("SUBMIT_DATE >=", value, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateLessThan(Date value) {
+            addCriterion("SUBMIT_DATE <", value, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateLessThanOrEqualTo(Date value) {
+            addCriterion("SUBMIT_DATE <=", value, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateIn(List<Date> values) {
+            addCriterion("SUBMIT_DATE in", values, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateNotIn(List<Date> values) {
+            addCriterion("SUBMIT_DATE not in", values, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateBetween(Date value1, Date value2) {
+            addCriterion("SUBMIT_DATE between", value1, value2, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateNotBetween(Date value1, Date value2) {
+            addCriterion("SUBMIT_DATE not between", value1, value2, "submitDate");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

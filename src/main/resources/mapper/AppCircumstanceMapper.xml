@@ -17,6 +17,16 @@
     <result column="PROJECT_REMARK" jdbcType="VARCHAR" property="projectRemark" />
     <result column="IS_ANSWER" jdbcType="INTEGER" property="isAnswer" />
     <result column="ANSWER_REMARK" jdbcType="VARCHAR" property="answerRemark" />
+    <result column="CIRCUMSTANCE_MAN" jdbcType="VARCHAR" property="circumstanceMan" />
+    <result column="CIRCUMSTANCE_DATE" jdbcType="TIMESTAMP" property="circumstanceDate" />
+    <result column="CIRCUMSTANCE_REMARK" jdbcType="VARCHAR" property="circumstanceRemark" />
+    <result column="POWER_SUPPLY_DATE" jdbcType="TIMESTAMP" property="powerSupplyDate" />
+    <result column="POWER_SUPPLY_EXPLAIN" jdbcType="VARCHAR" property="powerSupplyExplain" />
+    <result column="POWER_SUPPLY_ACCESS" jdbcType="INTEGER" property="powerSupplyAccess" />
+    <result column="POWER_SUPPLY_REMARK" jdbcType="VARCHAR" property="powerSupplyRemark" />
+    <result column="IS_COMMON" jdbcType="INTEGER" property="isCommon" />
+    <result column="COMMON_REMARK" jdbcType="VARCHAR" property="commonRemark" />
+    <result column="SUBMIT_DATE" jdbcType="TIMESTAMP" property="submitDate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -87,7 +97,9 @@
       WARNING - @mbg.generated
     -->
     ID, APP_ID, TASK_ID, PROCESS_INSTANCE_ID, CREATE_DATE, CREATE_MAN, IS_ACCESS, ACCESS_REMARK, 
-    HAVA_PROJECT, PROJECT_REMARK, IS_ANSWER, ANSWER_REMARK
+    HAVA_PROJECT, PROJECT_REMARK, IS_ANSWER, ANSWER_REMARK, CIRCUMSTANCE_MAN, CIRCUMSTANCE_DATE, 
+    CIRCUMSTANCE_REMARK, POWER_SUPPLY_DATE, POWER_SUPPLY_EXPLAIN, POWER_SUPPLY_ACCESS, 
+    POWER_SUPPLY_REMARK, IS_COMMON, COMMON_REMARK, SUBMIT_DATE
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppCircumstanceExample" resultMap="BaseResultMap">
     <!--
@@ -166,6 +178,36 @@
       <if test="record.answerRemark != null">
         ANSWER_REMARK = #{record.answerRemark,jdbcType=VARCHAR},
       </if>
+      <if test="record.circumstanceMan != null">
+        CIRCUMSTANCE_MAN = #{record.circumstanceMan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.circumstanceDate != null">
+        CIRCUMSTANCE_DATE = #{record.circumstanceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.circumstanceRemark != null">
+        CIRCUMSTANCE_REMARK = #{record.circumstanceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.powerSupplyDate != null">
+        POWER_SUPPLY_DATE = #{record.powerSupplyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.powerSupplyExplain != null">
+        POWER_SUPPLY_EXPLAIN = #{record.powerSupplyExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.powerSupplyAccess != null">
+        POWER_SUPPLY_ACCESS = #{record.powerSupplyAccess,jdbcType=INTEGER},
+      </if>
+      <if test="record.powerSupplyRemark != null">
+        POWER_SUPPLY_REMARK = #{record.powerSupplyRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCommon != null">
+        IS_COMMON = #{record.isCommon,jdbcType=INTEGER},
+      </if>
+      <if test="record.commonRemark != null">
+        COMMON_REMARK = #{record.commonRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitDate != null">
+        SUBMIT_DATE = #{record.submitDate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -187,7 +229,17 @@
       HAVA_PROJECT = #{record.havaProject,jdbcType=INTEGER},
       PROJECT_REMARK = #{record.projectRemark,jdbcType=VARCHAR},
       IS_ANSWER = #{record.isAnswer,jdbcType=INTEGER},
-      ANSWER_REMARK = #{record.answerRemark,jdbcType=VARCHAR}
+      ANSWER_REMARK = #{record.answerRemark,jdbcType=VARCHAR},
+      CIRCUMSTANCE_MAN = #{record.circumstanceMan,jdbcType=VARCHAR},
+      CIRCUMSTANCE_DATE = #{record.circumstanceDate,jdbcType=TIMESTAMP},
+      CIRCUMSTANCE_REMARK = #{record.circumstanceRemark,jdbcType=VARCHAR},
+      POWER_SUPPLY_DATE = #{record.powerSupplyDate,jdbcType=TIMESTAMP},
+      POWER_SUPPLY_EXPLAIN = #{record.powerSupplyExplain,jdbcType=VARCHAR},
+      POWER_SUPPLY_ACCESS = #{record.powerSupplyAccess,jdbcType=INTEGER},
+      POWER_SUPPLY_REMARK = #{record.powerSupplyRemark,jdbcType=VARCHAR},
+      IS_COMMON = #{record.isCommon,jdbcType=INTEGER},
+      COMMON_REMARK = #{record.commonRemark,jdbcType=VARCHAR},
+      SUBMIT_DATE = #{record.submitDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

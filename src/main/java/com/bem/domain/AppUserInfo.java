@@ -143,6 +143,12 @@ public class AppUserInfo {
     private Date createDate;
 
     /**
+     * 完成时间（短信通知依据时间）
+     */
+    @Column(name = "SUBMIT_DATE")
+    private Date submitDate;
+
+    /**
      * 获取ID
      *
      * @return ID - ID
@@ -550,5 +556,23 @@ public class AppUserInfo {
      */
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    /**
+     * 获取完成时间（短信通知依据时间）
+     *
+     * @return SUBMIT_DATE - 完成时间（短信通知依据时间）
+     */
+    public Date getSubmitDate() {
+        return submitDate;
+    }
+
+    /**
+     * 设置完成时间（短信通知依据时间）
+     *
+     * @param submitDate 完成时间（短信通知依据时间）
+     */
+    public void setSubmitDate(Date submitDate) {
+        this.submitDate = submitDate;
     }
 }

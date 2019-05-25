@@ -1555,6 +1555,66 @@ public class AppUserInfoExample {
             addCriterion("CREATE_DATE not between", value1, value2, "createDate");
             return (Criteria) this;
         }
+
+        public Criteria andSubmitDateIsNull() {
+            addCriterion("SUBMIT_DATE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateIsNotNull() {
+            addCriterion("SUBMIT_DATE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateEqualTo(Date value) {
+            addCriterion("SUBMIT_DATE =", value, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateNotEqualTo(Date value) {
+            addCriterion("SUBMIT_DATE <>", value, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateGreaterThan(Date value) {
+            addCriterion("SUBMIT_DATE >", value, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("SUBMIT_DATE >=", value, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateLessThan(Date value) {
+            addCriterion("SUBMIT_DATE <", value, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateLessThanOrEqualTo(Date value) {
+            addCriterion("SUBMIT_DATE <=", value, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateIn(List<Date> values) {
+            addCriterion("SUBMIT_DATE in", values, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateNotIn(List<Date> values) {
+            addCriterion("SUBMIT_DATE not in", values, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateBetween(Date value1, Date value2) {
+            addCriterion("SUBMIT_DATE between", value1, value2, "submitDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubmitDateNotBetween(Date value1, Date value2) {
+            addCriterion("SUBMIT_DATE not between", value1, value2, "submitDate");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
