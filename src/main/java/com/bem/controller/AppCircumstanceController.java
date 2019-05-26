@@ -72,8 +72,10 @@ public class AppCircumstanceController {
         appCircumstance.setCreateDate(new Date());
         appCircumstance.setCreateMan(new Integer(BemCommonUtil.getOpeartorId(appCircumstanceJson)));
         if (isExist) {
+            appCircumstance.setSubmitDate(new Date());
             appCircumstanceMapper.updateByPrimaryKeySelective(appCircumstance);
         } else {
+            appCircumstance.setSubmitDate(new Date());
             appCircumstanceMapper.insertSelective(appCircumstance);
         }
         restultContent.setStatus(200);

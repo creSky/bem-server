@@ -144,7 +144,7 @@ public class ActivitiController {
     @RequestMapping("/queryHistoricActivitiInstance")
     @ResponseBody
     public void queryHistoricActivitiInstance() {
-        activitiService.queryHistoricActivitiInstance("17501");
+        activitiService.queryHistoricActivitiInstance("7511");
     }
 
     /**
@@ -153,9 +153,22 @@ public class ActivitiController {
     @RequestMapping("/queryHistoricTask")
     @ResponseBody
     public void queryHistoricTask() {
-        activitiService.queryHistoricTask("17501");
+        activitiService.queryHistoricTask("7511");
+
+    }
+    @RequestMapping("/stopProcessInstance")
+    @ResponseBody
+    public void stopProcessInstance() {
+        activitiService.stopProcessInstance("7511");
+
     }
 
+    @RequestMapping("/isEnd")
+    @ResponseBody
+    public void isEnd() {
+        activitiService.isEnd("7511");
+
+    }
 
 
 }

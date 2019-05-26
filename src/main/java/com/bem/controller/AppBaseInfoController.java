@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/appBaseInfo")
@@ -98,10 +95,12 @@ public class AppBaseInfoController {
         //判断用电户是否存在
         isExists = appUserInfoMapper.existsWithPrimaryKey(appUserInfo);
         if (isExists) {
+            appUserInfo.setSubmitDate(new Date());
             appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
         } else {
             appUserInfo.setId(appCustomerInfo.getId());
             appUserInfo.setAppNo(appNo);
+            appUserInfo.setSubmitDate(new Date());
             appUserInfo.setCustomerId(appCustomerInfo.getId());
             appUserInfoMapper.insertSelective(appUserInfo);
             //启动流程

@@ -142,18 +142,6 @@ public class ActivitiService {
 
     }
 
-    /**
-     * 查询历史流程
-     *
-     * @return
-     */
-    public List<HistoricActivityInstance> getHistoricInstance(String processInstanceId) {
-        List<HistoricActivityInstance> list = processEngine.getHistoryService()
-                .createHistoricActivityInstanceQuery()
-                .processInstanceId(processInstanceId)
-                .list();
-        return list;
-    }
 
     /**
      * 设置办理人
@@ -165,6 +153,7 @@ public class ActivitiService {
     public void addCandidateUser(String taskId, String taskAssignee) throws Exception {
         taskService.addCandidateUser(taskId, taskAssignee);
     }
+
     /**
      * 某一次流程执行了多少步
      */
@@ -190,15 +179,24 @@ public class ActivitiService {
     public void queryHistoricTask(String processInstanceId) {
         List<HistoricTaskInstance> list = processEngine.getHistoryService()
                 .createHistoricTaskInstanceQuery()
-                .processInstanceId(processInstanceId)
+                .processInstanceId(processInstanceId).orderByHistoricTaskInstanceStartTime().asc()
                 .list();
         if (list != null && list.size() > 0) {
             for (HistoricTaskInstance hti : list) {
-                System.out.println("taskId:" + hti.getId()+"，");
-                System.out.println("name:" + hti.getName()+"，");
-                System.out.println("pdId:" + hti.getProcessDefinitionId()+"，");
-                System.out.println("assignee:" + hti.getTaskLocalVariables()+"，");
+                System.out.println("taskId:" + hti.getId() + "，");
+                System.out.println("name:" + hti.getName() + "，");
+                System.out.println("pdId:" + hti.getProcessDefinitionId() + "，");
+                System.out.println("assignee:" + hti.getTaskLocalVariables() + "，");
             }
         }
     }
+
+    /**
+     * 终止流程
+     * @param processInstanceId
+     */
+    public void stopProcessInstance(String processInstanceId){
+        runtimeService.deleteProcessInstance(processInstanceId,"结束流程");
+    }
+
 }
