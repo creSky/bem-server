@@ -7,9 +7,16 @@ package com.bem.bemEnum;
  * 业务类别关联启动流程类型
  */
 public enum BemEnum {
-    BemEnum0("0","HighVoltageNewV1"),
-    BemEnum1("1","LowVoltageNewV1"),
-    BemEnum2("2","LowVoltageNewV1");
+    BemEnum0("1","HighVoltageNewV1"),
+    BemEnum1("2","LowVoltageNewZJV1"),
+    BemEnum2("3","LowVoltageNewGSV1"),
+    BemEnum3("3","ChangeInformation"),
+    BemEnum4("4","ChangeType"),
+    BemEnum5("5","HighVoltageAddCapacity"),
+    BemEnum6("6","ChangeMeterInfo"),
+    BemEnum7("7","CancelAccount");
+
+
 
     // 防止字段值被修改，增加的字段也统一final表示常量
     private final String key;

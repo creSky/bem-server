@@ -8,6 +8,7 @@ import com.bem.mapper.AppCustomerInfoMapper;
 import com.bem.mapper.AppUserInfoMapper;
 import com.bem.service.ActivitiService;
 import com.bem.util.BemCommonUtil;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,9 +103,12 @@ public class AppBaseInfoController {
             appUserInfo.setAppNo(appNo);
             appUserInfo.setSubmitDate(new Date());
             appUserInfo.setCustomerId(appCustomerInfo.getId());
-            appUserInfoMapper.insertSelective(appUserInfo);
             //启动流程
-            activitiService.start(appUserInfo.getTemplateId().toString(), appUserInfo.getAppNo());
+            ProcessInstance processInstance = activitiService.start(appUserInfo.getTemplateId().toString(),
+                    appUserInfo.getAppNo());
+
+            appUserInfo.setProcInstId(processInstance.getId());
+            appUserInfoMapper.insertSelective(appUserInfo);
         }
         Map<String, Object> appBaseInfo = new HashMap<>();
         appBaseInfo.put("customer", appCustomerInfo);

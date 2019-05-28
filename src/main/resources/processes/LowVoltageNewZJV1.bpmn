@@ -2,9 +2,9 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/HighVoltageNew" xmlns:xsd="http://www.w3.org/2001/XMLSchema" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/HighVoltageNew">
   <process id="LowVoltageNewZJV1" name="低压居民（住宅用电）" isExecutable="true" isClosed="false" processType="None">
     <startEvent id="startevent1" name="开始"></startEvent>
-    <userTask id="bem-f1-p1" name="申请登记" activiti:candidateGroups="1"></userTask>
+    <userTask id="bem-f1-p1" name="申请登记" activiti:candidateGroups="10"></userTask>
     <sequenceFlow id="flow2" sourceRef="startevent1" targetRef="bem-f1-p1"></sequenceFlow>
-    <userTask id="bem-f1-p21" name="装表接电" activiti:candidateGroups="1"></userTask>
+    <userTask id="bem-f1-p21" name="装表接电" activiti:candidateGroups="3"></userTask>
     <endEvent id="endevent1" name="End"></endEvent>
     <sequenceFlow id="flow28" sourceRef="bem-f1-p21" targetRef="endevent1"></sequenceFlow>
     <sequenceFlow id="flow29" sourceRef="bem-f1-p1" targetRef="bem-f1-p21"></sequenceFlow>

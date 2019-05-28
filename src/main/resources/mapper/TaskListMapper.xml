@@ -81,4 +81,26 @@
         </if>
         )
     </select>
+
+    <select id="queryHistoricTask" parameterType="java.lang.String" resultType="java.util.Map">
+        select
+        b.id id,
+        b.APP_NO appNo,
+        b.TEMPLATE_ID templateId,
+        b.USER_NO userNo,
+        b.USER_NAME userName,
+        b.ADDRESS address,
+        a.START_TIME_ startTime,
+        a.END_TIME_ endTime,
+        a.TASK_DEF_KEY_ taskDefKey,
+        a.ASSIGNEE_ assignee,
+        a.NAME_ name,
+        a.ID_ taskId,
+        a.PROC_INST_ID_ processInstanceId,
+        a.EXECUTION_ID_ executionId
+        from ACT_HI_TASKINST a,APP_USER_INFO b
+        where a.PROC_INST_ID_=b.PROC_INST_ID
+        AND b.PROC_INST_ID = #{processInstanceId}
+        order by a.START_TIME_ desc
+    </select>
 </mapper>

@@ -1,10 +1,10 @@
 package com.bem.mapper;
 
+import com.bem.common.SiteSurveyTree;
 import com.bem.domain.AppTransformerInfo;
 import com.bem.domain.AppTransformerInfoExample;
 import java.util.List;
 
-import com.bem.domain.SiteSurveyTree;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;

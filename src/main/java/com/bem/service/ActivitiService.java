@@ -1,26 +1,29 @@
 package com.bem.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.bem.bemEnum.BemEnum;
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
+import com.bem.common.HistoricTaskInstanceEntityExt;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.FlowNode;
+import org.activiti.bpmn.model.SequenceFlow;
+import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricActivityInstance;
-import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricVariableInstance;
+import org.activiti.engine.impl.identity.Authentication;
+import org.activiti.engine.impl.persistence.entity.HistoricTaskInstanceEntityImpl;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +39,10 @@ public class ActivitiService {
     private RuntimeService runtimeService;
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private HistoryService historyService;
+    @Autowired
+    private RepositoryService repositoryService;
 
     /**
      * 部署文件
@@ -80,6 +87,7 @@ public class ActivitiService {
      * 完成任务 带流程变量 方便流转到下以个节点
      */
     public void compleTask(String taskId, Map<String, Object> variables) throws Exception {
+        taskService.setVariablesLocal(taskId, variables);
         taskService.complete(taskId, variables);
     }
 
@@ -100,6 +108,15 @@ public class ActivitiService {
         Task task = createTaskQuery.processInstanceId(pid).singleResult();
         // 完成
         taskService.complete(task.getId());
+    }
+
+    /**
+     * 设置办理人
+     */
+    public void setAssignee(String taskId, String assigner) {
+
+        processEngine.getTaskService().setAssignee(taskId, assigner);
+
     }
 
     /**
@@ -173,30 +190,166 @@ public class ActivitiService {
         }
     }
 
+
     /**
      * 某一次流程的执行经历的多少任务
      */
-    public void queryHistoricTask(String processInstanceId) {
+    public List<HistoricTaskInstance> queryHistoricTask(String processInstanceId) {
         List<HistoricTaskInstance> list = processEngine.getHistoryService()
                 .createHistoricTaskInstanceQuery()
                 .processInstanceId(processInstanceId).orderByHistoricTaskInstanceStartTime().asc()
                 .list();
+        return list;
+    }
+
+    /**
+     * 终止流程
+     *
+     * @param processInstanceId
+     */
+    public void stopProcessInstance(String processInstanceId) {
+        runtimeService.deleteProcessInstance(processInstanceId, "结束流程");
+    }
+
+    /**
+     * 根据环节id 查历史流程变量
+     * @param taskId
+     */
+    public void getHistoryProcessVariables(String taskId) {
+        List<HistoricVariableInstance> list = processEngine.getHistoryService()
+                .createHistoricVariableInstanceQuery()//创建一个历史的流程变量查询
+                .taskId(taskId)
+                .list();
+
         if (list != null && list.size() > 0) {
-            for (HistoricTaskInstance hti : list) {
-                System.out.println("taskId:" + hti.getId() + "，");
-                System.out.println("name:" + hti.getName() + "，");
-                System.out.println("pdId:" + hti.getProcessDefinitionId() + "，");
-                System.out.println("assignee:" + hti.getTaskLocalVariables() + "，");
+            for (HistoricVariableInstance hiv : list) {
+                System.out.println(hiv.getTaskId() + "  " + hiv.getVariableName() + "		" + hiv.getValue() + "		" + hiv.getVariableTypeName());
             }
         }
     }
 
     /**
-     * 终止流程
-     * @param processInstanceId
+     * 根据环节id 查历史环节
+     * @param taskId
+     * @return
      */
-    public void stopProcessInstance(String processInstanceId){
-        runtimeService.deleteProcessInstance(processInstanceId,"结束流程");
+    public HistoricTaskInstance getHistoricTaskInstanceByTAskId(String taskId) {
+        return historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
+    }
+
+    /**
+     * 根据流程实例id 查在执行的流程
+     * @param processInstanceId
+     * @return
+     */
+    public ProcessInstance getProcessInstanceByPID(String processInstanceId){
+       return  runtimeService.createProcessInstanceQuery()
+                .processInstanceId(processInstanceId)
+                .singleResult();
+    }
+
+    /**
+     * 根据流程定义id  获取流程定义
+     * @param processDefinitionId
+     * @return
+     */
+    public ProcessDefinition getProcessDefinition(String processDefinitionId){
+        return repositoryService.getProcessDefinition(processDefinitionId);
+    }
+
+    /**
+     * 根据processDefinitionId 获取BpmnModel
+     * @param processDefinitionId
+     * @return
+     */
+    public BpmnModel getBpmnModel(String processDefinitionId){
+        return repositoryService.getBpmnModel(processDefinitionId);
+
+    }
+
+    /**
+     * 跳转环节
+     * @param fromTaskID
+     * @param toTaskId
+     */
+    public void turnTask(String fromTaskID, String toTaskId ,String manangerId) {
+        // 当前环节 act_ru_task
+        Task task = processEngine.getTaskService().createTaskQuery().taskId(fromTaskID).singleResult();
+        if (task == null) {
+            System.out.println("流程未启动或已执行完成，无法撤回");
+        }
+
+        HistoricTaskInstance toTask = processEngine.getHistoryService().createHistoricTaskInstanceQuery()
+                .taskId(fromTaskID).singleResult();
+        if (null == toTask) {
+            System.out.println("目标环节不存在");
+        }
+        // 找到流程定义
+        String processDefinitionId = toTask.getProcessDefinitionId();
+
+        // ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity)
+        // processEngine.getRepositoryService()
+        // .createProcessDefinitionQuery().processDefinitionId(processDefinitionId).singleResult();
+
+        // 获取BpmnModel
+        // In version 6, all the process definition information can be found through the
+        // BpmnModel 记录流程定义信息
+
+        BpmnModel bpmnModel = processEngine.getRepositoryService().getBpmnModel(processDefinitionId);
+
+        // 获得已经提交环节的ActivityId
+        // HistoricActivityInstance
+        // Represents one execution of an activity and it's stored permanent for
+        // statistics, audit and other business intelligence purposes.
+
+        String toActivityId = null;
+        List<HistoricActivityInstance> haiList = processEngine.getHistoryService().createHistoricActivityInstanceQuery()
+                .executionId(toTask.getExecutionId()).finished().list();
+
+        for (HistoricActivityInstance hai : haiList) {
+            if (toTaskId.equals(hai.getTaskId())) {
+                toActivityId = hai.getActivityId();
+                break;
+            }
+        }
+        // FlowNode 节点
+        FlowNode myFlowNode = (FlowNode) bpmnModel.getMainProcess().getFlowElement(toActivityId);
+
+        Execution execution = processEngine.getRuntimeService().createExecutionQuery()
+                .executionId(task.getExecutionId()).singleResult();
+
+        String activityId = execution.getActivityId();
+        System.out.println(activityId + "------->> activityId:" + toActivityId);
+
+        // 节点信息
+        FlowNode flowNode = (FlowNode) bpmnModel.getMainProcess().getFlowElement(activityId);
+
+        // 记录原活动方向
+        List<SequenceFlow> oriSequenceFlows = new ArrayList<SequenceFlow>();
+        oriSequenceFlows.addAll(flowNode.getOutgoingFlows());
+
+        // 清理出线活动方向
+        flowNode.getOutgoingFlows().clear();
+
+        // 建立新方向
+        List<SequenceFlow> newSequenceFlowList = new ArrayList<SequenceFlow>();
+        SequenceFlow newSequenceFlow = new SequenceFlow();
+        newSequenceFlow.setId("newSequenceFlowId");
+        newSequenceFlow.setSourceFlowElement(flowNode);
+        newSequenceFlow.setTargetFlowElement(myFlowNode);
+        newSequenceFlowList.add(newSequenceFlow);
+        flowNode.setOutgoingFlows(newSequenceFlowList);
+
+        // act_hi_comment 添加审核人
+        Authentication.setAuthenticatedUserId(manangerId);
+        processEngine.getTaskService().addComment(task.getId(), task.getProcessInstanceId(), "撤回");
+
+        Map<String, Object> currentVariables = new HashMap<String, Object>();
+        currentVariables.put("applier", manangerId);
+        // 完成任务
+        processEngine.getTaskService().complete(task.getId(), currentVariables);
+        // 恢复原方向
+        flowNode.setOutgoingFlows(oriSequenceFlows);
     }
 
 }

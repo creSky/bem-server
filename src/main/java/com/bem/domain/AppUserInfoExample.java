@@ -1615,6 +1615,136 @@ public class AppUserInfoExample {
             addCriterion("SUBMIT_DATE not between", value1, value2, "submitDate");
             return (Criteria) this;
         }
+
+        public Criteria andProcInstIdIsNull() {
+            addCriterion("PROC_INST_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdIsNotNull() {
+            addCriterion("PROC_INST_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdEqualTo(String value) {
+            addCriterion("PROC_INST_ID =", value, "procInstId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdNotEqualTo(String value) {
+            addCriterion("PROC_INST_ID <>", value, "procInstId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdGreaterThan(String value) {
+            addCriterion("PROC_INST_ID >", value, "procInstId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdGreaterThanOrEqualTo(String value) {
+            addCriterion("PROC_INST_ID >=", value, "procInstId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdLessThan(String value) {
+            addCriterion("PROC_INST_ID <", value, "procInstId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdLessThanOrEqualTo(String value) {
+            addCriterion("PROC_INST_ID <=", value, "procInstId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdLike(String value) {
+            addCriterion("PROC_INST_ID like", value, "procInstId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdNotLike(String value) {
+            addCriterion("PROC_INST_ID not like", value, "procInstId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdIn(List<String> values) {
+            addCriterion("PROC_INST_ID in", values, "procInstId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdNotIn(List<String> values) {
+            addCriterion("PROC_INST_ID not in", values, "procInstId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdBetween(String value1, String value2) {
+            addCriterion("PROC_INST_ID between", value1, value2, "procInstId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcInstIdNotBetween(String value1, String value2) {
+            addCriterion("PROC_INST_ID not between", value1, value2, "procInstId");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyDateIsNull() {
+            addCriterion("APPLY_DATE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyDateIsNotNull() {
+            addCriterion("APPLY_DATE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyDateEqualTo(Date value) {
+            addCriterion("APPLY_DATE =", value, "applyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyDateNotEqualTo(Date value) {
+            addCriterion("APPLY_DATE <>", value, "applyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyDateGreaterThan(Date value) {
+            addCriterion("APPLY_DATE >", value, "applyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("APPLY_DATE >=", value, "applyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyDateLessThan(Date value) {
+            addCriterion("APPLY_DATE <", value, "applyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyDateLessThanOrEqualTo(Date value) {
+            addCriterion("APPLY_DATE <=", value, "applyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyDateIn(List<Date> values) {
+            addCriterion("APPLY_DATE in", values, "applyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyDateNotIn(List<Date> values) {
+            addCriterion("APPLY_DATE not in", values, "applyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyDateBetween(Date value1, Date value2) {
+            addCriterion("APPLY_DATE between", value1, value2, "applyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyDateNotBetween(Date value1, Date value2) {
+            addCriterion("APPLY_DATE not between", value1, value2, "applyDate");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

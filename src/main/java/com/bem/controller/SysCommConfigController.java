@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bem.config.Page;
 import com.bem.domain.SysCommConfig;
 import com.bem.mapper.SysCommConfigMapper;
+import com.bem.util.PropertiesUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class SysCommConfigController {
     private SysCommConfigMapper sysCommConfigMapper;
     @Autowired
     private Page page;
+    @Autowired
+    private RestTemplate restTemplate;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -38,5 +42,12 @@ public class SysCommConfigController {
         logger.info("[lambda写法] - [分页信息] - [{}]", pageInfo.toString());
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/getUserInfomation")
+    public void getUserInfomation() {
+        String result = restTemplate.getForObject("http://AUTH-DATA/auth-data/user/name/sysadmin", String.class);
+        System.out.println(result);
+    }
 
 }

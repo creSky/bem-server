@@ -21,4 +21,7 @@ public class TaskListService {
         return taskListMapper.selectUserByApp(userMap);
     }
 
+    public List<Map<String,Object>> queryHistoricTask(String processInstanceId){
+        return taskListMapper.queryHistoricTask(processInstanceId);
+    }
 }

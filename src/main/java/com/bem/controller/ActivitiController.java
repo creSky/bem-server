@@ -1,17 +1,18 @@
 package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bem.common.HistoricTaskInstanceEntityExt;
 import com.bem.common.RestultContent;
 import com.bem.domain.*;
-import com.bem.mapper.AppCircumstanceMapper;
-import com.bem.mapper.AppDeclareInfoMapper;
-import com.bem.mapper.AppDispatchMapper;
-import com.bem.mapper.AppPassAdviceMapper;
+import com.bem.mapper.*;
 import com.bem.service.ActivitiService;
 import com.bem.service.TaskListService;
 import com.bem.util.BemCommonUtil;
+import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -129,10 +130,11 @@ public class ActivitiController {
             appDeclareInfoExampleCriteria.andAppIdEqualTo(jsonObject.getString("appId")).
                     andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
             List<AppDeclareInfo> appDeclareInfos = appDeclareInfoMapper.selectByExample(appDeclareInfoExample);
-            candidate.put("designType", 0 == appDeclareInfos.size() ? null :appDeclareInfos.get(0).getDesignType());
+            candidate.put("designType", 0 == appDeclareInfos.size() ? null : appDeclareInfos.get(0).getDesignType());
 
         }
-        //提交
+        //提交设置当前提交人为办理人
+        activitiService.setAssignee(jsonObject.getString("taskId"), BemCommonUtil.getOpeartorId(submitJson));
         activitiService.compleTask(jsonObject.getString("taskId"), candidate);
         restultContent.setStatus(200);
         return restultContent;
@@ -144,7 +146,7 @@ public class ActivitiController {
     @RequestMapping("/queryHistoricActivitiInstance")
     @ResponseBody
     public void queryHistoricActivitiInstance() {
-        activitiService.queryHistoricActivitiInstance("7511");
+        activitiService.queryHistoricActivitiInstance("27503");
     }
 
     /**
@@ -152,14 +154,19 @@ public class ActivitiController {
      */
     @RequestMapping("/queryHistoricTask")
     @ResponseBody
-    public void queryHistoricTask() {
-        activitiService.queryHistoricTask("7511");
+    public RestultContent queryHistoricTask(@RequestBody String processInstanceIdJson) {
+        JSONObject jsonObject = JSONObject.parseObject(processInstanceIdJson);
+        RestultContent restultContent = new RestultContent();
+        restultContent.setStatus(200);
+        restultContent.setData(taskListService.queryHistoricTask(jsonObject.getString("processInstanceId")));
+        return restultContent;
 
     }
+
     @RequestMapping("/stopProcessInstance")
     @ResponseBody
-    public void stopProcessInstance() {
-        activitiService.stopProcessInstance("7511");
+    public void stopProcessInstance(String processInstanceId) {
+        activitiService.stopProcessInstance(processInstanceId);
 
     }
 
@@ -170,5 +177,40 @@ public class ActivitiController {
 
     }
 
+    @RequestMapping("/compleTask")
+    @ResponseBody
+    public void compleTask() throws Exception {
+        Map<String, Object> aa = new HashMap<>();
+        aa.put("aa", "aa");
+        activitiService.compleTask("27503", aa);
+
+    }
+
+    @RequestMapping("/getHistoryProcessVariables")
+    @ResponseBody
+    public void getHistoryProcessVariables() throws Exception {
+        activitiService.getHistoryProcessVariables("27503");
+
+    }
+
+    /**
+     * 回退
+     *
+     * @param taskRollbackJson
+     * @return
+     */
+    @RequestMapping("/taskRollback")
+    @ResponseBody
+    public RestultContent taskRollback(String taskRollbackJson) {
+        JSONObject taskRollback = JSONObject.parseObject(taskRollbackJson);
+        List<HistoricTaskInstance> list = activitiService.queryHistoricTask(taskRollback.getString("processInstanceId"));
+        if (list != null) {
+            activitiService.turnTask(taskRollback.getString("taskId"), list.get(0).getId(),
+                    BemCommonUtil.getOpeartorId(taskRollbackJson));
+        }
+        RestultContent restultContent = new RestultContent();
+        restultContent.setStatus(200);
+        return restultContent;
+    }
 
 }

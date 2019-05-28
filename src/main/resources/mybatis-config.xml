@@ -26,5 +26,7 @@
         <!-- 打印查询语句 -->
         <!--<setting name="logImpl" value="STDOUT_LOGGING" />-->
         <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--返回map 值为空 保留字段-->
+        <setting name="callSettersOnNulls" value="true"/>
     </settings>
 </configuration>

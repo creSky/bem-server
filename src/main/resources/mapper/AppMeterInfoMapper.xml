@@ -266,7 +266,7 @@
   </update>
 
 
-  <select id="getSiteSurveyMeterInfoTree" parameterType="java.lang.String" resultType="com.bem.domain.SiteSurveyTree">
+  <select id="getSiteSurveyMeterInfoTree" parameterType="java.lang.String" resultType="com.bem.common.SiteSurveyTree">
     SELECT
     T.ID,
     'TRUE' expand,

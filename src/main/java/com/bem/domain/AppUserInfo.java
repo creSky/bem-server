@@ -149,6 +149,18 @@ public class AppUserInfo {
     private Date submitDate;
 
     /**
+     * activiti实例编号
+     */
+    @Column(name = "PROC_INST_ID")
+    private String procInstId;
+
+    /**
+     * 申请时间
+     */
+    @Column(name = "APPLY_DATE")
+    private Date applyDate;
+
+    /**
      * 获取ID
      *
      * @return ID - ID
@@ -574,5 +586,41 @@ public class AppUserInfo {
      */
     public void setSubmitDate(Date submitDate) {
         this.submitDate = submitDate;
+    }
+
+    /**
+     * 获取activiti实例编号
+     *
+     * @return PROC_INST_ID - activiti实例编号
+     */
+    public String getProcInstId() {
+        return procInstId;
+    }
+
+    /**
+     * 设置activiti实例编号
+     *
+     * @param procInstId activiti实例编号
+     */
+    public void setProcInstId(String procInstId) {
+        this.procInstId = procInstId == null ? null : procInstId.trim();
+    }
+
+    /**
+     * 获取申请时间
+     *
+     * @return APPLY_DATE - 申请时间
+     */
+    public Date getApplyDate() {
+        return applyDate;
+    }
+
+    /**
+     * 设置申请时间
+     *
+     * @param applyDate 申请时间
+     */
+    public void setApplyDate(Date applyDate) {
+        this.applyDate = applyDate;
     }
 }

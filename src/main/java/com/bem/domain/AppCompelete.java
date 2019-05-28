@@ -1,6 +1,8 @@
 package com.bem.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Table(name = "APP_COMPELETE")
@@ -111,6 +113,17 @@ public class AppCompelete {
     @Column(name = "COMPLETE_REMARK")
     private String completeRemark;
 
+
+    @Transient
+    private List<String> relativePath;
+
+    public List<String> getRelativePath() {
+        return new ArrayList<>();
+    }
+
+    public void setRelativePath(List<String> relativePath) {
+        this.relativePath = relativePath;
+    }
     /**
      * @return ID
      */
