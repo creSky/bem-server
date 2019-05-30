@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/HighVoltageNew" xmlns:xsd="http://www.w3.org/2001/XMLSchema" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/HighVoltageNew">
-  <process id="HighVoltageAddCapacity" name="高压新装1.0" isExecutable="true" isClosed="false" processType="None">
+  <process id="HighVoltageAddCapacity" name="增容" isExecutable="true" isClosed="false" processType="None">
     <startEvent id="startevent1" name="开始"></startEvent>
     <userTask id="bem-f1-p1" name="申请登记" activiti:candidateGroups="10"></userTask>
     <sequenceFlow id="flow2" sourceRef="startevent1" targetRef="bem-f1-p1"></sequenceFlow>
     <userTask id="bem-f1-p19" name="现场勘察及供电方案答复" activiti:candidateGroups="10"></userTask>
     <sequenceFlow id="flow3" sourceRef="bem-f1-p1" targetRef="bem-f1-p19"></sequenceFlow>
-    <userTask id="bem-f1-p9" name="竣工检验和装表接电" activiti:candidateGroups="3"></userTask>
+    <userTask id="bem-f1-p9" name="竣工检验申请" activiti:candidateGroups="10"></userTask>
     <sequenceFlow id="flow4" sourceRef="bem-f1-p19" targetRef="bem-f1-p9"></sequenceFlow>
+    <userTask id="bem-f1-p23" name="装表接电" activiti:candidateGroups="10"></userTask>
+    <sequenceFlow id="flow5" sourceRef="bem-f1-p9" targetRef="bem-f1-p23"></sequenceFlow>
     <endEvent id="endevent1" name="End"></endEvent>
-    <sequenceFlow id="flow5" sourceRef="bem-f1-p9" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="bem-f1-p23" targetRef="endevent1"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_HighVoltageAddCapacity">
     <bpmndi:BPMNPlane bpmnElement="HighVoltageAddCapacity" id="BPMNPlane_HighVoltageAddCapacity">
@@ -25,8 +27,11 @@
       <bpmndi:BPMNShape bpmnElement="bem-f1-p9" id="BPMNShape_bem-f1-p9">
         <omgdc:Bounds height="55.0" width="105.0" x="440.0" y="190.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p23" id="BPMNShape_bem-f1-p23">
+        <omgdc:Bounds height="55.0" width="105.0" x="590.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="590.0" y="200.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="740.0" y="200.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
         <omgdi:waypoint x="34.0" y="217.0"></omgdi:waypoint>
@@ -43,6 +48,10 @@
       <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
         <omgdi:waypoint x="545.0" y="217.0"></omgdi:waypoint>
         <omgdi:waypoint x="590.0" y="217.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="695.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="740.0" y="217.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

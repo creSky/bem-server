@@ -24,4 +24,20 @@ public class TaskListService {
     public List<Map<String,Object>> queryHistoricTask(String processInstanceId){
         return taskListMapper.queryHistoricTask(processInstanceId);
     }
+
+    public List<Map<String,Object>> queryHighFinishApp(){
+        return taskListMapper.queryHighFinishApp();
+
+    }
+
+    public List<Map<String,Object>> queryLowFinishApp(){
+        return taskListMapper.queryLowFinishApp();
+
+    }
+
+    public List<Map<String,Object>> queryFinishTask(String processInstanceId){
+        return taskListMapper.queryFinishTask(processInstanceId);
+
+    }
+
 }

@@ -355,136 +355,6 @@ public class AppCompeleteExample {
             return (Criteria) this;
         }
 
-        public Criteria andAssemManIsNull() {
-            addCriterion("ASSEM_MAN is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManIsNotNull() {
-            addCriterion("ASSEM_MAN is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManEqualTo(String value) {
-            addCriterion("ASSEM_MAN =", value, "assemMan");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManNotEqualTo(String value) {
-            addCriterion("ASSEM_MAN <>", value, "assemMan");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManGreaterThan(String value) {
-            addCriterion("ASSEM_MAN >", value, "assemMan");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManGreaterThanOrEqualTo(String value) {
-            addCriterion("ASSEM_MAN >=", value, "assemMan");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManLessThan(String value) {
-            addCriterion("ASSEM_MAN <", value, "assemMan");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManLessThanOrEqualTo(String value) {
-            addCriterion("ASSEM_MAN <=", value, "assemMan");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManLike(String value) {
-            addCriterion("ASSEM_MAN like", value, "assemMan");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManNotLike(String value) {
-            addCriterion("ASSEM_MAN not like", value, "assemMan");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManIn(List<String> values) {
-            addCriterion("ASSEM_MAN in", values, "assemMan");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManNotIn(List<String> values) {
-            addCriterion("ASSEM_MAN not in", values, "assemMan");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManBetween(String value1, String value2) {
-            addCriterion("ASSEM_MAN between", value1, value2, "assemMan");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemManNotBetween(String value1, String value2) {
-            addCriterion("ASSEM_MAN not between", value1, value2, "assemMan");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemDateIsNull() {
-            addCriterion("ASSEM_DATE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemDateIsNotNull() {
-            addCriterion("ASSEM_DATE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemDateEqualTo(Date value) {
-            addCriterion("ASSEM_DATE =", value, "assemDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemDateNotEqualTo(Date value) {
-            addCriterion("ASSEM_DATE <>", value, "assemDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemDateGreaterThan(Date value) {
-            addCriterion("ASSEM_DATE >", value, "assemDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemDateGreaterThanOrEqualTo(Date value) {
-            addCriterion("ASSEM_DATE >=", value, "assemDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemDateLessThan(Date value) {
-            addCriterion("ASSEM_DATE <", value, "assemDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemDateLessThanOrEqualTo(Date value) {
-            addCriterion("ASSEM_DATE <=", value, "assemDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemDateIn(List<Date> values) {
-            addCriterion("ASSEM_DATE in", values, "assemDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemDateNotIn(List<Date> values) {
-            addCriterion("ASSEM_DATE not in", values, "assemDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemDateBetween(Date value1, Date value2) {
-            addCriterion("ASSEM_DATE between", value1, value2, "assemDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andAssemDateNotBetween(Date value1, Date value2) {
-            addCriterion("ASSEM_DATE not between", value1, value2, "assemDate");
-            return (Criteria) this;
-        }
-
         public Criteria andCreateDateIsNull() {
             addCriterion("CREATE_DATE is null");
             return (Criteria) this;
@@ -1252,6 +1122,66 @@ public class AppCompeleteExample {
 
         public Criteria andCompleteRemarkNotBetween(String value1, String value2) {
             addCriterion("COMPLETE_REMARK not between", value1, value2, "completeRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateManIsNull() {
+            addCriterion("CREATE_MAN is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateManIsNotNull() {
+            addCriterion("CREATE_MAN is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateManEqualTo(Integer value) {
+            addCriterion("CREATE_MAN =", value, "createMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateManNotEqualTo(Integer value) {
+            addCriterion("CREATE_MAN <>", value, "createMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateManGreaterThan(Integer value) {
+            addCriterion("CREATE_MAN >", value, "createMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateManGreaterThanOrEqualTo(Integer value) {
+            addCriterion("CREATE_MAN >=", value, "createMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateManLessThan(Integer value) {
+            addCriterion("CREATE_MAN <", value, "createMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateManLessThanOrEqualTo(Integer value) {
+            addCriterion("CREATE_MAN <=", value, "createMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateManIn(List<Integer> values) {
+            addCriterion("CREATE_MAN in", values, "createMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateManNotIn(List<Integer> values) {
+            addCriterion("CREATE_MAN not in", values, "createMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateManBetween(Integer value1, Integer value2) {
+            addCriterion("CREATE_MAN between", value1, value2, "createMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateManNotBetween(Integer value1, Integer value2) {
+            addCriterion("CREATE_MAN not between", value1, value2, "createMan");
             return (Criteria) this;
         }
     }

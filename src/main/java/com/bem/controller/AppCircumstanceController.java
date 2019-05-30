@@ -70,7 +70,7 @@ public class AppCircumstanceController {
         appCircumstance.setCreateMan(new Integer(BemCommonUtil.getOpeartorId(appCircumstanceJson)));
         if (isExist) {
             appCircumstance.setSubmitDate(new Date());
-            appCircumstanceMapper.updateByPrimaryKeySelective(appCircumstance);
+            appCircumstanceMapper.updateByPrimaryKey(appCircumstance);
         } else {
             appCircumstance.setCreateDate(new Date());
             appCircumstance.setSubmitDate(new Date());

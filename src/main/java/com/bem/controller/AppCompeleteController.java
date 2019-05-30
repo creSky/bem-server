@@ -40,7 +40,7 @@ public class AppCompeleteController {
      * @param appCompeleteJson
      * @return
      */
-    @RequestMapping("/getAappCompelete")
+    @RequestMapping("/getAppCompelete")
     @ResponseBody
     public RestultContent getAappCompelete(@RequestBody String appCompeleteJson) throws Exception {
         AppCompelete appCompelete = JSONObject.parseObject(appCompeleteJson, AppCompelete.class);
@@ -52,11 +52,10 @@ public class AppCompeleteController {
         criteria.andAppIdEqualTo(appCompelete.getAppId()).
                 andProcessInstanceIdEqualTo(appCompelete.getProcessInstanceId());
         returnAppCompelete = appCompeleteMapper.selectByExample(appCompeleteExample);
-        restultContent.setStatus(200);
         if (null != returnAppCompelete && returnAppCompelete.size() > 0) {
             returnMap.put("appCompelete", returnAppCompelete.get(0));
         } else {
-            returnMap.put("appCompelete", null);
+            returnMap.put("appCompelete", appCompelete);
         }
 
         AppFileExample appFileExample = new AppFileExample();
@@ -83,12 +82,12 @@ public class AppCompeleteController {
         AppCompelete appCompelete = JSONObject.parseObject(appCompeleteJson, AppCompelete.class);
         RestultContent restultContent = new RestultContent();
         boolean isExist = appCompeleteMapper.existsWithPrimaryKey(appCompelete);
+        appCompelete.setSubmitDate(new Date());
+        appCompelete.setCreateMan(new Integer(BemCommonUtil.getOpeartorId(appCompeleteJson)));
         if (isExist) {
-            appCompelete.setSubmitDate(new Date());
-            appCompeleteMapper.updateByPrimaryKeySelective(appCompelete);
+            appCompeleteMapper.updateByPrimaryKey(appCompelete);
         } else {
             appCompelete.setCreateDate(new Date());
-            appCompelete.setSubmitDate(new Date());
             appCompeleteMapper.insertSelective(appCompelete);
         }
         Map<String, Object> returnMaps = new HashMap<>();
@@ -101,67 +100,7 @@ public class AppCompeleteController {
         return restultContent;
     }
 
-    /**
-     * @param saveCirAndcompeleteJson
-     * @return
-     */
-    @RequestMapping("/saveCirAndcompelete")
-    @ResponseBody
-    public RestultContent saveCirAndcompelete(@RequestBody String saveCirAndcompeleteJson) throws Exception {
-        JSONObject saveCirAndcompelete = JSONObject.parseObject(saveCirAndcompeleteJson);
-        //保存文件和装表信息
-        RestultContent appCompelete = save(saveCirAndcompelete.getString("appCompelete"));
-        //保存现场勘察信息
-        AppCircumstance appCircumstance = JSONObject.parseObject(saveCirAndcompelete.getString("appCircumstance"), AppCircumstance.class);
-        RestultContent restultContent = new RestultContent();
-        boolean isExist = appCircumstanceMapper.existsWithPrimaryKey(appCircumstance);
-        appCircumstance.setCreateDate(new Date());
-        appCircumstance.setCreateMan(new Integer(BemCommonUtil.getOpeartorId(saveCirAndcompeleteJson)));
-        if (isExist) {
-            appCircumstance.setSubmitDate(new Date());
-            appCircumstanceMapper.updateByPrimaryKeySelective(appCircumstance);
-        } else {
-            appCircumstance.setCreateDate(new Date());
-            appCircumstance.setSubmitDate(new Date());
-            appCircumstanceMapper.insertSelective(appCircumstance);
-        }
-        Map<String, Object> returnMaps = (Map<String, Object>) appCompelete.getData();
-        returnMaps.put("appCircumstance",appCircumstance);
-        restultContent.setStatus(200);
-        restultContent.setData(returnMaps);
-        return restultContent;
-    }
 
-
-    /**
-     * @param cirAndcompeleteJson
-     * @return
-     */
-    @RequestMapping("/getCirAndcompelete")
-    @ResponseBody
-    public RestultContent getCirAndcompelete(@RequestBody String cirAndcompeleteJson) throws Exception {
-        RestultContent cirAndcompelete=getAappCompelete(cirAndcompeleteJson);
-        Map<String,Object> returnMap= (Map<String, Object>) cirAndcompelete.getData();
-        AppCircumstance appCircumstance = JSONObject.parseObject(cirAndcompeleteJson, AppCircumstance.class);
-        List<AppCircumstance> returnAppCircumstance = new ArrayList<>();
-        RestultContent restultContent = new RestultContent();
-        AppCircumstanceExample appCircumstanceExample = new AppCircumstanceExample();
-        AppCircumstanceExample.Criteria criteria = appCircumstanceExample.createCriteria();
-        criteria.andAppIdEqualTo(appCircumstance.getAppId()).
-                andProcessInstanceIdEqualTo(appCircumstance.getProcessInstanceId());
-        returnAppCircumstance = appCircumstanceMapper.selectByExample(appCircumstanceExample);
-        restultContent.setStatus(200);
-        if (null != returnAppCircumstance && returnAppCircumstance.size() > 0) {
-            returnMap.put("appCircumstance",returnAppCircumstance.get(0));
-        }else{
-            returnMap.put("appCircumstance",null);
-        }
-        restultContent.setData(returnMap);
-        restultContent.setStatus(200);
-        return restultContent;
-
-
-    }
 
 
 }

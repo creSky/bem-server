@@ -30,18 +30,6 @@ public class AppCompelete {
     private Long processInstanceId;
 
     /**
-     * 装表人
-     */
-    @Column(name = "ASSEM_MAN")
-    private String assemMan;
-
-    /**
-     * 装表时间
-     */
-    @Column(name = "ASSEM_DATE")
-    private Date assemDate;
-
-    /**
      * 创建时间（短信通知依据时间）
      */
     @Column(name = "CREATE_DATE")
@@ -113,6 +101,11 @@ public class AppCompelete {
     @Column(name = "COMPLETE_REMARK")
     private String completeRemark;
 
+    /**
+     * 创建人
+     */
+    @Column(name = "CREATE_MAN")
+    private Integer createMan;
 
     @Transient
     private List<String> relativePath;
@@ -121,9 +114,7 @@ public class AppCompelete {
         return new ArrayList<>();
     }
 
-    public void setRelativePath(List<String> relativePath) {
-        this.relativePath = relativePath;
-    }
+
     /**
      * @return ID
      */
@@ -190,42 +181,6 @@ public class AppCompelete {
      */
     public void setProcessInstanceId(Long processInstanceId) {
         this.processInstanceId = processInstanceId;
-    }
-
-    /**
-     * 获取装表人
-     *
-     * @return ASSEM_MAN - 装表人
-     */
-    public String getAssemMan() {
-        return assemMan;
-    }
-
-    /**
-     * 设置装表人
-     *
-     * @param assemMan 装表人
-     */
-    public void setAssemMan(String assemMan) {
-        this.assemMan = assemMan == null ? null : assemMan.trim();
-    }
-
-    /**
-     * 获取装表时间
-     *
-     * @return ASSEM_DATE - 装表时间
-     */
-    public Date getAssemDate() {
-        return assemDate;
-    }
-
-    /**
-     * 设置装表时间
-     *
-     * @param assemDate 装表时间
-     */
-    public void setAssemDate(Date assemDate) {
-        this.assemDate = assemDate;
     }
 
     /**
@@ -442,5 +397,23 @@ public class AppCompelete {
      */
     public void setCompleteRemark(String completeRemark) {
         this.completeRemark = completeRemark == null ? null : completeRemark.trim();
+    }
+
+    /**
+     * 获取创建人
+     *
+     * @return CREATE_MAN - 创建人
+     */
+    public Integer getCreateMan() {
+        return createMan;
+    }
+
+    /**
+     * 设置创建人
+     *
+     * @param createMan 创建人
+     */
+    public void setCreateMan(Integer createMan) {
+        this.createMan = createMan;
     }
 }

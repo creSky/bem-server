@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author ：zjd
@@ -197,8 +198,9 @@ public class ActivitiService {
     public List<HistoricTaskInstance> queryHistoricTask(String processInstanceId) {
         List<HistoricTaskInstance> list = processEngine.getHistoryService()
                 .createHistoricTaskInstanceQuery()
-                .processInstanceId(processInstanceId).orderByHistoricTaskInstanceStartTime().asc()
+                .processInstanceId(processInstanceId).finished().orderByHistoricTaskInstanceStartTime().asc()
                 .list();
+
         return list;
     }
 
@@ -213,6 +215,7 @@ public class ActivitiService {
 
     /**
      * 根据环节id 查历史流程变量
+     *
      * @param taskId
      */
     public void getHistoryProcessVariables(String taskId) {
@@ -230,6 +233,7 @@ public class ActivitiService {
 
     /**
      * 根据环节id 查历史环节
+     *
      * @param taskId
      * @return
      */
@@ -239,40 +243,44 @@ public class ActivitiService {
 
     /**
      * 根据流程实例id 查在执行的流程
+     *
      * @param processInstanceId
      * @return
      */
-    public ProcessInstance getProcessInstanceByPID(String processInstanceId){
-       return  runtimeService.createProcessInstanceQuery()
+    public ProcessInstance getProcessInstanceByPID(String processInstanceId) {
+        return runtimeService.createProcessInstanceQuery()
                 .processInstanceId(processInstanceId)
                 .singleResult();
     }
 
     /**
      * 根据流程定义id  获取流程定义
+     *
      * @param processDefinitionId
      * @return
      */
-    public ProcessDefinition getProcessDefinition(String processDefinitionId){
+    public ProcessDefinition getProcessDefinition(String processDefinitionId) {
         return repositoryService.getProcessDefinition(processDefinitionId);
     }
 
     /**
      * 根据processDefinitionId 获取BpmnModel
+     *
      * @param processDefinitionId
      * @return
      */
-    public BpmnModel getBpmnModel(String processDefinitionId){
+    public BpmnModel getBpmnModel(String processDefinitionId) {
         return repositoryService.getBpmnModel(processDefinitionId);
 
     }
 
     /**
      * 跳转环节
+     *
      * @param fromTaskID
      * @param toTaskId
      */
-    public void turnTask(String fromTaskID, String toTaskId ,String manangerId) {
+    public void turnTask(String fromTaskID, String toTaskId, String manangerId) {
         // 当前环节 act_ru_task
         Task task = processEngine.getTaskService().createTaskQuery().taskId(fromTaskID).singleResult();
         if (task == null) {

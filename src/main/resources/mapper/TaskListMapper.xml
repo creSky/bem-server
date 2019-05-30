@@ -90,6 +90,20 @@
         b.USER_NO userNo,
         b.USER_NAME userName,
         b.ADDRESS address,
+        b.BUSINESS_PLACE_CODE businessPlaceCode,
+        b.WRITE_SECT_NO writeSectNo,
+        b.ALL_CAPACITY allCapacity,
+        b.TRADE_TYPE tradeType,
+        b.ELEC_TYPE elecType,
+        b.VOLT_LEVEL_TYPE voltLevelType,
+        b.MS_MODE_TYPE msModeType,
+        b.LOAD_TYPE loadType,
+        b.IS_HIGH_TYPE isHighType,
+        b.TEMP_TYPE tempType,
+        b.CREDIT_RANK_TYPE creditRankType,
+        b.WRITE_TYPE writeType,
+        b.USER_TYPE userType,
+        b.REMARK remark,
         a.START_TIME_ startTime,
         a.END_TIME_ endTime,
         a.TASK_DEF_KEY_ taskDefKey,
@@ -103,4 +117,51 @@
         AND b.PROC_INST_ID = #{processInstanceId}
         order by a.START_TIME_ desc
     </select>
+
+    <select id="queryFinishTask" parameterType="java.lang.String" resultType="java.util.Map">
+       SELECT
+            taskinst.PROC_INST_ID_ processInstanceId,
+            taskinst.TASK_DEF_KEY_ taskDefKey,
+            max(taskinst.START_TIME_) startTime,
+            max(taskinst.END_TIME_) endTime,
+            max(taskinst.NAME_) name
+        FROM
+            ACT_HI_TASKINST taskinst
+        WHERE
+             NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = taskinst.PROC_INST_ID_ )
+             AND taskinst.PROC_INST_ID_= #{processInstanceId}
+         group by taskinst.PROC_INST_ID_,taskinst.TASK_DEF_KEY_
+
+    </select>
+
+    <select id="queryHighFinishApp" parameterType="java.lang.String" resultType="java.util.Map">
+       SELECT
+            APP_NO appNo,
+            PROC_INST_ID processInstanceId,
+            USER_NO userNo,
+            USER_NAME userName,
+            TEMPLATE_ID templateId,
+            APPLY_DATE applyDate
+        FROM
+            APP_USER_INFO info
+        WHERE
+             NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = info.PROC_INST_ID )
+             AND info.template_id in (1,6)
+    </select>
+
+    <select id="queryLowFinishApp" parameterType="java.lang.String" resultType="java.util.Map">
+       SELECT
+            APP_NO appNo,
+            PROC_INST_ID processInstanceId,
+            USER_NO userNo,
+            USER_NAME userName,
+            TEMPLATE_ID templateId,
+            APPLY_DATE applyDate
+        FROM
+            APP_USER_INFO info
+        WHERE
+             NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = info.PROC_INST_ID )
+             AND info.template_id not in (1,6)
+    </select>
+
 </mapper>

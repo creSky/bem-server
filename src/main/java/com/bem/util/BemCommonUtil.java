@@ -10,7 +10,7 @@ public class BemCommonUtil {
      */
     public static String createAppNo() {
         long time = System.currentTimeMillis();
-        return String.valueOf(time / 1000);
+        return String.valueOf(time);
     }
 
     /**

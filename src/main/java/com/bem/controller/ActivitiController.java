@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -159,6 +156,59 @@ public class ActivitiController {
         RestultContent restultContent = new RestultContent();
         restultContent.setStatus(200);
         restultContent.setData(taskListService.queryHistoricTask(jsonObject.getString("processInstanceId")));
+        return restultContent;
+
+    }
+
+
+    /**
+     * 已完结任务时间
+     */
+    @RequestMapping("/queryFinishApp")
+    @ResponseBody
+    public RestultContent queryFinishApp(@RequestBody(required = false) String processInstanceIdJson) {
+        RestultContent restultContent = new RestultContent();
+        JSONObject hignOrlow = JSONObject.parseObject(processInstanceIdJson);
+        List<Map<String, Object>> finishApps = new ArrayList<>();
+        if ("high".equals(hignOrlow.getString("val"))){
+            finishApps = taskListService.queryHighFinishApp();
+        }else{
+            finishApps = taskListService.queryLowFinishApp();
+        }
+        if(finishApps==null || finishApps.size()<=0){
+            restultContent.setStatus(500);
+            restultContent.setErrorMsg("无完成数据");
+            return restultContent;
+        }
+        for (int i = 0; i < finishApps.size(); i++) {
+            List<Map<String, Object>> finishTasks = taskListService.queryFinishTask(finishApps.get(i).get("processInstanceId").toString());
+            for (int j = 0; j < finishTasks.size(); j++) {
+                switch (finishTasks.get(j).get("taskDefKey").toString()) {
+                    case "bem-f1-p1":
+                        finishApps.get(i).put("submitDate", finishTasks.get(j).get("endTime"));
+                        break;
+                    case "bem-f1-p19":
+                        finishApps.get(i).put("powerSupplyDate", finishTasks.get(j).get("endTime"));
+                        break;
+                    case "bem-f1-p9":
+                        finishApps.get(i).put("constructionDate", finishTasks.get(j).get("endTime"));
+                        break;
+                    case "bem-f1-p23":
+                        finishApps.get(i).put("assemDate", finishTasks.get(j).get("endTime"));
+                        break;
+                    case "bem-f1-p22":
+                        finishApps.get(i).put("assemDateDY", finishTasks.get(j).get("endTime"));
+                        break;
+                    case "bem-f1-p21":
+                        finishApps.get(i).put("assemDateDY", finishTasks.get(j).get("endTime"));
+                        break;
+
+                }
+            }
+
+        }
+        restultContent.setStatus(200);
+        restultContent.setData(finishApps);
         return restultContent;
 
     }

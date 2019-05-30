@@ -9,8 +9,6 @@
     <result column="APP_ID" jdbcType="VARCHAR" property="appId" />
     <result column="TASK_ID" jdbcType="INTEGER" property="taskId" />
     <result column="PROCESS_INSTANCE_ID" jdbcType="DECIMAL" property="processInstanceId" />
-    <result column="ASSEM_MAN" jdbcType="VARCHAR" property="assemMan" />
-    <result column="ASSEM_DATE" jdbcType="TIMESTAMP" property="assemDate" />
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
     <result column="SUBMIT_DATE" jdbcType="TIMESTAMP" property="submitDate" />
     <result column="DESIGN_TYPE" jdbcType="INTEGER" property="designType" />
@@ -23,6 +21,7 @@
     <result column="COMPLETE_DATE" jdbcType="TIMESTAMP" property="completeDate" />
     <result column="IS_COMPLETE" jdbcType="INTEGER" property="isComplete" />
     <result column="COMPLETE_REMARK" jdbcType="VARCHAR" property="completeRemark" />
+    <result column="CREATE_MAN" jdbcType="INTEGER" property="createMan" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -92,9 +91,9 @@
     <!--
       WARNING - @mbg.generated
     -->
-    ID, APP_ID, TASK_ID, PROCESS_INSTANCE_ID, ASSEM_MAN, ASSEM_DATE, CREATE_DATE, SUBMIT_DATE, 
-    DESIGN_TYPE, IS_DESIGN, DESIGN_REMARK, DESIGN_COMPANY, CONSTRUCTION_NAME, CONSTRUCTION_DATE, 
-    COMPLETE_MAN, COMPLETE_DATE, IS_COMPLETE, COMPLETE_REMARK
+    ID, APP_ID, TASK_ID, PROCESS_INSTANCE_ID, CREATE_DATE, SUBMIT_DATE, DESIGN_TYPE, 
+    IS_DESIGN, DESIGN_REMARK, DESIGN_COMPANY, CONSTRUCTION_NAME, CONSTRUCTION_DATE, COMPLETE_MAN, 
+    COMPLETE_DATE, IS_COMPLETE, COMPLETE_REMARK, CREATE_MAN
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppCompeleteExample" resultMap="BaseResultMap">
     <!--
@@ -149,12 +148,6 @@
       <if test="record.processInstanceId != null">
         PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
       </if>
-      <if test="record.assemMan != null">
-        ASSEM_MAN = #{record.assemMan,jdbcType=VARCHAR},
-      </if>
-      <if test="record.assemDate != null">
-        ASSEM_DATE = #{record.assemDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.createDate != null">
         CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
       </if>
@@ -191,6 +184,9 @@
       <if test="record.completeRemark != null">
         COMPLETE_REMARK = #{record.completeRemark,jdbcType=VARCHAR},
       </if>
+      <if test="record.createMan != null">
+        CREATE_MAN = #{record.createMan,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -205,8 +201,6 @@
       APP_ID = #{record.appId,jdbcType=VARCHAR},
       TASK_ID = #{record.taskId,jdbcType=INTEGER},
       PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
-      ASSEM_MAN = #{record.assemMan,jdbcType=VARCHAR},
-      ASSEM_DATE = #{record.assemDate,jdbcType=TIMESTAMP},
       CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
       SUBMIT_DATE = #{record.submitDate,jdbcType=TIMESTAMP},
       DESIGN_TYPE = #{record.designType,jdbcType=INTEGER},
@@ -218,7 +212,8 @@
       COMPLETE_MAN = #{record.completeMan,jdbcType=VARCHAR},
       COMPLETE_DATE = #{record.completeDate,jdbcType=TIMESTAMP},
       IS_COMPLETE = #{record.isComplete,jdbcType=INTEGER},
-      COMPLETE_REMARK = #{record.completeRemark,jdbcType=VARCHAR}
+      COMPLETE_REMARK = #{record.completeRemark,jdbcType=VARCHAR},
+      CREATE_MAN = #{record.createMan,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
