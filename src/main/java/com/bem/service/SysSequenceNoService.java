@@ -29,7 +29,7 @@ public class SysSequenceNoService {
         sysSequenceNo.setCode(userNoCode);
         sysSequenceNo.setFormat("0000000");
         sysSequenceNo.setPrefix(noPre);
-        sysSequenceNo.setName("户号(GGDL)");
+        sysSequenceNo.setName("户号(gddl)");
         String maxNo = genSequenceNo(sysSequenceNo);
         return noPre + maxNo;
 
@@ -51,9 +51,9 @@ public class SysSequenceNoService {
         sysSequenceNo.setCode(userNoCode);
         sysSequenceNo.setFormat("0000");
         sysSequenceNo.setPrefix(noPre);
-        sysSequenceNo.setName("流程号(GGDL)");
+        sysSequenceNo.setName("工作单号(yk_gddl)");
         String maxNo = genSequenceNo(sysSequenceNo);
-        return noPre + DateUtil.getYMD().get(0).substring(1, 3) + DateUtil.getYMD().get(1) + DateUtil.getYMD().get(2) + maxNo;
+        return noPre + DateUtil.getYMD().get(0).substring(2, 4) + DateUtil.getYMD().get(1) + DateUtil.getYMD().get(2) + maxNo;
 
     }
 
@@ -61,7 +61,7 @@ public class SysSequenceNoService {
     //获得序列号
     public String genSequenceNo(SysSequenceNo inputSys) {
         SysSequenceNo sysSequenceNo = sysSequenceNoMapper.selectByPrimaryKey(inputSys);
-        Integer maxNo = new Integer("");
+        Integer maxNo = new Integer(0);
         String outputValue = "";
         String format = "";
         //没有最大值则生成
