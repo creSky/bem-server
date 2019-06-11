@@ -13,6 +13,14 @@ public class BemCommonUtil {
         return String.valueOf(time);
     }
 
+    /**生成用户号
+     * 规则 营业区域（3位）+年月日（190610）
+     */
+    public static String createUserNo() {
+        long time = System.currentTimeMillis();
+        return String.valueOf(time);
+    }
+
     /**
      * 操作人id
      */

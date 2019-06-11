@@ -72,6 +72,12 @@
         V.BUSINESS_KEY businessKey
         from V_TASKLIST V,APP_USER_INFO A
         WHERE V.BUSINESS_KEY = A.APP_NO
+        <if test="businessPlaceCode != null and businessPlaceCode.trim().length()>0">
+            AND A.BUSINESS_PLACE_CODE IN
+            <foreach collection="businessPlaceCode.split(',')" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
         AND (V.USER_ID = #{userId}
         <if test="roleIds != null and roleIds.trim().length()>0">
             OR V.GROUP_ID IN
@@ -134,9 +140,10 @@
 
     </select>
 
-    <select id="queryHighFinishApp" parameterType="java.lang.String" resultType="java.util.Map">
+    <select id="queryHighFinishApp" parameterType="java.util.Map" resultType="java.util.Map">
        SELECT
             APP_NO appNo,
+            BUSINESS_PLACE_CODE businessPlaceCode,
             PROC_INST_ID processInstanceId,
             USER_NO userNo,
             USER_NAME userName,
@@ -146,13 +153,20 @@
             APP_USER_INFO info
         WHERE
              NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = info.PROC_INST_ID )
+            <if test="businessPlaceCode != null and businessPlaceCode.trim().length()>0">
+                AND info.BUSINESS_PLACE_CODE IN
+                <foreach collection="businessPlaceCode.split(',')" item="item" index="index" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
              AND info.template_id in (1,6)
     </select>
 
-    <select id="queryLowFinishApp" parameterType="java.lang.String" resultType="java.util.Map">
+    <select id="queryLowFinishApp" parameterType="java.util.Map" resultType="java.util.Map">
        SELECT
             APP_NO appNo,
             PROC_INST_ID processInstanceId,
+            BUSINESS_PLACE_CODE businessPlaceCode,
             USER_NO userNo,
             USER_NAME userName,
             TEMPLATE_ID templateId,
@@ -161,6 +175,12 @@
             APP_USER_INFO info
         WHERE
              NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = info.PROC_INST_ID )
+            <if test="businessPlaceCode != null and businessPlaceCode.trim().length()>0">
+                AND info.BUSINESS_PLACE_CODE IN
+                <foreach collection="businessPlaceCode.split(',')" item="item" index="index" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
              AND info.template_id not in (1,6)
     </select>
 

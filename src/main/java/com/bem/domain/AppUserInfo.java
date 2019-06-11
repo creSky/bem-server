@@ -161,6 +161,12 @@ public class AppUserInfo {
     private Date applyDate;
 
     /**
+     * 联系电话（短信发送凭证）
+     */
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNumber;
+
+    /**
      * 获取ID
      *
      * @return ID - ID
@@ -622,5 +628,23 @@ public class AppUserInfo {
      */
     public void setApplyDate(Date applyDate) {
         this.applyDate = applyDate;
+    }
+
+    /**
+     * 获取联系电话（短信发送凭证）
+     *
+     * @return PHONE_NUMBER - 联系电话（短信发送凭证）
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * 设置联系电话（短信发送凭证）
+     *
+     * @param phoneNumber 联系电话（短信发送凭证）
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber == null ? null : phoneNumber.trim();
     }
 }

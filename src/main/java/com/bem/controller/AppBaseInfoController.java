@@ -7,6 +7,7 @@ import com.bem.domain.AppUserInfo;
 import com.bem.mapper.AppCustomerInfoMapper;
 import com.bem.mapper.AppUserInfoMapper;
 import com.bem.service.ActivitiService;
+import com.bem.service.SysSequenceNoService;
 import com.bem.util.BemCommonUtil;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class AppBaseInfoController {
 
     @Autowired
     private ActivitiService activitiService;
+
+    @Autowired
+    private SysSequenceNoService sysSequenceNoService;
 
 
     @RequestMapping("/getAppBaseInfo")
@@ -75,14 +79,16 @@ public class AppBaseInfoController {
     @ResponseBody
     @Transactional
     public RestultContent save(@RequestBody(required = false) String appBaseInfoJson) throws Exception {
+        RestultContent restultContent = new RestultContent();
         JSONObject appBaseInfoObject = JSONObject.parseObject(appBaseInfoJson);
         //客户
         AppCustomerInfo appCustomerInfo = JSONObject.parseObject(appBaseInfoObject.getString("customer"), AppCustomerInfo.class);
         //用电户
         AppUserInfo appUserInfo = JSONObject.parseObject(appBaseInfoObject.getString("user"), AppUserInfo.class);
-        RestultContent restultContent = new RestultContent();
+        //生成户号
+        appUserInfo.setUserNo(sysSequenceNoService.getUserNo(appUserInfo.getBusinessPlaceCode()));
 
-        String appNo = BemCommonUtil.createAppNo();
+        String appNo = sysSequenceNoService.getAppNo(appUserInfo.getBusinessPlaceCode());
 
         //判断客户是否存在
         boolean isExists = appCustomerInfoMapper.existsWithPrimaryKey(appCustomerInfo);

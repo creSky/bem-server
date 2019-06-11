@@ -25,13 +25,13 @@ public class TaskListService {
         return taskListMapper.queryHistoricTask(processInstanceId);
     }
 
-    public List<Map<String,Object>> queryHighFinishApp(){
-        return taskListMapper.queryHighFinishApp();
+    public List<Map<String,Object>> queryHighFinishApp(Map<String, Object> userMap){
+        return taskListMapper.queryHighFinishApp(userMap);
 
     }
 
-    public List<Map<String,Object>> queryLowFinishApp(){
-        return taskListMapper.queryLowFinishApp();
+    public List<Map<String,Object>> queryLowFinishApp(Map<String, Object> userMap){
+        return taskListMapper.queryLowFinishApp(userMap);
 
     }
 

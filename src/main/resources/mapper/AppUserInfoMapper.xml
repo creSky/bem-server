@@ -31,6 +31,7 @@
     <result column="SUBMIT_DATE" jdbcType="TIMESTAMP" property="submitDate" />
     <result column="PROC_INST_ID" jdbcType="VARCHAR" property="procInstId" />
     <result column="APPLY_DATE" jdbcType="TIMESTAMP" property="applyDate" />
+    <result column="PHONE_NUMBER" jdbcType="VARCHAR" property="phoneNumber" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -103,7 +104,7 @@
     ID, APP_NO, TEMPLATE_ID, CUSTOMER_ID, USER_NO, USER_NAME, ADDRESS, BUSINESS_PLACE_CODE, 
     WRITE_SECT_NO, ALL_CAPACITY, TRADE_TYPE, ELEC_TYPE, VOLT_LEVEL_TYPE, MS_MODE_TYPE, 
     LOAD_TYPE, IS_HIGH_TYPE, TEMP_TYPE, CREDIT_RANK_TYPE, WRITE_TYPE, USER_TYPE, REMARK, 
-    STATUS, CREATE_DATE, SUBMIT_DATE, PROC_INST_ID, APPLY_DATE
+    STATUS, CREATE_DATE, SUBMIT_DATE, PROC_INST_ID, APPLY_DATE, PHONE_NUMBER
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppUserInfoExample" resultMap="BaseResultMap">
     <!--
@@ -224,6 +225,9 @@
       <if test="record.applyDate != null">
         APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.phoneNumber != null">
+        PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -259,7 +263,8 @@
       CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
       SUBMIT_DATE = #{record.submitDate,jdbcType=TIMESTAMP},
       PROC_INST_ID = #{record.procInstId,jdbcType=VARCHAR},
-      APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP}
+      APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
+      PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

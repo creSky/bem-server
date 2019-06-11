@@ -8,12 +8,12 @@ eureka:
   client:
     serviceUrl:
       #注册中心的地址
-      defaultZone: http://172.20.100.29:7777/eureka/
+      defaultZone: http://172.21.29.55:7777/eureka/
 spring:
   application:
     name: bem-server
   datasource:
-    url: jdbc:mysql://172.20.100.30:3306/titan-bem?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://172.21.29.55:3306/titan-bem?serverTimezone=Asia/Shanghai
     username: root
     password: df6100
     driver-class-name: com.mysql.jdbc.Driver
@@ -48,6 +48,11 @@ mapper:
   #公用接口类路径
   mappers: com.bem.baseMapper.BemBaseMapper
   identity: MYSQL
+
+logging:
+  level:
+    com.bem: debug
+  path: log
 
 pagehelper:
   helper-dialect: MYSQL

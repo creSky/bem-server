@@ -61,6 +61,7 @@ public class ActivitiController {
         userMap.put("userId", BemCommonUtil.getOpeartorId(userRightJson));
         //userMap.put("roleIds","1");
         userMap.put("roleIds", BemCommonUtil.getOpeartorRoleIds(userRightJson));
+        userMap.put("businessPlaceCode",BemCommonUtil.getOpeartorDeptIds(userRightJson));
         taskMap = taskListService.selectUserByApp(userMap);
 
         // System.out.println(result);
@@ -170,10 +171,12 @@ public class ActivitiController {
         RestultContent restultContent = new RestultContent();
         JSONObject hignOrlow = JSONObject.parseObject(processInstanceIdJson);
         List<Map<String, Object>> finishApps = new ArrayList<>();
+        Map<String,Object> userMap=new HashMap<>();
+        userMap.put("businessPlaceCode",BemCommonUtil.getOpeartorDeptIds(processInstanceIdJson));
         if ("high".equals(hignOrlow.getString("val"))){
-            finishApps = taskListService.queryHighFinishApp();
+            finishApps = taskListService.queryHighFinishApp(userMap);
         }else{
-            finishApps = taskListService.queryLowFinishApp();
+            finishApps = taskListService.queryLowFinishApp(userMap);
         }
         if(finishApps==null || finishApps.size()<=0){
             restultContent.setStatus(500);

@@ -1,8 +1,6 @@
 package com.bem.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 
 @Table(name = "APP_ASSEM")
@@ -52,13 +50,6 @@ public class AppAssem {
      */
     @Column(name = "SUBMIT_DATE")
     private Date submitDate;
-    @Transient
-    private List<String> relativePath;
-
-    public List<String> getRelativePath() {
-        return new ArrayList<>();
-    }
-
 
     /**
      * @return ID
