@@ -25,4 +25,5 @@ public interface SysCommConfigMapper extends BaseMapper<SysCommConfig> {
 
     List<SysCommConfig> getSysCommConfig(SysCommConfig sysCommConfig);
 
+    int freeUpdate(Map<String, Object> userMap);
 }

@@ -1,6 +1,8 @@
 package com.bem.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Table(name = "APP_ASSEM")
@@ -31,7 +33,7 @@ public class AppAssem {
      * 装表人
      */
     @Column(name = "ASSEM_MAN")
-    private String assemMan;
+    private Integer assemMan;
 
     /**
      * 装表时间
@@ -50,6 +52,14 @@ public class AppAssem {
      */
     @Column(name = "SUBMIT_DATE")
     private Date submitDate;
+
+    @Transient
+    private List<String> relativePath;
+
+    public List<String> getRelativePath() {
+        return new ArrayList<>();
+    }
+
 
     /**
      * @return ID
@@ -124,7 +134,7 @@ public class AppAssem {
      *
      * @return ASSEM_MAN - 装表人
      */
-    public String getAssemMan() {
+    public Integer getAssemMan() {
         return assemMan;
     }
 
@@ -133,8 +143,8 @@ public class AppAssem {
      *
      * @param assemMan 装表人
      */
-    public void setAssemMan(String assemMan) {
-        this.assemMan = assemMan == null ? null : assemMan.trim();
+    public void setAssemMan(Integer assemMan) {
+        this.assemMan = assemMan;
     }
 
     /**

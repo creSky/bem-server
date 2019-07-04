@@ -50,6 +50,14 @@ public class ActivitiController {
     @Autowired
     private AppDeclareInfoMapper appDeclareInfoMapper;
 
+    @Autowired
+    private AppCompeleteMapper appCompeleteMapper;
+
+    @Autowired
+    private AppAssemMapper appAssemMapper;
+
+
+
 
     @RequestMapping(value = "/getTaskList")
     @ResponseBody
@@ -57,14 +65,18 @@ public class ActivitiController {
         RestultContent restultContent = new RestultContent();
         List<Map<String, Object>> taskMap = new ArrayList<>();
         Map<String, Object> userMap = new HashMap<>();
+        JSONObject userRight = JSONObject.parseObject(userRightJson);
         //获得用户信息
         userMap.put("userId", BemCommonUtil.getOpeartorId(userRightJson));
         //userMap.put("roleIds","1");
         userMap.put("roleIds", BemCommonUtil.getOpeartorRoleIds(userRightJson));
-        userMap.put("businessPlaceCode",BemCommonUtil.getOpeartorDeptIds(userRightJson));
+        userMap.put("userDepts",BemCommonUtil.getOpeartorDeptIds(userRightJson));
+
+        userMap.put("businessPlaceCode",userRight.getString("businessPlaceCode"));
+        userMap.put("appNo",userRight.getString("appNo"));
+        userMap.put("userName",userRight.getString("userName"));
         taskMap = taskListService.selectUserByApp(userMap);
 
-        // System.out.println(result);
         restultContent.setStatus(200);
         restultContent.setData(taskMap);
         return restultContent;
@@ -172,14 +184,19 @@ public class ActivitiController {
         JSONObject hignOrlow = JSONObject.parseObject(processInstanceIdJson);
         List<Map<String, Object>> finishApps = new ArrayList<>();
         Map<String,Object> userMap=new HashMap<>();
-        userMap.put("businessPlaceCode",BemCommonUtil.getOpeartorDeptIds(processInstanceIdJson));
+        JSONObject userRight = JSONObject.parseObject(processInstanceIdJson);
+        userMap.put("userDepts",BemCommonUtil.getOpeartorDeptIds(processInstanceIdJson));
+        userMap.put("businessPlaceCode",userRight.getString("businessPlaceCode"));
+        userMap.put("appNo",userRight.getString("appNo"));
+        userMap.put("userName",userRight.getString("userName"));
         if ("high".equals(hignOrlow.getString("val"))){
             finishApps = taskListService.queryHighFinishApp(userMap);
         }else{
             finishApps = taskListService.queryLowFinishApp(userMap);
         }
         if(finishApps==null || finishApps.size()<=0){
-            restultContent.setStatus(500);
+            restultContent.setStatus(200);
+            restultContent.setData(finishApps);
             restultContent.setErrorMsg("无完成数据");
             return restultContent;
         }
@@ -191,21 +208,40 @@ public class ActivitiController {
                         finishApps.get(i).put("submitDate", finishTasks.get(j).get("endTime"));
                         break;
                     case "bem-f1-p19":
-                        finishApps.get(i).put("powerSupplyDate", finishTasks.get(j).get("endTime"));
+                        AppCircumstanceExample appCircumstanceExample = new AppCircumstanceExample();
+                        AppCircumstanceExample.Criteria circumCriteria = appCircumstanceExample.createCriteria();
+                        circumCriteria.andProcessInstanceIdEqualTo(Long.parseLong(finishTasks.get(j).get("processInstanceId").toString()));
+                        List<AppCircumstance> returnAppCircumstance = new ArrayList<>();
+                        returnAppCircumstance = appCircumstanceMapper.selectByExample(appCircumstanceExample);
+                        finishApps.get(i).put("powerSupplyDate", returnAppCircumstance.get(0).getPowerSupplyDate());
                         break;
                     case "bem-f1-p9":
-                        finishApps.get(i).put("constructionDate", finishTasks.get(j).get("endTime"));
+                        AppCompeleteExample appCompeleteExample = new AppCompeleteExample();
+                        AppCompeleteExample.Criteria compeleteCriteria = appCompeleteExample.createCriteria();
+                        compeleteCriteria.andProcessInstanceIdEqualTo(Long.parseLong(finishTasks.get(j).get("processInstanceId").toString()));
+                        List<AppCompelete> returnAppCompelete = new ArrayList<>();
+                        returnAppCompelete = appCompeleteMapper.selectByExample(appCompeleteExample);
+                        finishApps.get(i).put("constructionDate", returnAppCompelete.get(0).getConstructionDate());
                         break;
                     case "bem-f1-p23":
-                        finishApps.get(i).put("assemDate", finishTasks.get(j).get("endTime"));
+                        AppAssemExample appAssemExample = new AppAssemExample();
+                        AppAssemExample.Criteria assemCriteria = appAssemExample.createCriteria();
+                        assemCriteria.andProcessInstanceIdEqualTo(Long.parseLong(finishTasks.get(j).get("processInstanceId").toString()));
+                        List<AppAssem> returnAppAssem = new ArrayList<>();
+                        returnAppAssem = appAssemMapper.selectByExample(appAssemExample);
+                        finishApps.get(i).put("assemDate", returnAppAssem.get(0).getAssemDate());
                         break;
                     case "bem-f1-p22":
                         finishApps.get(i).put("assemDateDY", finishTasks.get(j).get("endTime"));
                         break;
                     case "bem-f1-p21":
-                        finishApps.get(i).put("assemDateDY", finishTasks.get(j).get("endTime"));
+                        AppAssemExample appAssemExample21 = new AppAssemExample();
+                        AppAssemExample.Criteria assemCriteria21 = appAssemExample21.createCriteria();
+                        assemCriteria21.andProcessInstanceIdEqualTo(Long.parseLong(finishTasks.get(j).get("processInstanceId").toString()));
+                        List<AppAssem> returnAppAssem21 = new ArrayList<>();
+                        returnAppAssem21 = appAssemMapper.selectByExample(appAssemExample21);
+                        finishApps.get(i).put("assemDateDY", returnAppAssem21.get(0).getAssemDate());
                         break;
-
                 }
             }
 
@@ -216,11 +252,32 @@ public class ActivitiController {
 
     }
 
+
+    /**
+     * 已完结任务时间
+     */
+    @RequestMapping("/queryFinishAppDage")
+    @ResponseBody
+    public RestultContent queryFinishAppDage(@RequestBody(required = false) String processInstanceIdJson) {
+        RestultContent restultContent = new RestultContent();
+        JSONObject hignOrlow = JSONObject.parseObject(processInstanceIdJson);
+        List<Map<String, Object>> finishApps = new ArrayList<>();
+        Map<String,Object> userMap=new HashMap<>();
+        JSONObject userRight = JSONObject.parseObject(processInstanceIdJson);
+        userMap.put("userDepts",BemCommonUtil.getOpeartorDeptIds(processInstanceIdJson));
+        userMap.put("appNo",userRight.getString("appNo"));
+        userMap.put("userName",userRight.getString("userName"));
+        finishApps = taskListService.queryFinishAppDate(userMap);
+        restultContent.setStatus(200);
+        restultContent.setData(finishApps);
+        return restultContent;
+
+    }
+
     @RequestMapping("/stopProcessInstance")
     @ResponseBody
     public void stopProcessInstance(String processInstanceId) {
         activitiService.stopProcessInstance(processInstanceId);
-
     }
 
     @RequestMapping("/isEnd")
@@ -265,5 +322,7 @@ public class ActivitiController {
         restultContent.setStatus(200);
         return restultContent;
     }
+
+
 
 }

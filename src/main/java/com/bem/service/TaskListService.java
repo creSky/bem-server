@@ -25,6 +25,11 @@ public class TaskListService {
         return taskListMapper.queryHistoricTask(processInstanceId);
     }
 
+    public List<Map<String,Object>> queryFinishAppDate(Map<String, Object> userMap){
+        return taskListMapper.queryFinishAppDate(userMap);
+
+    }
+
     public List<Map<String,Object>> queryHighFinishApp(Map<String, Object> userMap){
         return taskListMapper.queryHighFinishApp(userMap);
 

@@ -365,62 +365,62 @@ public class AppAssemExample {
             return (Criteria) this;
         }
 
-        public Criteria andAssemManEqualTo(String value) {
+        public Criteria andAssemManEqualTo(Integer value) {
             addCriterion("ASSEM_MAN =", value, "assemMan");
             return (Criteria) this;
         }
 
-        public Criteria andAssemManNotEqualTo(String value) {
+        public Criteria andAssemManNotEqualTo(Integer value) {
             addCriterion("ASSEM_MAN <>", value, "assemMan");
             return (Criteria) this;
         }
 
-        public Criteria andAssemManGreaterThan(String value) {
+        public Criteria andAssemManGreaterThan(Integer value) {
             addCriterion("ASSEM_MAN >", value, "assemMan");
             return (Criteria) this;
         }
 
-        public Criteria andAssemManGreaterThanOrEqualTo(String value) {
+        public Criteria andAssemManGreaterThanOrEqualTo(Integer value) {
             addCriterion("ASSEM_MAN >=", value, "assemMan");
             return (Criteria) this;
         }
 
-        public Criteria andAssemManLessThan(String value) {
+        public Criteria andAssemManLessThan(Integer value) {
             addCriterion("ASSEM_MAN <", value, "assemMan");
             return (Criteria) this;
         }
 
-        public Criteria andAssemManLessThanOrEqualTo(String value) {
+        public Criteria andAssemManLessThanOrEqualTo(Integer value) {
             addCriterion("ASSEM_MAN <=", value, "assemMan");
             return (Criteria) this;
         }
 
-        public Criteria andAssemManLike(String value) {
+        public Criteria andAssemManLike(Integer value) {
             addCriterion("ASSEM_MAN like", value, "assemMan");
             return (Criteria) this;
         }
 
-        public Criteria andAssemManNotLike(String value) {
+        public Criteria andAssemManNotLike(Integer value) {
             addCriterion("ASSEM_MAN not like", value, "assemMan");
             return (Criteria) this;
         }
 
-        public Criteria andAssemManIn(List<String> values) {
+        public Criteria andAssemManIn(List<Integer> values) {
             addCriterion("ASSEM_MAN in", values, "assemMan");
             return (Criteria) this;
         }
 
-        public Criteria andAssemManNotIn(List<String> values) {
+        public Criteria andAssemManNotIn(List<Integer> values) {
             addCriterion("ASSEM_MAN not in", values, "assemMan");
             return (Criteria) this;
         }
 
-        public Criteria andAssemManBetween(String value1, String value2) {
+        public Criteria andAssemManBetween(Integer value1, Integer value2) {
             addCriterion("ASSEM_MAN between", value1, value2, "assemMan");
             return (Criteria) this;
         }
 
-        public Criteria andAssemManNotBetween(String value1, String value2) {
+        public Criteria andAssemManNotBetween(Integer value1, Integer value2) {
             addCriterion("ASSEM_MAN not between", value1, value2, "assemMan");
             return (Criteria) this;
         }

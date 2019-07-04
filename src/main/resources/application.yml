@@ -13,7 +13,7 @@ spring:
   application:
     name: bem-server
   datasource:
-    url: jdbc:mysql://172.21.29.55:3306/titan-bem?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://172.21.29.55:3306/titan-cim?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
     username: root
     password: df6100
     driver-class-name: com.mysql.jdbc.Driver

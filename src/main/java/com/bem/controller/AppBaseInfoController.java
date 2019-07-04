@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
@@ -35,6 +36,9 @@ public class AppBaseInfoController {
 
     @Autowired
     private SysSequenceNoService sysSequenceNoService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
 
     @RequestMapping("/getAppBaseInfo")
@@ -85,10 +89,18 @@ public class AppBaseInfoController {
         AppCustomerInfo appCustomerInfo = JSONObject.parseObject(appBaseInfoObject.getString("customer"), AppCustomerInfo.class);
         //用电户
         AppUserInfo appUserInfo = JSONObject.parseObject(appBaseInfoObject.getString("user"), AppUserInfo.class);
-        //生成户号
-        appUserInfo.setUserNo(sysSequenceNoService.getUserNo(appUserInfo.getBusinessPlaceCode()));
 
-        String appNo = sysSequenceNoService.getAppNo(appUserInfo.getBusinessPlaceCode());
+        //得到营业区域no
+        String businessNo = restTemplate.getForObject("http://AUTH-DATA/auth-data/dept/getDeptById/" + appUserInfo.getBusinessPlaceCode(),
+                String.class);
+
+        JSONObject preBusinessJson = JSONObject.parseObject(businessNo);
+
+        JSONObject businessJson = JSONObject.parseObject(preBusinessJson.getString("data"));
+        //生成户号
+        appUserInfo.setUserNo(sysSequenceNoService.getUserNo(businessJson.getString("deptId")));
+
+        String appNo = sysSequenceNoService.getAppNo(businessJson.getString("deptId"));
 
         //判断客户是否存在
         boolean isExists = appCustomerInfoMapper.existsWithPrimaryKey(appCustomerInfo);

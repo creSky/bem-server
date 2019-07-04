@@ -12,7 +12,7 @@
     <result column="USER_NO" jdbcType="VARCHAR" property="userNo" />
     <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
     <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
-    <result column="BUSINESS_PLACE_CODE" jdbcType="VARCHAR" property="businessPlaceCode" />
+    <result column="BUSINESS_PLACE_CODE" jdbcType="INTEGER" property="businessPlaceCode" />
     <result column="WRITE_SECT_NO" jdbcType="VARCHAR" property="writeSectNo" />
     <result column="ALL_CAPACITY" jdbcType="DECIMAL" property="allCapacity" />
     <result column="TRADE_TYPE" jdbcType="SMALLINT" property="tradeType" />
@@ -169,7 +169,7 @@
         ADDRESS = #{record.address,jdbcType=VARCHAR},
       </if>
       <if test="record.businessPlaceCode != null">
-        BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=VARCHAR},
+        BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=INTEGER},
       </if>
       <if test="record.writeSectNo != null">
         WRITE_SECT_NO = #{record.writeSectNo,jdbcType=VARCHAR},
@@ -245,7 +245,7 @@
       USER_NO = #{record.userNo,jdbcType=VARCHAR},
       USER_NAME = #{record.userName,jdbcType=VARCHAR},
       ADDRESS = #{record.address,jdbcType=VARCHAR},
-      BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=VARCHAR},
+      BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=INTEGER},
       WRITE_SECT_NO = #{record.writeSectNo,jdbcType=VARCHAR},
       ALL_CAPACITY = #{record.allCapacity,jdbcType=DECIMAL},
       TRADE_TYPE = #{record.tradeType,jdbcType=SMALLINT},

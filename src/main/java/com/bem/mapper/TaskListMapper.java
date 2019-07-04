@@ -23,6 +23,8 @@ public interface TaskListMapper extends BemBaseMapper<TaskList> {
 
     List<Map<String,Object>> queryLowFinishApp(Map<String, Object> userMap);
 
+    List<Map<String,Object>> queryFinishAppDate(Map<String, Object> userMap);
+
     List<Map<String,Object>> queryFinishTask(String processInstanceId);
 
 

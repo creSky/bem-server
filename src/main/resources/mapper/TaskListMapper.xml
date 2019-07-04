@@ -15,7 +15,7 @@
         LINK_MAN linkMan,
         CONTACT_INFORMATION contactInformation,
         REMARK remark,
-        STATUS status，
+        STATUS status,
         V.ID taskId,
         V.PROC_INST_ID processInstanceId,
         V.EXECUTION_ID executionId,
@@ -61,6 +61,7 @@
         USER_TYPE userType,
         REMARK remark,
         STATUS status,
+        A.BUSINESS_PLACE_CODE businessPlaceCode,
         V.ID taskId,
         V.PROC_INST_ID processInstanceId,
         V.EXECUTION_ID executionId,
@@ -72,9 +73,9 @@
         V.BUSINESS_KEY businessKey
         from V_TASKLIST V,APP_USER_INFO A
         WHERE V.BUSINESS_KEY = A.APP_NO
-        <if test="businessPlaceCode != null and businessPlaceCode.trim().length()>0">
+        <if test="userDepts != null and userDepts.trim().length()>0">
             AND A.BUSINESS_PLACE_CODE IN
-            <foreach collection="businessPlaceCode.split(',')" item="item" index="index" open="(" close=")" separator=",">
+            <foreach collection="userDepts.split(',')" item="item" index="index" open="(" close=")" separator=",">
                 #{item}
             </foreach>
         </if>
@@ -84,6 +85,15 @@
             <foreach collection="roleIds.split(',')" item="item" index="index" open="(" close=")" separator=",">
                 #{item}
             </foreach>
+        </if>
+        <if test="businessPlaceCode != null and  businessPlaceCode !=''">
+        AND  A.BUSINESS_PLACE_CODE = #{businessPlaceCode}
+        </if>
+        <if test="appNo != null and  appNo !=''">
+            AND  APP_NO like CONCAT('%',#{appNo},'%')
+        </if>
+        <if test="userName != null and  userName !=''">
+            AND  USER_NAME like CONCAT('%',#{userName},'%')
         </if>
         )
     </select>
@@ -148,18 +158,28 @@
             USER_NO userNo,
             USER_NAME userName,
             TEMPLATE_ID templateId,
-            APPLY_DATE applyDate
+            APPLY_DATE applyDate,
+            BUSINESS_PLACE_CODE businessPlaceCode
         FROM
             APP_USER_INFO info
         WHERE
              NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = info.PROC_INST_ID )
-            <if test="businessPlaceCode != null and businessPlaceCode.trim().length()>0">
+            <if test="userDepts != null and userDepts.trim().length()>0">
                 AND info.BUSINESS_PLACE_CODE IN
-                <foreach collection="businessPlaceCode.split(',')" item="item" index="index" open="(" close=")" separator=",">
+                <foreach collection="userDepts.split(',')" item="item" index="index" open="(" close=")" separator=",">
                     #{item}
                 </foreach>
             </if>
              AND info.template_id in (1,6)
+            <if test="businessPlaceCode != null and  businessPlaceCode !=''">
+                AND  BUSINESS_PLACE_CODE = #{businessPlaceCode}
+            </if>
+            <if test="appNo != null and  appNo !=''">
+                AND  APP_NO like CONCAT('%',#{appNo},'%')
+            </if>
+            <if test="userName != null and  userName !=''">
+                AND  USER_NAME like CONCAT('%',#{userName},'%')
+            </if>
     </select>
 
     <select id="queryLowFinishApp" parameterType="java.util.Map" resultType="java.util.Map">
@@ -170,18 +190,124 @@
             USER_NO userNo,
             USER_NAME userName,
             TEMPLATE_ID templateId,
-            APPLY_DATE applyDate
+            APPLY_DATE applyDate,
+            BUSINESS_PLACE_CODE businessPlaceCode
         FROM
             APP_USER_INFO info
         WHERE
              NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = info.PROC_INST_ID )
-            <if test="businessPlaceCode != null and businessPlaceCode.trim().length()>0">
+            <if test="userDepts != null and userDepts.trim().length()>0">
                 AND info.BUSINESS_PLACE_CODE IN
-                <foreach collection="businessPlaceCode.split(',')" item="item" index="index" open="(" close=")" separator=",">
+                <foreach collection="userDepts.split(',')" item="item" index="index" open="(" close=")" separator=",">
                     #{item}
                 </foreach>
             </if>
              AND info.template_id not in (1,6)
+            <if test="businessPlaceCode != null and  businessPlaceCode !=''">
+                AND  BUSINESS_PLACE_CODE = #{businessPlaceCode}
+            </if>
+            <if test="appNo != null and  appNo !=''">
+                AND  APP_NO like CONCAT('%',#{appNo},'%')
+            </if>
+            <if test="userName != null and  userName !=''">
+                AND  USER_NAME like CONCAT('%',#{userName},'%')
+            </if>
     </select>
 
+
+    <select id="queryFinishAppDate" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+	i.APP_NO appNo,
+	i.PROC_INST_ID processInstanceId,
+	i.BUSINESS_PLACE_CODE businessPlaceCode,
+	i.USER_NO userNo,
+	i.USER_NAME userName,
+	i.TEMPLATE_ID templateId,
+	i.APPLY_DATE applyDate,
+	i.BUSINESS_PLACE_CODE businessPlaceCode,
+    f1p1.id_ f1p1Id,
+	f1p1.endTime  submitDate,
+    f1p23.id_ f1p23Id,
+	f1p23.endTime  taskEndDate,
+	c.CONSTRUCTION_DATE constructionDate,
+	a.ASSEM_DATE assemDate,
+	r.POWER_SUPPLY_DATE powerSupplyDate,
+	r.CIRCUMSTANCE_DATE circumstanceDate
+FROM
+	APP_USER_INFO i
+LEFT JOIN (
+	SELECT
+        id_ ,
+		taskinst.PROC_INST_ID_ processInstanceId,
+		taskinst.TASK_DEF_KEY_ taskDefKey,
+		max(taskinst.START_TIME_) startTime,
+		max(taskinst.END_TIME_) endTime,
+		max(taskinst.NAME_) NAME
+	FROM
+		ACT_HI_TASKINST taskinst
+	WHERE
+		NOT EXISTS (
+			SELECT
+				1
+			FROM
+				ACT_RU_TASK act
+			WHERE
+				act.PROC_INST_ID_ = taskinst.PROC_INST_ID_
+		)
+	and TASK_DEF_KEY_='bem-f1-p1'
+	GROUP BY
+		taskinst.PROC_INST_ID_,
+		taskinst.TASK_DEF_KEY_
+) f1p1 on  i.PROC_INST_ID=f1p1.processInstanceId
+LEFT JOIN (
+	SELECT
+        id_ ,
+		taskinst.PROC_INST_ID_ processInstanceId,
+		taskinst.TASK_DEF_KEY_ taskDefKey,
+		max(taskinst.START_TIME_) startTime,
+		max(taskinst.END_TIME_) endTime,
+		max(taskinst.NAME_) NAME
+	FROM
+		ACT_HI_TASKINST taskinst
+	WHERE
+		NOT EXISTS (
+			SELECT
+				1
+			FROM
+				ACT_RU_TASK act
+			WHERE
+				act.PROC_INST_ID_ = taskinst.PROC_INST_ID_
+		)
+	and TASK_DEF_KEY_='bem-f1-p23'
+	GROUP BY
+		taskinst.PROC_INST_ID_,
+		taskinst.TASK_DEF_KEY_
+) f1p23 on  i.PROC_INST_ID=f1p23.processInstanceId
+left join  APP_COMPELETE c ON i.PROC_INST_ID=c.PROCESS_INSTANCE_ID
+left join APP_ASSEM a on i.PROC_INST_ID=a.PROCESS_INSTANCE_ID
+left join APP_CIRCUMSTANCE r on i.PROC_INST_ID=r.PROCESS_INSTANCE_ID
+WHERE
+	NOT EXISTS (
+		SELECT
+			1
+		FROM
+			ACT_RU_TASK act
+		WHERE
+			act.PROC_INST_ID_ = i.PROC_INST_ID
+	)
+        <if test="userDepts != null and userDepts.trim().length()>0">
+            AND i.BUSINESS_PLACE_CODE IN
+            <foreach collection="userDepts.split(',')" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+
+        <if test="appNo != null and  appNo !=''">
+            AND  i.app_No = #{appNo}
+        </if>
+
+        <if test="userName != null and  userName !=''">
+            AND  i.user_Name like CONCAT('%',#{userName},'%')
+        </if>
+    </select>
 </mapper>

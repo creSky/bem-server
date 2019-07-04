@@ -576,62 +576,52 @@ public class AppUserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeEqualTo(String value) {
+        public Criteria andBusinessPlaceCodeEqualTo(Integer value) {
             addCriterion("BUSINESS_PLACE_CODE =", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeNotEqualTo(String value) {
+        public Criteria andBusinessPlaceCodeNotEqualTo(Integer value) {
             addCriterion("BUSINESS_PLACE_CODE <>", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeGreaterThan(String value) {
+        public Criteria andBusinessPlaceCodeGreaterThan(Integer value) {
             addCriterion("BUSINESS_PLACE_CODE >", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeGreaterThanOrEqualTo(String value) {
+        public Criteria andBusinessPlaceCodeGreaterThanOrEqualTo(Integer value) {
             addCriterion("BUSINESS_PLACE_CODE >=", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeLessThan(String value) {
+        public Criteria andBusinessPlaceCodeLessThan(Integer value) {
             addCriterion("BUSINESS_PLACE_CODE <", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeLessThanOrEqualTo(String value) {
+        public Criteria andBusinessPlaceCodeLessThanOrEqualTo(Integer value) {
             addCriterion("BUSINESS_PLACE_CODE <=", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeLike(String value) {
-            addCriterion("BUSINESS_PLACE_CODE like", value, "businessPlaceCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andBusinessPlaceCodeNotLike(String value) {
-            addCriterion("BUSINESS_PLACE_CODE not like", value, "businessPlaceCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andBusinessPlaceCodeIn(List<String> values) {
+        public Criteria andBusinessPlaceCodeIn(List<Integer> values) {
             addCriterion("BUSINESS_PLACE_CODE in", values, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeNotIn(List<String> values) {
+        public Criteria andBusinessPlaceCodeNotIn(List<Integer> values) {
             addCriterion("BUSINESS_PLACE_CODE not in", values, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeBetween(String value1, String value2) {
+        public Criteria andBusinessPlaceCodeBetween(Integer value1, Integer value2) {
             addCriterion("BUSINESS_PLACE_CODE between", value1, value2, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeNotBetween(String value1, String value2) {
+        public Criteria andBusinessPlaceCodeNotBetween(Integer value1, Integer value2) {
             addCriterion("BUSINESS_PLACE_CODE not between", value1, value2, "businessPlaceCode");
             return (Criteria) this;
         }

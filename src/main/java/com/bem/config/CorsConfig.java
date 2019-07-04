@@ -15,7 +15,7 @@ import org.springframework.web.filter.CorsFilter;
  */
 @Configuration
 public class CorsConfig {
- /*   private CorsConfiguration buildConfig() {
+    private CorsConfiguration buildConfig() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("*"); // 1允许任何域名使用
         corsConfiguration.addAllowedHeader("*"); // 2允许任何头
@@ -28,5 +28,5 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", buildConfig()); // 4
         return new CorsFilter(source);
-    }*/
+    }
 }
