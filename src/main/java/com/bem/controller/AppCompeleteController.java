@@ -81,6 +81,15 @@ public class AppCompeleteController {
         List<AppFile> appFiles = appFileService.upload(appCompeleteJson);
         AppCompelete appCompelete = JSONObject.parseObject(appCompeleteJson, AppCompelete.class);
         RestultContent restultContent = new RestultContent();
+        //关键数据校验
+        VerificationDomain verificationDomain=JSONObject.parseObject(appCompeleteJson, VerificationDomain.class);
+        String verificationData= BemCommonUtil.verificationData(verificationDomain);
+        if(!"200".equals(verificationData)){
+            restultContent.setStatus(300);
+            restultContent.setErrorMsg("关键数据缺失");
+            return restultContent;
+        }
+
         boolean isExist = appCompeleteMapper.existsWithPrimaryKey(appCompelete);
         appCompelete.setSubmitDate(new Date());
         appCompelete.setCreateMan(new Integer(BemCommonUtil.getOpeartorId(appCompeleteJson)));

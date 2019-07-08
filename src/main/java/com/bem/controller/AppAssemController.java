@@ -82,6 +82,15 @@ public class AppAssemController {
         List<AppFile> appFiles = appFileService.upload(appAssemJson);
         AppAssem appAssem = JSONObject.parseObject(appAssemJson, AppAssem.class);
         RestultContent restultContent = new RestultContent();
+        VerificationDomain verificationDomain=JSONObject.parseObject(appAssemJson, VerificationDomain.class);
+        //关键数据校验
+        String verificationData= BemCommonUtil.verificationData(verificationDomain);
+        if(!"200".equals(verificationData)){
+            restultContent.setStatus(300);
+            restultContent.setErrorMsg("关键数据缺失");
+            return restultContent;
+        }
+
         boolean isExist = appAssemMapper.existsWithPrimaryKey(appAssem);
         appAssem.setSubmitDate(new Date());
         if (isExist) {
@@ -109,15 +118,30 @@ public class AppAssemController {
     public RestultContent saveCirAndAssem(@RequestBody String saveCirAndAssemJson) throws Exception {
         JSONObject saveCirAndcompelete = JSONObject.parseObject(saveCirAndAssemJson);
         //保存文件和装表信息
-        Map<String, Object> returnMaps =new HashMap<>();
-        if(saveCirAndcompelete.getString("appAssem")!=null && !"".equals(saveCirAndcompelete.getString("appAssem"))){
+        Map<String, Object> returnMaps = new HashMap<>();
+        if (saveCirAndcompelete.getString("appAssem") != null && !"".equals(saveCirAndcompelete.getString("appAssem"))) {
             RestultContent appAssem = save(saveCirAndcompelete.getString("appAssem"));
+            //关键参数缺失
+            if(!"200".equals(appAssem.getStatus())){
+                return appAssem;
+            }
             returnMaps = (Map<String, Object>) appAssem.getData();
 
         }
         //保存现场勘察信息
         AppCircumstance appCircumstance = JSONObject.parseObject(saveCirAndcompelete.getString("appCircumstance"), AppCircumstance.class);
         RestultContent restultContent = new RestultContent();
+
+        //关键数据校验
+        VerificationDomain verificationDomain=JSONObject.parseObject(saveCirAndcompelete.getString("appCircumstance"), VerificationDomain.class);
+        String verificationData= BemCommonUtil.verificationData(verificationDomain);
+        if(!"200".equals(verificationData)){
+            restultContent.setStatus(300);
+            restultContent.setErrorMsg("关键数据缺失");
+            return restultContent;
+        }
+
+
         boolean isExist = appCircumstanceMapper.existsWithPrimaryKey(appCircumstance);
         appCircumstance.setCreateDate(new Date());
         appCircumstance.setCreateMan(new Integer(BemCommonUtil.getOpeartorId(saveCirAndAssemJson)));
@@ -129,7 +153,7 @@ public class AppAssemController {
             appCircumstance.setSubmitDate(new Date());
             appCircumstanceMapper.insertSelective(appCircumstance);
         }
-        returnMaps.put("appCircumstance",appCircumstance);
+        returnMaps.put("appCircumstance", appCircumstance);
         restultContent.setStatus(200);
         restultContent.setData(returnMaps);
         return restultContent;
@@ -143,8 +167,8 @@ public class AppAssemController {
     @RequestMapping("/getCirAndAssem")
     @ResponseBody
     public RestultContent getCirAndAssem(@RequestBody String getCirAndAssemJson) throws Exception {
-        RestultContent cirAndAssem=getAppAssem(getCirAndAssemJson);
-        Map<String,Object> returnMap= (Map<String, Object>) cirAndAssem.getData();
+        RestultContent cirAndAssem = getAppAssem(getCirAndAssemJson);
+        Map<String, Object> returnMap = (Map<String, Object>) cirAndAssem.getData();
         AppCircumstance appCircumstance = JSONObject.parseObject(getCirAndAssemJson, AppCircumstance.class);
         List<AppCircumstance> returnAppCircumstance = new ArrayList<>();
         RestultContent restultContent = new RestultContent();
@@ -155,9 +179,9 @@ public class AppAssemController {
         returnAppCircumstance = appCircumstanceMapper.selectByExample(appCircumstanceExample);
         restultContent.setStatus(200);
         if (null != returnAppCircumstance && returnAppCircumstance.size() > 0) {
-            returnMap.put("appCircumstance",returnAppCircumstance.get(0));
-        }else{
-            returnMap.put("appCircumstance",appCircumstance );
+            returnMap.put("appCircumstance", returnAppCircumstance.get(0));
+        } else {
+            returnMap.put("appCircumstance", appCircumstance);
         }
         restultContent.setData(returnMap);
         restultContent.setStatus(200);

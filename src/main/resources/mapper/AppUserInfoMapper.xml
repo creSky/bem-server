@@ -12,7 +12,7 @@
     <result column="USER_NO" jdbcType="VARCHAR" property="userNo" />
     <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
     <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
-    <result column="BUSINESS_PLACE_CODE" jdbcType="INTEGER" property="businessPlaceCode" />
+    <result column="BUSINESS_PLACE_CODE" jdbcType="VARCHAR" property="businessPlaceCode" />
     <result column="WRITE_SECT_NO" jdbcType="VARCHAR" property="writeSectNo" />
     <result column="ALL_CAPACITY" jdbcType="DECIMAL" property="allCapacity" />
     <result column="TRADE_TYPE" jdbcType="SMALLINT" property="tradeType" />
@@ -32,6 +32,7 @@
     <result column="PROC_INST_ID" jdbcType="VARCHAR" property="procInstId" />
     <result column="APPLY_DATE" jdbcType="TIMESTAMP" property="applyDate" />
     <result column="PHONE_NUMBER" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="APP_STATUS" jdbcType="VARCHAR" property="appStatus" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -104,7 +105,7 @@
     ID, APP_NO, TEMPLATE_ID, CUSTOMER_ID, USER_NO, USER_NAME, ADDRESS, BUSINESS_PLACE_CODE, 
     WRITE_SECT_NO, ALL_CAPACITY, TRADE_TYPE, ELEC_TYPE, VOLT_LEVEL_TYPE, MS_MODE_TYPE, 
     LOAD_TYPE, IS_HIGH_TYPE, TEMP_TYPE, CREDIT_RANK_TYPE, WRITE_TYPE, USER_TYPE, REMARK, 
-    STATUS, CREATE_DATE, SUBMIT_DATE, PROC_INST_ID, APPLY_DATE, PHONE_NUMBER
+    STATUS, CREATE_DATE, SUBMIT_DATE, PROC_INST_ID, APPLY_DATE, PHONE_NUMBER, APP_STATUS
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppUserInfoExample" resultMap="BaseResultMap">
     <!--
@@ -169,7 +170,7 @@
         ADDRESS = #{record.address,jdbcType=VARCHAR},
       </if>
       <if test="record.businessPlaceCode != null">
-        BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=INTEGER},
+        BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=VARCHAR},
       </if>
       <if test="record.writeSectNo != null">
         WRITE_SECT_NO = #{record.writeSectNo,jdbcType=VARCHAR},
@@ -228,6 +229,9 @@
       <if test="record.phoneNumber != null">
         PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
       </if>
+      <if test="record.appStatus != null">
+        APP_STATUS = #{record.appStatus,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -245,7 +249,7 @@
       USER_NO = #{record.userNo,jdbcType=VARCHAR},
       USER_NAME = #{record.userName,jdbcType=VARCHAR},
       ADDRESS = #{record.address,jdbcType=VARCHAR},
-      BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=INTEGER},
+      BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=VARCHAR},
       WRITE_SECT_NO = #{record.writeSectNo,jdbcType=VARCHAR},
       ALL_CAPACITY = #{record.allCapacity,jdbcType=DECIMAL},
       TRADE_TYPE = #{record.tradeType,jdbcType=SMALLINT},
@@ -264,7 +268,8 @@
       SUBMIT_DATE = #{record.submitDate,jdbcType=TIMESTAMP},
       PROC_INST_ID = #{record.procInstId,jdbcType=VARCHAR},
       APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
-      PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR}
+      PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
+      APP_STATUS = #{record.appStatus,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

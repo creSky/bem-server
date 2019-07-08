@@ -2,6 +2,9 @@ package com.bem.util;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.bem.common.RestultContent;
+import com.bem.domain.VerificationDomain;
+import org.apache.commons.lang.StringUtils;
 
 public class BemCommonUtil {
 
@@ -76,6 +79,28 @@ public class BemCommonUtil {
         ouJObj.putAll(addJObj);
         return ouJObj.toString();
     }
+    //流程关键数据校验
+    public static String verificationData(VerificationDomain verificationDomain){
+        String restultStatus = "200";
+        //判断关键参数
+        if ((verificationDomain.getAppId() == "") ||
+                ("".equals(verificationDomain.getAppId())) ||
+                (verificationDomain.getProcessInstanceId().toString() == "") ||
+                ("".equals(verificationDomain.getProcessInstanceId().toString()))){
+            restultStatus="300";
+        }
+        return restultStatus;
+    }
 
+
+    //判断String能否转化成数字
+    public static boolean isNumeric(String... param){
+        for (String s : param) {
+            if (!StringUtils.isNumeric(s)){
+                return false;
+            }
+        }
+        return true;
+    }
 
 }

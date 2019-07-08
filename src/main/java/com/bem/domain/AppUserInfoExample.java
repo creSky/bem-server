@@ -576,52 +576,62 @@ public class AppUserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeEqualTo(Integer value) {
+        public Criteria andBusinessPlaceCodeEqualTo(String value) {
             addCriterion("BUSINESS_PLACE_CODE =", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeNotEqualTo(Integer value) {
+        public Criteria andBusinessPlaceCodeNotEqualTo(String value) {
             addCriterion("BUSINESS_PLACE_CODE <>", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeGreaterThan(Integer value) {
+        public Criteria andBusinessPlaceCodeGreaterThan(String value) {
             addCriterion("BUSINESS_PLACE_CODE >", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andBusinessPlaceCodeGreaterThanOrEqualTo(String value) {
             addCriterion("BUSINESS_PLACE_CODE >=", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeLessThan(Integer value) {
+        public Criteria andBusinessPlaceCodeLessThan(String value) {
             addCriterion("BUSINESS_PLACE_CODE <", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeLessThanOrEqualTo(Integer value) {
+        public Criteria andBusinessPlaceCodeLessThanOrEqualTo(String value) {
             addCriterion("BUSINESS_PLACE_CODE <=", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeIn(List<Integer> values) {
+        public Criteria andBusinessPlaceCodeLike(String value) {
+            addCriterion("BUSINESS_PLACE_CODE like", value, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeNotLike(String value) {
+            addCriterion("BUSINESS_PLACE_CODE not like", value, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeIn(List<String> values) {
             addCriterion("BUSINESS_PLACE_CODE in", values, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeNotIn(List<Integer> values) {
+        public Criteria andBusinessPlaceCodeNotIn(List<String> values) {
             addCriterion("BUSINESS_PLACE_CODE not in", values, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeBetween(Integer value1, Integer value2) {
+        public Criteria andBusinessPlaceCodeBetween(String value1, String value2) {
             addCriterion("BUSINESS_PLACE_CODE between", value1, value2, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeNotBetween(Integer value1, Integer value2) {
+        public Criteria andBusinessPlaceCodeNotBetween(String value1, String value2) {
             addCriterion("BUSINESS_PLACE_CODE not between", value1, value2, "businessPlaceCode");
             return (Criteria) this;
         }
@@ -1803,6 +1813,76 @@ public class AppUserInfoExample {
 
         public Criteria andPhoneNumberNotBetween(String value1, String value2) {
             addCriterion("PHONE_NUMBER not between", value1, value2, "phoneNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusIsNull() {
+            addCriterion("APP_STATUS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusIsNotNull() {
+            addCriterion("APP_STATUS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusEqualTo(String value) {
+            addCriterion("APP_STATUS =", value, "appStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusNotEqualTo(String value) {
+            addCriterion("APP_STATUS <>", value, "appStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusGreaterThan(String value) {
+            addCriterion("APP_STATUS >", value, "appStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("APP_STATUS >=", value, "appStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusLessThan(String value) {
+            addCriterion("APP_STATUS <", value, "appStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusLessThanOrEqualTo(String value) {
+            addCriterion("APP_STATUS <=", value, "appStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusLike(String value) {
+            addCriterion("APP_STATUS like", value, "appStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusNotLike(String value) {
+            addCriterion("APP_STATUS not like", value, "appStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusIn(List<String> values) {
+            addCriterion("APP_STATUS in", values, "appStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusNotIn(List<String> values) {
+            addCriterion("APP_STATUS not in", values, "appStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusBetween(String value1, String value2) {
+            addCriterion("APP_STATUS between", value1, value2, "appStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppStatusNotBetween(String value1, String value2) {
+            addCriterion("APP_STATUS not between", value1, value2, "appStatus");
             return (Criteria) this;
         }
     }

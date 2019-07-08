@@ -76,7 +76,7 @@ public class SysSequenceNoService {
             updateSys.setMaxNo(sysSequenceNo.getMaxNo() + 1);
             maxNo = sysSequenceNo.getMaxNo() + 1;
             format = sysSequenceNo.getFormat();
-            sysSequenceNoMapper.updateByPrimaryKey(updateSys);
+            sysSequenceNoMapper.updateByPrimaryKeySelective(updateSys);
         }
         if (null != format) {
             DecimalFormat df = new DecimalFormat(format);

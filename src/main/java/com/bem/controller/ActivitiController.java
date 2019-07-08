@@ -1,25 +1,26 @@
 package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bem.common.HistoricTaskInstanceEntityExt;
 import com.bem.common.RestultContent;
 import com.bem.domain.*;
 import com.bem.mapper.*;
 import com.bem.service.ActivitiService;
 import com.bem.service.TaskListService;
 import com.bem.util.BemCommonUtil;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.engine.history.HistoricActivityInstance;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.activiti.engine.history.HistoricTaskInstance;
-import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
-import org.activiti.engine.runtime.ProcessInstance;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -56,29 +57,41 @@ public class ActivitiController {
     @Autowired
     private AppAssemMapper appAssemMapper;
 
-
-
+    @Autowired
+    private AppUserInfoMapper appUserInfoMapper;
 
     @RequestMapping(value = "/getTaskList")
     @ResponseBody
     public RestultContent getTaskList(@RequestBody(required = false) String userRightJson) throws Exception {
         RestultContent restultContent = new RestultContent();
-        List<Map<String, Object>> taskMap = new ArrayList<>();
+        //List<Map<String, Object>> taskMap = new ArrayList<>();
         Map<String, Object> userMap = new HashMap<>();
         JSONObject userRight = JSONObject.parseObject(userRightJson);
         //获得用户信息
         userMap.put("userId", BemCommonUtil.getOpeartorId(userRightJson));
         //userMap.put("roleIds","1");
         userMap.put("roleIds", BemCommonUtil.getOpeartorRoleIds(userRightJson));
-        userMap.put("userDepts",BemCommonUtil.getOpeartorDeptIds(userRightJson));
+        userMap.put("userDepts", BemCommonUtil.getOpeartorDeptIds(userRightJson));
 
-        userMap.put("businessPlaceCode",userRight.getString("businessPlaceCode"));
-        userMap.put("appNo",userRight.getString("appNo"));
-        userMap.put("userName",userRight.getString("userName"));
-        taskMap = taskListService.selectUserByApp(userMap);
+        userMap.put("businessPlaceCode", userRight.getString("businessPlaceCode"));
+        userMap.put("appNo", userRight.getString("appNo"));
+        userMap.put("userName", userRight.getString("userName"));
+        //分页 gql
+        boolean isNumeric = BemCommonUtil.isNumeric(userRight.getString("pageCurrent"), userRight.getString("pageSize"));
+        PageInfo<Map<String, Object>> pageInfo = null;
+        if(isNumeric){
+            pageInfo =
+                    PageHelper.startPage(userRight.getInteger("pageCurrent"), userRight.getInteger("pageSize")).
+                            doSelectPageInfo(() -> this.taskListService.selectUserByApp(userMap));
+        }else{
+             pageInfo =
+                    PageHelper.startPage(1, 10).
+                            doSelectPageInfo(() -> this.taskListService.selectUserByApp(userMap));
+        }
 
+        //taskMap=pageInfo.getList();
         restultContent.setStatus(200);
-        restultContent.setData(taskMap);
+        restultContent.setData(pageInfo);
         return restultContent;
     }
 
@@ -102,6 +115,11 @@ public class ActivitiController {
             appPassAdvicecriteria.andAppIdEqualTo(jsonObject.getString("appId")).
                     andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
             List<AppPassAdvice> appPassAdvices = appPassAdviceMapper.selectByExample(appPassAdviceExample);
+            if (appPassAdvices.size() < 1) {
+                restultContent.setStatus(300);
+                restultContent.setErrorMsg("该环节没有办理无法提交");
+                return restultContent;
+            }
             candidate.put("haveProject", 0 == appPassAdvices.size() ? null : appPassAdvices.get(0).getHavaProject());
         }
 
@@ -112,6 +130,11 @@ public class ActivitiController {
             appDispatchcriteria.andAppIdEqualTo(jsonObject.getString("appId")).
                     andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
             List<AppDispatch> appDispatches = appDispatchMapper.selectByExample(appDispatchExample);
+            if (appDispatches.size() < 1) {
+                restultContent.setStatus(300);
+                restultContent.setErrorMsg("该环节没有办理无法提交");
+                return restultContent;
+            }
             if (0 < appDispatches.size()) {
                 candidate.put("dispatchMan",
                         appDispatches.stream().map(p -> p.getDispatchMan().toString()).collect(Collectors.toList()));
@@ -125,6 +148,11 @@ public class ActivitiController {
             appCircumstancecriteria.andAppIdEqualTo(jsonObject.getString("appId")).
                     andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
             List<AppCircumstance> appCircumstances = appCircumstanceMapper.selectByExample(appCircumstanceExample);
+            if (appCircumstances.size() < 1) {
+                restultContent.setStatus(300);
+                restultContent.setErrorMsg("该环节没有办理无法提交");
+                return restultContent;
+            }
             candidate.put("haveProject", 0 == appCircumstances.size() ? null :
                     appCircumstances.get(0).getHavaProject());
             candidate.put("isAccess", 0 == appCircumstances.size() ? null : appCircumstances.get(0).getIsAccess());
@@ -140,12 +168,57 @@ public class ActivitiController {
             appDeclareInfoExampleCriteria.andAppIdEqualTo(jsonObject.getString("appId")).
                     andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
             List<AppDeclareInfo> appDeclareInfos = appDeclareInfoMapper.selectByExample(appDeclareInfoExample);
+            if (appDeclareInfos.size() < 1) {
+                restultContent.setStatus(300);
+                restultContent.setErrorMsg("该环节没有办理无法提交");
+                return restultContent;
+            }
             candidate.put("designType", 0 == appDeclareInfos.size() ? null : appDeclareInfos.get(0).getDesignType());
 
         }
+
+        //低压装表接电
+        if ("bem-f1-p21".equals(jsonObject.get("taskDefKey"))) {
+            AppAssemExample appAssemExample = new AppAssemExample();
+            com.bem.domain.AppAssemExample.Criteria appAssemExampleCriteria =
+                    appAssemExample.createCriteria();
+            appAssemExampleCriteria.andAppIdEqualTo(jsonObject.getString("appId")).
+                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+            List<AppAssem> appAssems = appAssemMapper.selectByExample(appAssemExample);
+
+
+            AppCircumstanceExample appCircumstanceExample = new AppCircumstanceExample();
+            com.bem.domain.AppCircumstanceExample.Criteria appCircumstanceExampleCriteria =
+                    appCircumstanceExample.createCriteria();
+            appCircumstanceExampleCriteria.andAppIdEqualTo(jsonObject.getString("appId")).
+                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+            List<AppCircumstance> appCircumstances = appCircumstanceMapper.selectByExample(appCircumstanceExample);
+
+            if (appAssems.size() < 1 || appCircumstances.size() < 1) {
+                restultContent.setStatus(300);
+                restultContent.setErrorMsg("该环节没有办理无法提交");
+                return restultContent;
+            }
+        }
+
+
         //提交设置当前提交人为办理人
         activitiService.setAssignee(jsonObject.getString("taskId"), BemCommonUtil.getOpeartorId(submitJson));
         activitiService.compleTask(jsonObject.getString("taskId"), candidate);
+
+        //判断流程是否结束 加结束标识
+        AppUserInfo appUserInfo = new AppUserInfo();
+        if (null != jsonObject.getString("processInstanceId") &&
+                activitiService.isEnd(jsonObject.getString("processInstanceId"))) {
+            appUserInfo.setId(new Long(jsonObject.getString("appId")));
+            appUserInfo.setAppStatus("C");
+        } else {
+            appUserInfo.setId(new Long(jsonObject.getString("appId")));
+            appUserInfo.setAppStatus("Y");
+        }
+        appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
+
+
         restultContent.setStatus(200);
         return restultContent;
     }
@@ -183,18 +256,41 @@ public class ActivitiController {
         RestultContent restultContent = new RestultContent();
         JSONObject hignOrlow = JSONObject.parseObject(processInstanceIdJson);
         List<Map<String, Object>> finishApps = new ArrayList<>();
-        Map<String,Object> userMap=new HashMap<>();
+        Map<String, Object> userMap = new HashMap<>();
+        PageInfo<Map<String, Object>> pageInfo = null;
         JSONObject userRight = JSONObject.parseObject(processInstanceIdJson);
-        userMap.put("userDepts",BemCommonUtil.getOpeartorDeptIds(processInstanceIdJson));
-        userMap.put("businessPlaceCode",userRight.getString("businessPlaceCode"));
-        userMap.put("appNo",userRight.getString("appNo"));
-        userMap.put("userName",userRight.getString("userName"));
-        if ("high".equals(hignOrlow.getString("val"))){
-            finishApps = taskListService.queryHighFinishApp(userMap);
-        }else{
-            finishApps = taskListService.queryLowFinishApp(userMap);
+        userMap.put("userDepts", BemCommonUtil.getOpeartorDeptIds(processInstanceIdJson));
+        userMap.put("businessPlaceCode", userRight.getString("businessPlaceCode"));
+        userMap.put("appNo", userRight.getString("appNo"));
+        userMap.put("userName", userRight.getString("userName"));
+        //判断分页传入值是不是数字类型
+        //出现传参问题 默认查前十条
+        boolean isNumeric = BemCommonUtil.isNumeric(userRight.getString("pageCurrent"), userRight.getString("pageSize"));
+        if ("high".equals(hignOrlow.getString("val"))) {
+            if(isNumeric){
+                pageInfo =
+                        PageHelper.startPage(userRight.getInteger("pageCurrent"), userRight.getInteger("pageSize")).
+                                doSelectPageInfo(() -> this.taskListService.queryHighFinishApp(userMap));
+            }else{
+                pageInfo =
+                        PageHelper.startPage(1, 10).doSelectPageInfo(() -> this.taskListService.queryHighFinishApp(userMap));
+            }
+            finishApps = pageInfo.getList();
+            //finishApps=taskListService.queryHighFinishApp(userMap);
+        } else {
+            if(isNumeric){
+                pageInfo =
+                        PageHelper.startPage(userRight.getInteger("pageCurrent"), userRight.getInteger("pageSize")).
+                                doSelectPageInfo(() -> this.taskListService.queryLowFinishApp(userMap));
+            }else{
+                pageInfo =
+                        PageHelper.startPage(1, 10).
+                                doSelectPageInfo(() -> this.taskListService.queryLowFinishApp(userMap));
+            }
+            finishApps = pageInfo.getList();
+            //finishApps=taskListService.queryLowFinishApp(userMap);
         }
-        if(finishApps==null || finishApps.size()<=0){
+        if (finishApps == null || finishApps.size() <= 0) {
             restultContent.setStatus(200);
             restultContent.setData(finishApps);
             restultContent.setErrorMsg("无完成数据");
@@ -213,7 +309,9 @@ public class ActivitiController {
                         circumCriteria.andProcessInstanceIdEqualTo(Long.parseLong(finishTasks.get(j).get("processInstanceId").toString()));
                         List<AppCircumstance> returnAppCircumstance = new ArrayList<>();
                         returnAppCircumstance = appCircumstanceMapper.selectByExample(appCircumstanceExample);
-                        finishApps.get(i).put("powerSupplyDate", returnAppCircumstance.get(0).getPowerSupplyDate());
+                        if (returnAppCircumstance.size() >= 1) {
+                            finishApps.get(i).put("powerSupplyDate", returnAppCircumstance.get(0).getPowerSupplyDate());
+                        }
                         break;
                     case "bem-f1-p9":
                         AppCompeleteExample appCompeleteExample = new AppCompeleteExample();
@@ -221,7 +319,9 @@ public class ActivitiController {
                         compeleteCriteria.andProcessInstanceIdEqualTo(Long.parseLong(finishTasks.get(j).get("processInstanceId").toString()));
                         List<AppCompelete> returnAppCompelete = new ArrayList<>();
                         returnAppCompelete = appCompeleteMapper.selectByExample(appCompeleteExample);
-                        finishApps.get(i).put("constructionDate", returnAppCompelete.get(0).getConstructionDate());
+                        if (returnAppCompelete.size() >= 1) {
+                            finishApps.get(i).put("constructionDate", returnAppCompelete.get(0).getConstructionDate());
+                        }
                         break;
                     case "bem-f1-p23":
                         AppAssemExample appAssemExample = new AppAssemExample();
@@ -229,7 +329,9 @@ public class ActivitiController {
                         assemCriteria.andProcessInstanceIdEqualTo(Long.parseLong(finishTasks.get(j).get("processInstanceId").toString()));
                         List<AppAssem> returnAppAssem = new ArrayList<>();
                         returnAppAssem = appAssemMapper.selectByExample(appAssemExample);
-                        finishApps.get(i).put("assemDate", returnAppAssem.get(0).getAssemDate());
+                        if (returnAppAssem.size() >= 1) {
+                            finishApps.get(i).put("assemDate", returnAppAssem.get(0).getAssemDate());
+                        }
                         break;
                     case "bem-f1-p22":
                         finishApps.get(i).put("assemDateDY", finishTasks.get(j).get("endTime"));
@@ -240,14 +342,17 @@ public class ActivitiController {
                         assemCriteria21.andProcessInstanceIdEqualTo(Long.parseLong(finishTasks.get(j).get("processInstanceId").toString()));
                         List<AppAssem> returnAppAssem21 = new ArrayList<>();
                         returnAppAssem21 = appAssemMapper.selectByExample(appAssemExample21);
-                        finishApps.get(i).put("assemDateDY", returnAppAssem21.get(0).getAssemDate());
+                        if (returnAppAssem21.size() >= 1) {
+                            finishApps.get(i).put("assemDateDY", returnAppAssem21.get(0).getAssemDate());
+                        }
                         break;
                 }
             }
 
         }
+        pageInfo.setList(finishApps);
         restultContent.setStatus(200);
-        restultContent.setData(finishApps);
+        restultContent.setData(pageInfo);
         return restultContent;
 
     }
@@ -262,11 +367,11 @@ public class ActivitiController {
         RestultContent restultContent = new RestultContent();
         JSONObject hignOrlow = JSONObject.parseObject(processInstanceIdJson);
         List<Map<String, Object>> finishApps = new ArrayList<>();
-        Map<String,Object> userMap=new HashMap<>();
+        Map<String, Object> userMap = new HashMap<>();
         JSONObject userRight = JSONObject.parseObject(processInstanceIdJson);
-        userMap.put("userDepts",BemCommonUtil.getOpeartorDeptIds(processInstanceIdJson));
-        userMap.put("appNo",userRight.getString("appNo"));
-        userMap.put("userName",userRight.getString("userName"));
+        userMap.put("userDepts", BemCommonUtil.getOpeartorDeptIds(processInstanceIdJson));
+        userMap.put("appNo", userRight.getString("appNo"));
+        userMap.put("userName", userRight.getString("userName"));
         finishApps = taskListService.queryFinishAppDate(userMap);
         restultContent.setStatus(200);
         restultContent.setData(finishApps);
@@ -274,10 +379,27 @@ public class ActivitiController {
 
     }
 
+    //流程作废
     @RequestMapping("/stopProcessInstance")
     @ResponseBody
-    public void stopProcessInstance(String processInstanceId) {
-        activitiService.stopProcessInstance(processInstanceId);
+    public RestultContent stopProcessInstance(@RequestBody(required = false) String stopJson) {
+        RestultContent restultContent=new RestultContent();
+        JSONObject stopObject = JSONObject.parseObject(stopJson);
+        AppUserInfoExample appUserInfoExample = new AppUserInfoExample();
+        try {
+            Long appId = new Long(stopObject.getString("appId"));
+            AppUserInfo appUserInfo = new AppUserInfo();
+            appUserInfo.setId(appId);
+            appUserInfo.setAppStatus("N");
+            appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
+            activitiService.stopProcessInstance(stopObject.getString("processInstanceId"), BemCommonUtil.getOpeartorId(stopJson));
+            restultContent.setStatus(200);
+            restultContent.setData(appUserInfo);
+        }catch(Exception e){
+            restultContent.setStatus(300);
+            restultContent.setErrorMsg("作废失败");
+        }
+        return restultContent;
     }
 
     @RequestMapping("/isEnd")
@@ -322,7 +444,6 @@ public class ActivitiController {
         restultContent.setStatus(200);
         return restultContent;
     }
-
 
 
 }

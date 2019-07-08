@@ -64,7 +64,7 @@ public class AppFileContorller {
     @ResponseBody
     public RestultContent delete(@RequestBody String fileJson, HttpServletResponse httpServletResponse) {
         AppFile appFile = JSONObject.parseObject(fileJson, AppFile.class);
-        appFileMapper.delete(appFile);
+        appFileMapper.deleteByPrimaryKey(appFile);
         RestultContent restultContent=new RestultContent();
         restultContent.setStatus(200);
         restultContent.setData(appFile);

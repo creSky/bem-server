@@ -27,6 +27,9 @@
         V.BUSINESS_KEY businessKey
         from V_TASKLIST V,APP_CUSTOMER_INFO A
         WHERE V.BUSINESS_KEY = A.APP_NO
+        AND EXISTS ( SELECT 1 FROM APP_USER_INFO act WHERE
+        act.APP_NO = a.APP_NO and
+        IFNULL(act.APP_STATUS,'Y')  &lt;&gt; 'N')
         AND (V.USER_ID = #{userId}
         <if test="roleIds != null and roleIds.trim().length()>0">
             OR V.GROUP_ID IN
@@ -73,6 +76,7 @@
         V.BUSINESS_KEY businessKey
         from V_TASKLIST V,APP_USER_INFO A
         WHERE V.BUSINESS_KEY = A.APP_NO
+        AND IFNULL(A.APP_STATUS,'Y') &lt;&gt; 'N'
         <if test="userDepts != null and userDepts.trim().length()>0">
             AND A.BUSINESS_PLACE_CODE IN
             <foreach collection="userDepts.split(',')" item="item" index="index" open="(" close=")" separator=",">
@@ -130,6 +134,7 @@
         a.EXECUTION_ID_ executionId
         from ACT_HI_TASKINST a,APP_USER_INFO b
         where a.PROC_INST_ID_=b.PROC_INST_ID
+        AND IFNULL(b.APP_STATUS,'Y') &lt;&gt; 'N'
         AND b.PROC_INST_ID = #{processInstanceId}
         order by a.START_TIME_ desc
     </select>
@@ -145,6 +150,9 @@
             ACT_HI_TASKINST taskinst
         WHERE
              NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = taskinst.PROC_INST_ID_ )
+             AND EXISTS ( SELECT 1 FROM APP_USER_INFO act WHERE
+              act.PROC_INST_ID = taskinst.PROC_INST_ID_ and
+             IFNULL(act.APP_STATUS,'Y')  &lt;&gt; 'N')
              AND taskinst.PROC_INST_ID_= #{processInstanceId}
          group by taskinst.PROC_INST_ID_,taskinst.TASK_DEF_KEY_
 
@@ -164,6 +172,7 @@
             APP_USER_INFO info
         WHERE
              NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = info.PROC_INST_ID )
+             AND IFNULL(info.APP_STATUS,'Y')  &lt;&gt; 'N'
             <if test="userDepts != null and userDepts.trim().length()>0">
                 AND info.BUSINESS_PLACE_CODE IN
                 <foreach collection="userDepts.split(',')" item="item" index="index" open="(" close=")" separator=",">
@@ -196,6 +205,7 @@
             APP_USER_INFO info
         WHERE
              NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = info.PROC_INST_ID )
+             AND IFNULL(info.APP_STATUS,'Y')  &lt;&gt; 'N'
             <if test="userDepts != null and userDepts.trim().length()>0">
                 AND info.BUSINESS_PLACE_CODE IN
                 <foreach collection="userDepts.split(',')" item="item" index="index" open="(" close=")" separator=",">
@@ -295,6 +305,7 @@ WHERE
 		WHERE
 			act.PROC_INST_ID_ = i.PROC_INST_ID
 	)
+        AND IFNULL(i.APP_STATUS,'Y')  &lt;&gt; 'N'
         <if test="userDepts != null and userDepts.trim().length()>0">
             AND i.BUSINESS_PLACE_CODE IN
             <foreach collection="userDepts.split(',')" item="item" index="index" open="(" close=")" separator=",">

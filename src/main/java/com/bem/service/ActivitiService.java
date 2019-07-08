@@ -134,16 +134,16 @@ public class ActivitiService {
 
 
     // 查询流程是否结束
-    public void isEnd(String pid) {
+    public boolean isEnd(String pid) {
         // 查询对象
         ProcessInstanceQuery createProcessInstanceQuery = runtimeService.createProcessInstanceQuery();
         // 根据id
         ProcessInstance singleResult = createProcessInstanceQuery.processInstanceId(pid).singleResult();
         // 如果singleResult找到说明流程还没有结束
         if (singleResult != null) {
-            System.out.println("流程未结束或不存在");
+            return false;
         } else {
-            System.out.println("流程结束");
+            return true;
         }
 
     }
@@ -209,8 +209,8 @@ public class ActivitiService {
      *
      * @param processInstanceId
      */
-    public void stopProcessInstance(String processInstanceId) {
-        runtimeService.deleteProcessInstance(processInstanceId, "结束流程");
+    public void stopProcessInstance(String processInstanceId,String managerId) {
+        runtimeService.deleteProcessInstance(processInstanceId, "流程由"+managerId+"作废");
     }
 
     /**

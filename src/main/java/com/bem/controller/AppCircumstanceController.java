@@ -65,6 +65,17 @@ public class AppCircumstanceController {
     public RestultContent save(@RequestBody String appCircumstanceJson) throws Exception {
         AppCircumstance appCircumstance = JSONObject.parseObject(appCircumstanceJson, AppCircumstance.class);
         RestultContent restultContent = new RestultContent();
+
+        //关键数据校验
+        VerificationDomain verificationDomain=JSONObject.parseObject(appCircumstanceJson, VerificationDomain.class);
+        String verificationData= BemCommonUtil.verificationData(verificationDomain);
+        if(!"200".equals(verificationData)){
+            restultContent.setStatus(300);
+            restultContent.setErrorMsg("关键数据缺失");
+            return restultContent;
+        }
+
+
         boolean isExist = appCircumstanceMapper.existsWithPrimaryKey(appCircumstance);
         appCircumstance.setCreateDate(new Date());
         appCircumstance.setCreateMan(new Integer(BemCommonUtil.getOpeartorId(appCircumstanceJson)));

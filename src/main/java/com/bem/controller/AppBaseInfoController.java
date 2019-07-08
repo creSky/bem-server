@@ -111,6 +111,8 @@ public class AppBaseInfoController {
             appCustomerInfoMapper.insertSelective(appCustomerInfo);
         }
 
+        //增加流程运行标识
+        appUserInfo.setAppStatus("Y");
         //判断用电户是否存在
         isExists = appUserInfoMapper.existsWithPrimaryKey(appUserInfo);
         if (isExists) {

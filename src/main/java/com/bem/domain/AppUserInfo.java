@@ -53,7 +53,7 @@ public class AppUserInfo {
      * 营业区域
      */
     @Column(name = "BUSINESS_PLACE_CODE")
-    private Integer businessPlaceCode;
+    private String businessPlaceCode;
 
     /**
      * 抄表区段
@@ -161,10 +161,16 @@ public class AppUserInfo {
     private Date applyDate;
 
     /**
-     * 联系电话（短信发送凭证）
+     * 电话
      */
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
+
+    /**
+     * 流程状态标识 Y正在运行 N作废 C是已完成
+     */
+    @Column(name = "APP_STATUS")
+    private String appStatus;
 
     /**
      * 获取ID
@@ -297,7 +303,7 @@ public class AppUserInfo {
      *
      * @return BUSINESS_PLACE_CODE - 营业区域
      */
-    public Integer getBusinessPlaceCode() {
+    public String getBusinessPlaceCode() {
         return businessPlaceCode;
     }
 
@@ -306,8 +312,8 @@ public class AppUserInfo {
      *
      * @param businessPlaceCode 营业区域
      */
-    public void setBusinessPlaceCode(Integer businessPlaceCode) {
-        this.businessPlaceCode = businessPlaceCode;
+    public void setBusinessPlaceCode(String businessPlaceCode) {
+        this.businessPlaceCode = businessPlaceCode == null ? null : businessPlaceCode.trim();
     }
 
     /**
@@ -631,20 +637,38 @@ public class AppUserInfo {
     }
 
     /**
-     * 获取联系电话（短信发送凭证）
+     * 获取电话
      *
-     * @return PHONE_NUMBER - 联系电话（短信发送凭证）
+     * @return PHONE_NUMBER - 电话
      */
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     /**
-     * 设置联系电话（短信发送凭证）
+     * 设置电话
      *
-     * @param phoneNumber 联系电话（短信发送凭证）
+     * @param phoneNumber 电话
      */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber == null ? null : phoneNumber.trim();
+    }
+
+    /**
+     * 获取流程状态标识 Y正在运行 N作废 C是已完成
+     *
+     * @return APP_STATUS - 流程状态标识 Y正在运行 N作废 C是已完成
+     */
+    public String getAppStatus() {
+        return appStatus;
+    }
+
+    /**
+     * 设置流程状态标识 Y正在运行 N作废 C是已完成
+     *
+     * @param appStatus 流程状态标识 Y正在运行 N作废 C是已完成
+     */
+    public void setAppStatus(String appStatus) {
+        this.appStatus = appStatus == null ? null : appStatus.trim();
     }
 }
