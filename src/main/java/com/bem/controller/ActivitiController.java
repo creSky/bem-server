@@ -5,6 +5,7 @@ import com.bem.common.RestultContent;
 import com.bem.domain.*;
 import com.bem.mapper.*;
 import com.bem.service.ActivitiService;
+import com.bem.service.AppFileService;
 import com.bem.service.TaskListService;
 import com.bem.util.BemCommonUtil;
 import com.github.pagehelper.PageHelper;
@@ -59,6 +60,9 @@ public class ActivitiController {
 
     @Autowired
     private AppUserInfoMapper appUserInfoMapper;
+
+    @Autowired
+    private AppFileService appFileService;
 
     @RequestMapping(value = "/getTaskList")
     @ResponseBody
@@ -199,6 +203,16 @@ public class ActivitiController {
                 restultContent.setErrorMsg("该环节没有办理无法提交");
                 return restultContent;
             }
+            //判断文件
+            boolean existsFile=
+                    appFileService.existsFile(jsonObject.getString("appId"),
+                            jsonObject.getString("taskId"));
+            if(!existsFile){
+                restultContent.setStatus(300);
+                restultContent.setErrorMsg("该环节没有上传文件");
+                return restultContent;
+            }
+
         }
 
 

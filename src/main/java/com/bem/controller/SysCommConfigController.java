@@ -1,6 +1,8 @@
 package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.bem.common.RestultContent;
 import com.bem.config.Page;
 import com.bem.domain.SysCommConfig;
 import com.bem.mapper.SysCommConfigMapper;
@@ -14,7 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/sysCommConfig")
@@ -50,4 +55,30 @@ public class SysCommConfigController {
         System.out.println(result);
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/freeUpdate")
+    public RestultContent freeUpdate(@RequestBody(required = false)String Json) {
+        RestultContent restultContent = new RestultContent();
+        JSONObject sqlObject = JSONObject.parseObject(Json);
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("tableName",sqlObject.getString("tableName"));
+        userMap.put("value",sqlObject.getDate("value"));
+        userMap.put("key",sqlObject.getString("key"));
+        List<Map<String,String>> itemsList=sqlObject.getObject("items", new TypeReference<List<Map<String,String>>>(){});
+
+
+        StringBuffer sb=new StringBuffer();
+        for (int i = 0; i <itemsList.size() ; i++) {
+            sb.append(" and "+itemsList.get(i).get("whereKey")+" = "+ itemsList.get(i).get("whereValue") );
+        }
+        userMap.put("where",sb.toString());
+        if("".equals(sb.toString())){
+            restultContent.setStatus(500);
+            return restultContent;
+        }
+        this.sysCommConfigMapper.freeUpdate(userMap);
+        restultContent.setStatus(200);
+        return restultContent;
+    }
 }

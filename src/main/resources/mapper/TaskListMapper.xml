@@ -100,6 +100,7 @@
             AND  USER_NAME like CONCAT('%',#{userName},'%')
         </if>
         )
+        ORDER BY A.APPLY_DATE desc
     </select>
 
     <select id="queryHistoricTask" parameterType="java.lang.String" resultType="java.util.Map">
@@ -189,6 +190,8 @@
             <if test="userName != null and  userName !=''">
                 AND  USER_NAME like CONCAT('%',#{userName},'%')
             </if>
+        order by info.APPLY_DATE desc
+
     </select>
 
     <select id="queryLowFinishApp" parameterType="java.util.Map" resultType="java.util.Map">
@@ -222,6 +225,7 @@
             <if test="userName != null and  userName !=''">
                 AND  USER_NAME like CONCAT('%',#{userName},'%')
             </if>
+        order by info.APPLY_DATE desc
     </select>
 
 

@@ -122,7 +122,7 @@ public class AppAssemController {
         if (saveCirAndcompelete.getString("appAssem") != null && !"".equals(saveCirAndcompelete.getString("appAssem"))) {
             RestultContent appAssem = save(saveCirAndcompelete.getString("appAssem"));
             //关键参数缺失
-            if(!"200".equals(appAssem.getStatus())){
+            if(!"200".equals(appAssem.getStatus().toString())){
                 return appAssem;
             }
             returnMaps = (Map<String, Object>) appAssem.getData();

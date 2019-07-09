@@ -3,7 +3,10 @@ package com.bem.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bem.common.RestultContent;
+import com.bem.domain.AppAssem;
+import com.bem.domain.AppAssemExample;
 import com.bem.domain.AppFile;
+import com.bem.domain.AppFileExample;
 import com.bem.mapper.AppFileMapper;
 import com.bem.util.BemCommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +73,18 @@ public class AppFileService {
         AppFile appFile = JSONObject.parseObject(fileJson, AppFile.class);
         AppFile returnFile = appFileMapper.selectOne(appFile);
         return null;
+    }
+    //判断改环节有没有文件
+    public boolean existsFile(String appId,String taskId){
+        AppFileExample appFileExample = new AppFileExample();
+        com.bem.domain.AppFileExample.Criteria appFileCriteria =
+                appFileExample.createCriteria();
+        appFileCriteria.andAppIdEqualTo(new Long(appId)).
+                andTaskIdEqualTo(taskId);
+        List<AppFile> appFiles=appFileMapper.selectByExample(appFileExample);
+        if(appFiles.size()>=1){
+            return true;
+        }
+        return false;
     }
 }
