@@ -406,7 +406,10 @@ public class ActivitiController {
             appUserInfo.setId(appId);
             appUserInfo.setAppStatus("N");
             appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
-            activitiService.stopProcessInstance(stopObject.getString("processInstanceId"), BemCommonUtil.getOpeartorId(stopJson));
+            //若已完成无法作废
+            if(!activitiService.isEnd(stopObject.getString("processInstanceId"))){
+                activitiService.stopProcessInstance(stopObject.getString("processInstanceId"), BemCommonUtil.getOpeartorId(stopJson));
+            }
             restultContent.setStatus(200);
             restultContent.setData(appUserInfo);
         }catch(Exception e){
