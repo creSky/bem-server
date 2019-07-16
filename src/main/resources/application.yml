@@ -8,12 +8,13 @@ eureka:
   client:
     serviceUrl:
       #注册中心的地址
-      defaultZone: http://172.20.100.55:7777/eureka/
+      defaultZone: http://10.1.0.192:7777/eureka/
+      #defaultZone: http://172.21.29.55:7777/eureka/
 spring:
   application:
     name: bem-server
   datasource:
-    url: jdbc:mysql://172.21.29.55:3306/titan-bem?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://10.1.0.192:3306/titan-bem?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
     username: root
     password: df6100
     driver-class-name: com.mysql.jdbc.Driver
@@ -53,6 +54,9 @@ logging:
   level:
     com.bem: DEBUG
   path: log
+  #日志最大保存的数量 一般一天生成一个日志
+  #file:
+    #max-history: 60
 
 pagehelper:
   helper-dialect: MYSQL

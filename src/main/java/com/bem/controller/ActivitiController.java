@@ -462,5 +462,13 @@ public class ActivitiController {
         return restultContent;
     }
 
+    @RequestMapping("/getWebStatus")
+    @ResponseBody
+    public String  getStatus(@RequestBody(required = false)String userNoJson) {
+        JSONObject userNoJSONObject = JSONObject.parseObject(userNoJson);
+
+        return null;
+    }
+
 
 }

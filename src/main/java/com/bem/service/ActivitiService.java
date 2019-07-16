@@ -200,7 +200,6 @@ public class ActivitiService {
                 .createHistoricTaskInstanceQuery()
                 .processInstanceId(processInstanceId).finished().orderByHistoricTaskInstanceStartTime().asc()
                 .list();
-
         return list;
     }
 
@@ -213,6 +212,10 @@ public class ActivitiService {
         runtimeService.deleteProcessInstance(processInstanceId, "流程由"+managerId+"作废");
     }
 
+    //根据流程实例id查taskid
+    public String getTaskByProInsId(String processInstanceId){
+        return taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult().getId();
+    }
     /**
      * 根据环节id 查历史流程变量
      *

@@ -239,8 +239,7 @@
 	i.TEMPLATE_ID templateId,
 	i.APPLY_DATE applyDate,
 	i.BUSINESS_PLACE_CODE businessPlaceCode,
-    f1p1.id_ f1p1Id,
-	f1p1.endTime  submitDate,
+	i.submitDate  submitDate,
     f1p23.id_ f1p23Id,
 	f1p23.endTime  taskEndDate,
 	c.CONSTRUCTION_DATE constructionDate,
@@ -249,30 +248,6 @@
 	r.CIRCUMSTANCE_DATE circumstanceDate
 FROM
 	APP_USER_INFO i
-LEFT JOIN (
-	SELECT
-        id_ ,
-		taskinst.PROC_INST_ID_ processInstanceId,
-		taskinst.TASK_DEF_KEY_ taskDefKey,
-		max(taskinst.START_TIME_) startTime,
-		max(taskinst.END_TIME_) endTime,
-		max(taskinst.NAME_) NAME
-	FROM
-		ACT_HI_TASKINST taskinst
-	WHERE
-		NOT EXISTS (
-			SELECT
-				1
-			FROM
-				ACT_RU_TASK act
-			WHERE
-				act.PROC_INST_ID_ = taskinst.PROC_INST_ID_
-		)
-	and TASK_DEF_KEY_='bem-f1-p1'
-	GROUP BY
-		taskinst.PROC_INST_ID_,
-		taskinst.TASK_DEF_KEY_
-) f1p1 on  i.PROC_INST_ID=f1p1.processInstanceId
 LEFT JOIN (
 	SELECT
         id_ ,

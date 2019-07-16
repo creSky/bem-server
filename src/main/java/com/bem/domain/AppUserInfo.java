@@ -133,9 +133,6 @@ public class AppUserInfo {
     @Column(name = "REMARK")
     private String remark;
 
-    @Column(name = "STATUS")
-    private Short status;
-
     /**
      * 创建时间（短信通知依据时间）
      */
@@ -163,7 +160,7 @@ public class AppUserInfo {
     /**
      * 电话
      */
-    @Column(name = "PHONE_NUMBER")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     /**
@@ -171,6 +168,12 @@ public class AppUserInfo {
      */
     @Column(name = "APP_STATUS")
     private String appStatus;
+
+    /**
+     * 环节id
+     */
+    @Column(name = "TASK_ID")
+    private String taskId;
 
     /**
      * 获取ID
@@ -551,20 +554,6 @@ public class AppUserInfo {
     }
 
     /**
-     * @return STATUS
-     */
-    public Short getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status
-     */
-    public void setStatus(Short status) {
-        this.status = status;
-    }
-
-    /**
      * 获取创建时间（短信通知依据时间）
      *
      * @return CREATE_DATE - 创建时间（短信通知依据时间）
@@ -639,7 +628,7 @@ public class AppUserInfo {
     /**
      * 获取电话
      *
-     * @return PHONE_NUMBER - 电话
+     * @return phone_number - 电话
      */
     public String getPhoneNumber() {
         return phoneNumber;
@@ -670,5 +659,23 @@ public class AppUserInfo {
      */
     public void setAppStatus(String appStatus) {
         this.appStatus = appStatus == null ? null : appStatus.trim();
+    }
+
+    /**
+     * 获取环节id
+     *
+     * @return TASK_ID - 环节id
+     */
+    public String getTaskId() {
+        return taskId;
+    }
+
+    /**
+     * 设置环节id
+     *
+     * @param taskId 环节id
+     */
+    public void setTaskId(String taskId) {
+        this.taskId = taskId == null ? null : taskId.trim();
     }
 }

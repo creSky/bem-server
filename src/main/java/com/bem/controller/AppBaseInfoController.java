@@ -4,11 +4,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.bem.common.RestultContent;
 import com.bem.domain.AppCustomerInfo;
 import com.bem.domain.AppUserInfo;
+import com.bem.domain.AppWebLog;
 import com.bem.mapper.AppCustomerInfoMapper;
 import com.bem.mapper.AppUserInfoMapper;
+import com.bem.mapper.AppWebLogMapper;
 import com.bem.service.ActivitiService;
 import com.bem.service.SysSequenceNoService;
 import com.bem.util.BemCommonUtil;
+import com.bem.util.DateUtil;
+import com.bem.util.PropertiesUtil;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 @Controller
@@ -40,6 +48,9 @@ public class AppBaseInfoController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private AppWebLogMapper appWebLogMapper;
+
 
     @RequestMapping("/getAppBaseInfo")
     @ResponseBody
@@ -51,6 +62,12 @@ public class AppBaseInfoController {
         Map<String, Object> returnMap = new HashMap<>();
         returnMap.put("user", appUserInfo);
         returnMap.put("customer", appCustomerInfo);
+        //提取文件注释
+        /*returnMap.put("file", PropertiesUtil.post(PropertiesUtil.getValue(
+                "getWebFile"),
+                "user_no="+appUserInfo.getUserNo()
+                +"&template_id="+appUserInfo.getTemplateId(),
+                "utf-8",30);*/
         restultContent.setData(returnMap);
         restultContent.setStatus(200);
         return restultContent;
@@ -93,7 +110,6 @@ public class AppBaseInfoController {
         //得到营业区域no
         String businessNo = restTemplate.getForObject("http://AUTH-DATA/auth-data/dept/getDeptById/" + appUserInfo.getBusinessPlaceCode(),
                 String.class);
-
         JSONObject preBusinessJson = JSONObject.parseObject(businessNo);
 
         JSONObject businessJson = JSONObject.parseObject(preBusinessJson.getString("data"));
@@ -108,6 +124,7 @@ public class AppBaseInfoController {
             appCustomerInfoMapper.updateByPrimaryKeySelective(appCustomerInfo);
         } else {
             appCustomerInfo.setAppNo(appNo);
+            appCustomerInfo.setCreateDate(new Date());
             appCustomerInfoMapper.insertSelective(appCustomerInfo);
         }
 
@@ -122,12 +139,13 @@ public class AppBaseInfoController {
             appUserInfo.setId(appCustomerInfo.getId());
             appUserInfo.setAppNo(appNo);
             appUserInfo.setSubmitDate(new Date());
+            appUserInfo.setCreateDate(new Date());
             appUserInfo.setCustomerId(appCustomerInfo.getId());
             //启动流程
             ProcessInstance processInstance = activitiService.start(appUserInfo.getTemplateId().toString(),
                     appUserInfo.getAppNo());
-
             appUserInfo.setProcInstId(processInstance.getId());
+            appUserInfo.setTaskId(activitiService.getTaskByProInsId(processInstance.getId()));
             appUserInfoMapper.insertSelective(appUserInfo);
         }
         Map<String, Object> appBaseInfo = new HashMap<>();
@@ -138,5 +156,130 @@ public class AppBaseInfoController {
         return restultContent;
     }
 
+
+    //网站包装
+    @RequestMapping("/receiveFromWeb")
+    @ResponseBody
+    @Transactional
+    public RestultContent receiveFromWeb(@RequestBody(required = false) String webJson) {
+        RestultContent restultContent = new RestultContent();
+        JSONObject webJsonbject = JSONObject.parseObject(webJson);
+        AppUserInfo appUserInfo = new AppUserInfo();
+        appUserInfo.setUserName(webJsonbject.getString("account_name"));
+        appUserInfo.setAddress(webJsonbject.getString("power_address"));
+        appUserInfo.setTemplateId(new Integer(webJsonbject.getString("template_id")));
+        appUserInfo.setBusinessPlaceCode(webJsonbject.getString("business_place_code"));
+        appUserInfo.setPhoneNumber(webJsonbject.getString("contact_number"));
+        appUserInfo.setRemark(webJsonbject.getString("remark"));
+        appUserInfo.setApplyDate(DateUtil.stampToTime(webJsonbject.getString("create_time")));
+        appUserInfo.setSubmitDate(DateUtil.stampToTime(webJsonbject.getString("approval_time")));
+
+        AppCustomerInfo appCustomerInfo = new AppCustomerInfo();
+        appCustomerInfo.setCustomerName(webJsonbject.getString("account_name"));
+        appCustomerInfo.setAddress(webJsonbject.getString("power_address"));
+        appCustomerInfo.setCustomerNameSpell(PropertiesUtil.ToPinyin(webJsonbject.getString("account_name")));
+        appCustomerInfo.setAddressSpell(webJsonbject.getString("power_address"));
+        /*switch (webJsonbject.getString("template_id")){
+            case "1" :
+                appCustomerInfo.setCardType(new Short("6"));
+                break;
+            case "2" :
+                appCustomerInfo.setCardType(new Short("0"));
+                break;
+            default :
+                appCustomerInfo.setCardType(new Short("0"));
+                break;
+        }*/
+        if (null != webJsonbject.getString("template_id") && "1".equals(webJsonbject.getString("template_id"))) {
+            appCustomerInfo.setCardType(new Short("6"));
+        } else {
+            appCustomerInfo.setCardType(new Short("0"));
+        }
+        appCustomerInfo.setCardNo(webJsonbject.getString("id_number"));
+        appCustomerInfo.setLinkMan(webJsonbject.getString("agent_name"));
+        appCustomerInfo.setContactInformation(webJsonbject.getString("contact_number"));
+/*
+        "account_name":"czy","id_number":"12312312","power_address":"\u4efb\u52a1\u5206\u4e3a\u798f\u5c14\u6cd5\u4eba","contact_number":"","agent_name":"qweqw","status":"1","remarks":"","id":"1","approval_time":1563003055
+*/
+        Map<String, Object> appBaseInfo = new HashMap<>();
+        appBaseInfo.put("customer", appCustomerInfo);
+        appBaseInfo.put("user", appUserInfo);
+        String appCustomerInfoJson = JSONObject.toJSONString(appBaseInfo);
+        //保存日志
+        AppWebLog appWebLog = new AppWebLog();
+        appWebLog.setId(webJsonbject.getString("id"));
+        appWebLog.setTemplateId(webJsonbject.getString("template_id"));
+        appWebLog.setReceiveJson(webJson);
+        try {
+            restultContent = save(appCustomerInfoJson);
+            appWebLog.setOutJson(JSONObject.toJSONString(restultContent));
+            appWebLogMapper.insert(appWebLog);
+        } catch (Exception e) {
+            e.printStackTrace();
+            restultContent.setStatus(300);
+            restultContent.setErrorMsg("提交营销系统失败");
+        }
+        return restultContent;
+    }
+
+    /**
+     * post请求
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/getWebFile")
+    @ResponseBody
+    public  String getWebFile(String userNo,String templateId) throws Exception {
+        HttpURLConnection http = null;
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        StringBuffer result = new StringBuffer();
+        try {
+            URL url = new URL(PropertiesUtil.getValue("getWebFile"));
+            http = (HttpURLConnection) url.openConnection();
+            http.setDoInput(true);
+            http.setDoOutput(true);
+            http.setUseCaches(false);
+            http.setConnectTimeout(30 * 1000);// 设置连接超时
+            // 如果在建立连接之前超时期满，则会引发一个
+            // java.net.SocketTimeoutException。超时时间为零表示无穷大超时。
+            http.setReadTimeout(30 * 1000);// 设置读取超时
+            // 如果在数据可读取之前超时期满，则会引发一个
+            // java.net.SocketTimeoutException。超时时间为零表示无穷大超时。
+            http.setRequestMethod("POST");
+            http.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded; charset=utf-8");
+            http.connect();
+
+            outputStream = http.getOutputStream();
+            OutputStreamWriter osw = new OutputStreamWriter(outputStream,
+                    "utf-8");
+            osw.write("user_no="+userNo+"&template_id="+templateId);
+            osw.flush();
+            osw.close();
+
+            if (http.getResponseCode() == 200) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(http.getInputStream()));
+                String line;
+                while ((line = in.readLine()) != null) {
+                    result.append(line);
+                }
+                return result.toString();
+            } else {
+                throw new RuntimeException("http read [" + http.getResponseCode() + "]");
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (http != null)
+                http.disconnect();
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            if (outputStream != null) {
+                outputStream.close();
+            }
+        }
+    }
 
 }
