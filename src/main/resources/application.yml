@@ -8,17 +8,25 @@ eureka:
   client:
     serviceUrl:
       #注册中心的地址
-      defaultZone: http://10.1.0.192:7777/eureka/
-      #defaultZone: http://172.21.29.55:7777/eureka/
+      #defaultZone: http://172.20.100.29:7777/eureka/
+      defaultZone: http://172.21.29.55:7777/eureka/
 spring:
   application:
     name: bem-server
   datasource:
-    url: jdbc:mysql://10.1.0.192:3306/titan-bem?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
-    username: root
-    password: df6100
-    driver-class-name: com.mysql.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
+    master:
+      url: jdbc:mysql://172.21.29.55:3306/titan-bem?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+      username: root
+      password: df6100
+      driver-class-name: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+    cluster:
+    - key: slave1
+      url: jdbc:mysql://172.21.29.55:3306/titan-cim?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+      username: root
+      password: df6100
+      driver-class-name: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8

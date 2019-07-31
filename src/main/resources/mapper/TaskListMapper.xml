@@ -166,6 +166,7 @@
             USER_NAME userName,
             TEMPLATE_ID templateId,
             APPLY_DATE applyDate,
+            SUBMIT_DATE submitDate,
             BUSINESS_PLACE_CODE businessPlaceCode
         FROM
             APP_USER_INFO info
@@ -201,6 +202,7 @@
             USER_NAME userName,
             TEMPLATE_ID templateId,
             APPLY_DATE applyDate,
+            SUBMIT_DATE submitDate,
             BUSINESS_PLACE_CODE businessPlaceCode
         FROM
             APP_USER_INFO info
@@ -240,6 +242,8 @@
 	i.SUBMIT_DATE  submitDate,
     f1p23.id_ f1p23Id,
 	f1p23.endTime  taskEndDate,
+    f1p21.id_ f1p21Id,
+    f1p21.endTime  lowTaskEndDate,
 	c.CONSTRUCTION_DATE constructionDate,
 	a.ASSEM_DATE assemDate,
 	r.POWER_SUPPLY_DATE powerSupplyDate,
@@ -270,6 +274,30 @@ LEFT JOIN (
 		taskinst.PROC_INST_ID_,
 		taskinst.TASK_DEF_KEY_
 ) f1p23 on  i.PROC_INST_ID=f1p23.processInstanceId
+LEFT JOIN (
+SELECT
+    id_ ,
+    taskinst.PROC_INST_ID_ processInstanceId,
+    taskinst.TASK_DEF_KEY_ taskDefKey,
+    max(taskinst.START_TIME_) startTime,
+    max(taskinst.END_TIME_) endTime,
+    max(taskinst.NAME_) NAME
+    FROM
+    ACT_HI_TASKINST taskinst
+    WHERE
+    NOT EXISTS (
+    SELECT
+    1
+    FROM
+    ACT_RU_TASK act
+    WHERE
+    act.PROC_INST_ID_ = taskinst.PROC_INST_ID_
+    )
+    and TASK_DEF_KEY_='bem-f1-p21'
+    GROUP BY
+    taskinst.PROC_INST_ID_,
+    taskinst.TASK_DEF_KEY_
+) f1p21 on  i.PROC_INST_ID=f1p21.processInstanceId
 left join  APP_COMPELETE c ON i.PROC_INST_ID=c.PROCESS_INSTANCE_ID
 left join APP_ASSEM a on i.PROC_INST_ID=a.PROCESS_INSTANCE_ID
 left join APP_CIRCUMSTANCE r on i.PROC_INST_ID=r.PROCESS_INSTANCE_ID

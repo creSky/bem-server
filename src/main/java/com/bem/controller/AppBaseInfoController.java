@@ -134,6 +134,7 @@ public class AppBaseInfoController {
         isExists = appUserInfoMapper.existsWithPrimaryKey(appUserInfo);
         if (isExists) {
             appUserInfo.setSubmitDate(new Date());
+            appUserInfo.setCustomerId(appCustomerInfo.getId());
             appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
         } else {
             appUserInfo.setId(appCustomerInfo.getId());

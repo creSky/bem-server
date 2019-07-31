@@ -57,12 +57,11 @@ public class AppFileContorller {
 
     /**
      * @param fileJson
-     * @param httpServletResponse
      * @return
      */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public RestultContent delete(@RequestBody String fileJson, HttpServletResponse httpServletResponse) {
+    public RestultContent delete(@RequestBody String fileJson) {
         AppFile appFile = JSONObject.parseObject(fileJson, AppFile.class);
         appFileMapper.deleteByPrimaryKey(appFile);
         RestultContent restultContent=new RestultContent();

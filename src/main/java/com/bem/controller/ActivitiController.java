@@ -314,9 +314,9 @@ public class ActivitiController {
             List<Map<String, Object>> finishTasks = taskListService.queryFinishTask(finishApps.get(i).get("processInstanceId").toString());
             for (int j = 0; j < finishTasks.size(); j++) {
                 switch (finishTasks.get(j).get("taskDefKey").toString()) {
-                    case "bem-f1-p1":
+                    /*case "bem-f1-p1":
                         finishApps.get(i).put("submitDate", finishTasks.get(j).get("endTime"));
-                        break;
+                        break;*/
                     case "bem-f1-p19":
                         AppCircumstanceExample appCircumstanceExample = new AppCircumstanceExample();
                         AppCircumstanceExample.Criteria circumCriteria = appCircumstanceExample.createCriteria();
