@@ -163,13 +163,14 @@ public class AppBaseInfoController {
     @ResponseBody
     @Transactional
     public RestultContent receiveFromWeb(@RequestBody(required = false) String webJson) {
+        System.out.println("提交网站参数======================"+webJson);
         RestultContent restultContent = new RestultContent();
         JSONObject webJsonbject = JSONObject.parseObject(webJson);
         AppUserInfo appUserInfo = new AppUserInfo();
         appUserInfo.setUserName(webJsonbject.getString("account_name"));
         appUserInfo.setAddress(webJsonbject.getString("power_address"));
         appUserInfo.setTemplateId(new Integer(webJsonbject.getString("template_id")));
-        appUserInfo.setBusinessPlaceCode(webJsonbject.getString("business_place_code"));
+        appUserInfo.setBusinessPlaceCode(webJsonbject.getString("business_area"));
         appUserInfo.setPhoneNumber(webJsonbject.getString("contact_number"));
         appUserInfo.setRemark(webJsonbject.getString("remark"));
         appUserInfo.setApplyDate(DateUtil.stampToTime(webJsonbject.getString("create_time")));

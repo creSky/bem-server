@@ -1,13 +1,10 @@
 package com.bem.start;
 
 import com.bem.mutilDbConfig.DynamicDataSourceRegister;
-import com.bstek.ureport.console.UReportServlet;
 import org.activiti.spring.boot.SecurityAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,7 +19,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @MapperScan("com.bem.mapper")
 @Import({DynamicDataSourceRegister.class})
 @EnableTransactionManagement
-@ImportResource("classpath:ureport-console-context.xml")
+//@ImportResource("classpath:ureport-console-context.xml")
 public class BemApplication {
     @Bean
     @LoadBalanced
@@ -34,12 +31,12 @@ public class BemApplication {
         SpringApplication.run(BemApplication.class, args);
     }
 
-    @Bean
+   /* @Bean
     public ServletRegistrationBean ureportServlet() {
         ServletRegistrationBean bean =
                 new ServletRegistrationBean(new UReportServlet());
         bean.addUrlMappings("/ureport/*");
         return bean;
-    }
+    }*/
 
 }
