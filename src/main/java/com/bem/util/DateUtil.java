@@ -22,12 +22,12 @@ public class DateUtil {
         return returnList;
     }
 
-    /* //时间戳转换日期 */
+    /* //秒级时间戳转换日期 */
     public static Date stampToTime(String stamp) {
         //时间戳转化为Sting或Date
         SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Long time=new Long(stamp);
-        String d = format.format(time);
+        String d = format.format(time*1000);
         Date date =new Date();
         try {
             date=format.parse(d);

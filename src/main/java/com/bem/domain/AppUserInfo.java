@@ -208,7 +208,7 @@ public class AppUserInfo {
      * @param appNo 工作单号
      */
     public void setAppNo(String appNo) {
-        this.appNo = appNo == null ? null : appNo.trim();
+        this.appNo = appNo;
     }
 
     /**
