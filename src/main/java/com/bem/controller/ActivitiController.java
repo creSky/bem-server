@@ -8,6 +8,7 @@ import com.bem.service.ActivitiService;
 import com.bem.service.AppFileService;
 import com.bem.service.TaskListService;
 import com.bem.util.BemCommonUtil;
+import com.bem.util.PropertiesUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.activiti.engine.history.HistoricTaskInstance;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +64,13 @@ public class ActivitiController {
     private AppUserInfoMapper appUserInfoMapper;
 
     @Autowired
+    private AppCustomerInfoMapper appCustomerInfoMapper;
+
+    @Autowired
     private AppFileService appFileService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @RequestMapping(value = "/getTaskList")
     @ResponseBody
@@ -226,6 +234,19 @@ public class ActivitiController {
                 activitiService.isEnd(jsonObject.getString("processInstanceId"))) {
             appUserInfo.setId(new Long(jsonObject.getString("appId")));
             appUserInfo.setAppStatus("C");
+           /* //组装用户信息
+            AppUserInfo updateAppUserInfo =
+                    appUserInfoMapper.selectByPrimaryKey(jsonObject.getString("appId"));
+            AppCustomerInfo updateAppCustomer =
+                    appCustomerInfoMapper.selectByPrimaryKey(jsonObject.getString("appId"));
+            JSONObject postData = new JSONObject();
+            postData.put("userInfo", updateAppUserInfo);
+            postData.put("customerInfo", updateAppCustomer);
+
+            //发送到cim 更新档案
+            String result = restTemplate.postForObject(PropertiesUtil.getValue("bemAddReceive"), postData, String.class);
+
+            */
         } else {
             appUserInfo.setId(new Long(jsonObject.getString("appId")));
             appUserInfo.setAppStatus("Y");
@@ -273,6 +294,7 @@ public class ActivitiController {
         Map<String, Object> userMap = new HashMap<>();
         PageInfo<Map<String, Object>> pageInfo = null;
         JSONObject userRight = JSONObject.parseObject(processInstanceIdJson);
+        System.out.println("");
         userMap.put("userDepts", BemCommonUtil.getOpeartorDeptIds(processInstanceIdJson));
         userMap.put("businessPlaceCode", userRight.getString("businessPlaceCode"));
         userMap.put("appNo", userRight.getString("appNo"));

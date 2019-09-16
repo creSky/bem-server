@@ -83,10 +83,13 @@ public class AppBaseInfoController {
         List<AppCustomerInfo> taskMap = new ArrayList<>();
         Map<String, Object> userMap = new HashMap<>();
         taskMap = appCustomerInfoMapper.select(appCustomerInfo);
-
-        // System.out.println(result);
-        restultContent.setStatus(200);
         restultContent.setData(taskMap);
+        if (null == taskMap || taskMap.size() < 1) {
+            taskMap.clear();
+            taskMap.add(new AppCustomerInfo());
+            restultContent.setData(taskMap);
+        }
+        restultContent.setStatus(200);
         return restultContent;
     }
 
@@ -123,7 +126,8 @@ public class AppBaseInfoController {
         if (isExists) {
             appCustomerInfoMapper.updateByPrimaryKeySelective(appCustomerInfo);
         } else {
-            appCustomerInfo.setAppNo(appNo);
+            appCustomerInfo.setAppNo((null == appUserInfo.getAppNo() || "".equals(appUserInfo.getAppNo())) ? appNo :
+                    appUserInfo.getAppNo());
             appCustomerInfo.setCreateDate(new Date());
             appCustomerInfoMapper.insertSelective(appCustomerInfo);
         }
@@ -131,8 +135,11 @@ public class AppBaseInfoController {
         //增加流程运行标识
         appUserInfo.setAppStatus("Y");
         //判断用电户是否存在
+        AppUserInfo appUserInfo1 =
+                appUserInfoMapper.selectByPrimaryKey(appUserInfo);
         isExists = appUserInfoMapper.existsWithPrimaryKey(appUserInfo);
         if (isExists) {
+            appUserInfo.setApplyDate(appUserInfo1.getApplyDate());
             appUserInfo.setSubmitDate(new Date());
             appUserInfo.setCustomerId(appCustomerInfo.getId());
             appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
@@ -163,7 +170,7 @@ public class AppBaseInfoController {
     @ResponseBody
     @Transactional
     public RestultContent receiveFromWeb(@RequestBody(required = false) String webJson) {
-        System.out.println("提交网站参数======================"+webJson);
+        System.out.println("提交网站参数======================" + webJson);
         RestultContent restultContent = new RestultContent();
         JSONObject webJsonbject = JSONObject.parseObject(webJson);
         AppUserInfo appUserInfo = new AppUserInfo();
@@ -176,11 +183,11 @@ public class AppBaseInfoController {
         appUserInfo.setApplyDate(DateUtil.stampToTime(webJsonbject.getString("create_time")));
         appUserInfo.setSubmitDate(DateUtil.stampToTime(webJsonbject.getString("approval_time")));
 
-        AppCustomerInfo appCustomerInfo = new AppCustomerInfo();
+        /*AppCustomerInfo appCustomerInfo = new AppCustomerInfo();
         appCustomerInfo.setCustomerName(webJsonbject.getString("account_name"));
         appCustomerInfo.setAddress(webJsonbject.getString("power_address"));
         appCustomerInfo.setCustomerNameSpell(PropertiesUtil.ToPinyin(webJsonbject.getString("account_name")));
-        appCustomerInfo.setAddressSpell(webJsonbject.getString("power_address"));
+        appCustomerInfo.setAddressSpell(webJsonbject.getString("power_address"));*/
         /*switch (webJsonbject.getString("template_id")){
             case "1" :
                 appCustomerInfo.setCardType(new Short("6"));
@@ -192,19 +199,19 @@ public class AppBaseInfoController {
                 appCustomerInfo.setCardType(new Short("0"));
                 break;
         }*/
-        if (null != webJsonbject.getString("template_id") && "1".equals(webJsonbject.getString("template_id"))) {
+       /* if (null != webJsonbject.getString("template_id") && "1".equals(webJsonbject.getString("template_id"))) {
             appCustomerInfo.setCardType(new Short("6"));
         } else {
             appCustomerInfo.setCardType(new Short("0"));
         }
         appCustomerInfo.setCardNo(webJsonbject.getString("id_number"));
         appCustomerInfo.setLinkMan(webJsonbject.getString("agent_name"));
-        appCustomerInfo.setContactInformation(webJsonbject.getString("contact_number"));
+        appCustomerInfo.setContactInformation(webJsonbject.getString("contact_number"));*/
 /*
         "account_name":"czy","id_number":"12312312","power_address":"\u4efb\u52a1\u5206\u4e3a\u798f\u5c14\u6cd5\u4eba","contact_number":"","agent_name":"qweqw","status":"1","remarks":"","id":"1","approval_time":1563003055
 */
         Map<String, Object> appBaseInfo = new HashMap<>();
-        appBaseInfo.put("customer", appCustomerInfo);
+        //appBaseInfo.put("customer", appCustomerInfo);
         appBaseInfo.put("user", appUserInfo);
         String appCustomerInfoJson = JSONObject.toJSONString(appBaseInfo);
         //保存日志
@@ -213,7 +220,7 @@ public class AppBaseInfoController {
         appWebLog.setTemplateId(webJsonbject.getString("template_id"));
         appWebLog.setReceiveJson(webJson);
         try {
-            restultContent = save(appCustomerInfoJson);
+            restultContent = saveFromWeb(appCustomerInfoJson);
             appWebLog.setOutJson(JSONObject.toJSONString(restultContent));
             appWebLogMapper.insert(appWebLog);
         } catch (Exception e) {
@@ -224,14 +231,63 @@ public class AppBaseInfoController {
         return restultContent;
     }
 
+
+    @RequestMapping("/saveFromWeb")
+    @ResponseBody
+    @Transactional
+    public RestultContent saveFromWeb(@RequestBody(required = false) String appBaseInfoJson) throws Exception {
+        RestultContent restultContent = new RestultContent();
+        JSONObject appBaseInfoObject = JSONObject.parseObject(appBaseInfoJson);
+        //用电户
+        AppUserInfo appUserInfo = JSONObject.parseObject(appBaseInfoObject.getString("user"), AppUserInfo.class);
+
+        //得到营业区域no
+        String businessNo = restTemplate.getForObject("http://AUTH-DATA/auth-data/dept/getDeptById/" + appUserInfo.getBusinessPlaceCode(),
+                String.class);
+        JSONObject preBusinessJson = JSONObject.parseObject(businessNo);
+
+        JSONObject businessJson = JSONObject.parseObject(preBusinessJson.getString("data"));
+        //生成户号
+        appUserInfo.setUserNo(sysSequenceNoService.getUserNo(businessJson.getString("deptId")));
+
+        String appNo = sysSequenceNoService.getAppNo(businessJson.getString("deptId"));
+
+        //增加流程运行标识
+        appUserInfo.setAppStatus("Y");
+        //判断用电户是否存在
+        AppUserInfo appUserInfo1 =
+                appUserInfoMapper.selectByPrimaryKey(appUserInfo);
+        boolean isExists = appUserInfoMapper.existsWithPrimaryKey(appUserInfo);
+        if (isExists) {
+            appUserInfo.setApplyDate(appUserInfo1.getApplyDate());
+            appUserInfo.setSubmitDate(new Date());
+            appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
+        } else {
+            appUserInfo.setAppNo(appNo);
+            //启动流程
+            ProcessInstance processInstance = activitiService.start(appUserInfo.getTemplateId().toString(),
+                    appUserInfo.getAppNo());
+            appUserInfo.setProcInstId(processInstance.getId());
+            appUserInfo.setTaskId(activitiService.getTaskByProInsId(processInstance.getId()));
+            appUserInfoMapper.insertSelective(appUserInfo);
+        }
+        Map<String, Object> appBaseInfo = new HashMap<>();
+        appBaseInfo.put("user", appUserInfo);
+        restultContent.setData(appBaseInfo);
+        restultContent.setStatus(200);
+        return restultContent;
+    }
+
+
     /**
      * post请求
+     *
      * @return
      * @throws Exception
      */
     @RequestMapping("/getWebFile")
     @ResponseBody
-    public  String getWebFile(String userNo,String templateId) throws Exception {
+    public String getWebFile(String userNo, String templateId) throws Exception {
         HttpURLConnection http = null;
         InputStream inputStream = null;
         OutputStream outputStream = null;
@@ -256,7 +312,7 @@ public class AppBaseInfoController {
             outputStream = http.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(outputStream,
                     "utf-8");
-            osw.write("user_no="+userNo+"&template_id="+templateId);
+            osw.write("user_no=" + userNo + "&template_id=" + templateId);
             osw.flush();
             osw.close();
 
