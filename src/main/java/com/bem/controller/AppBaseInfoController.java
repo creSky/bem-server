@@ -119,6 +119,8 @@ public class AppBaseInfoController {
         //生成户号
         appUserInfo.setUserNo(sysSequenceNoService.getUserNo(businessJson.getString("deptId")));
 
+        appUserInfo.setSource("4");
+
         String appNo = sysSequenceNoService.getAppNo(businessJson.getString("deptId"));
 
         //判断客户是否存在
@@ -182,34 +184,7 @@ public class AppBaseInfoController {
         appUserInfo.setRemark(webJsonbject.getString("remark"));
         appUserInfo.setApplyDate(DateUtil.stampToTime(webJsonbject.getString("create_time")));
         appUserInfo.setSubmitDate(DateUtil.stampToTime(webJsonbject.getString("approval_time")));
-
-        /*AppCustomerInfo appCustomerInfo = new AppCustomerInfo();
-        appCustomerInfo.setCustomerName(webJsonbject.getString("account_name"));
-        appCustomerInfo.setAddress(webJsonbject.getString("power_address"));
-        appCustomerInfo.setCustomerNameSpell(PropertiesUtil.ToPinyin(webJsonbject.getString("account_name")));
-        appCustomerInfo.setAddressSpell(webJsonbject.getString("power_address"));*/
-        /*switch (webJsonbject.getString("template_id")){
-            case "1" :
-                appCustomerInfo.setCardType(new Short("6"));
-                break;
-            case "2" :
-                appCustomerInfo.setCardType(new Short("0"));
-                break;
-            default :
-                appCustomerInfo.setCardType(new Short("0"));
-                break;
-        }*/
-       /* if (null != webJsonbject.getString("template_id") && "1".equals(webJsonbject.getString("template_id"))) {
-            appCustomerInfo.setCardType(new Short("6"));
-        } else {
-            appCustomerInfo.setCardType(new Short("0"));
-        }
-        appCustomerInfo.setCardNo(webJsonbject.getString("id_number"));
-        appCustomerInfo.setLinkMan(webJsonbject.getString("agent_name"));
-        appCustomerInfo.setContactInformation(webJsonbject.getString("contact_number"));*/
-/*
-        "account_name":"czy","id_number":"12312312","power_address":"\u4efb\u52a1\u5206\u4e3a\u798f\u5c14\u6cd5\u4eba","contact_number":"","agent_name":"qweqw","status":"1","remarks":"","id":"1","approval_time":1563003055
-*/
+        appUserInfo.setSource(webJsonbject.getString("source"));
         Map<String, Object> appBaseInfo = new HashMap<>();
         //appBaseInfo.put("customer", appCustomerInfo);
         appBaseInfo.put("user", appUserInfo);
