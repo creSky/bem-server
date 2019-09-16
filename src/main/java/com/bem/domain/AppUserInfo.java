@@ -133,6 +133,9 @@ public class AppUserInfo {
     @Column(name = "REMARK")
     private String remark;
 
+    @Column(name = "STATUS")
+    private Short status;
+
     /**
      * 创建时间（短信通知依据时间）
      */
@@ -160,7 +163,7 @@ public class AppUserInfo {
     /**
      * 电话
      */
-    @Column(name = "phone_number")
+    @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
     /**
@@ -169,11 +172,14 @@ public class AppUserInfo {
     @Column(name = "APP_STATUS")
     private String appStatus;
 
-    /**
-     * 环节id
-     */
     @Column(name = "TASK_ID")
     private String taskId;
+
+    /**
+     * 1网站2微信3智能终端4大厅
+     */
+    @Column(name = "SOURCE")
+    private String source;
 
     /**
      * 获取ID
@@ -208,7 +214,7 @@ public class AppUserInfo {
      * @param appNo 工作单号
      */
     public void setAppNo(String appNo) {
-        this.appNo = appNo;
+        this.appNo = appNo == null ? null : appNo.trim();
     }
 
     /**
@@ -554,6 +560,20 @@ public class AppUserInfo {
     }
 
     /**
+     * @return STATUS
+     */
+    public Short getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status
+     */
+    public void setStatus(Short status) {
+        this.status = status;
+    }
+
+    /**
      * 获取创建时间（短信通知依据时间）
      *
      * @return CREATE_DATE - 创建时间（短信通知依据时间）
@@ -628,7 +648,7 @@ public class AppUserInfo {
     /**
      * 获取电话
      *
-     * @return phone_number - 电话
+     * @return PHONE_NUMBER - 电话
      */
     public String getPhoneNumber() {
         return phoneNumber;
@@ -662,20 +682,34 @@ public class AppUserInfo {
     }
 
     /**
-     * 获取环节id
-     *
-     * @return TASK_ID - 环节id
+     * @return TASK_ID
      */
     public String getTaskId() {
         return taskId;
     }
 
     /**
-     * 设置环节id
-     *
-     * @param taskId 环节id
+     * @param taskId
      */
     public void setTaskId(String taskId) {
         this.taskId = taskId == null ? null : taskId.trim();
+    }
+
+    /**
+     * 获取1网站2微信3智能终端4大厅
+     *
+     * @return SOURCE - 1网站2微信3智能终端4大厅
+     */
+    public String getSource() {
+        return source;
+    }
+
+    /**
+     * 设置1网站2微信3智能终端4大厅
+     *
+     * @param source 1网站2微信3智能终端4大厅
+     */
+    public void setSource(String source) {
+        this.source = source == null ? null : source.trim();
     }
 }

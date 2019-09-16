@@ -26,13 +26,15 @@
     <result column="WRITE_TYPE" jdbcType="SMALLINT" property="writeType" />
     <result column="USER_TYPE" jdbcType="SMALLINT" property="userType" />
     <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="STATUS" jdbcType="SMALLINT" property="status" />
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
     <result column="SUBMIT_DATE" jdbcType="TIMESTAMP" property="submitDate" />
     <result column="PROC_INST_ID" jdbcType="VARCHAR" property="procInstId" />
     <result column="APPLY_DATE" jdbcType="TIMESTAMP" property="applyDate" />
-    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="PHONE_NUMBER" jdbcType="VARCHAR" property="phoneNumber" />
     <result column="APP_STATUS" jdbcType="VARCHAR" property="appStatus" />
     <result column="TASK_ID" jdbcType="VARCHAR" property="taskId" />
+    <result column="SOURCE" jdbcType="VARCHAR" property="source" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -105,7 +107,8 @@
     ID, APP_NO, TEMPLATE_ID, CUSTOMER_ID, USER_NO, USER_NAME, ADDRESS, BUSINESS_PLACE_CODE, 
     WRITE_SECT_NO, ALL_CAPACITY, TRADE_TYPE, ELEC_TYPE, VOLT_LEVEL_TYPE, MS_MODE_TYPE, 
     LOAD_TYPE, IS_HIGH_TYPE, TEMP_TYPE, CREDIT_RANK_TYPE, WRITE_TYPE, USER_TYPE, REMARK, 
-    CREATE_DATE, SUBMIT_DATE, PROC_INST_ID, APPLY_DATE, phone_number, APP_STATUS, TASK_ID
+    STATUS, CREATE_DATE, SUBMIT_DATE, PROC_INST_ID, APPLY_DATE, PHONE_NUMBER, APP_STATUS, 
+    TASK_ID, SOURCE
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppUserInfoExample" resultMap="BaseResultMap">
     <!--
@@ -211,6 +214,9 @@
       <if test="record.remark != null">
         REMARK = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
       <if test="record.createDate != null">
         CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
       </if>
@@ -224,13 +230,16 @@
         APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.phoneNumber != null">
-        phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+        PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
       </if>
       <if test="record.appStatus != null">
         APP_STATUS = #{record.appStatus,jdbcType=VARCHAR},
       </if>
       <if test="record.taskId != null">
         TASK_ID = #{record.taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null">
+        SOURCE = #{record.source,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -263,13 +272,15 @@
       WRITE_TYPE = #{record.writeType,jdbcType=SMALLINT},
       USER_TYPE = #{record.userType,jdbcType=SMALLINT},
       REMARK = #{record.remark,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=SMALLINT},
       CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
       SUBMIT_DATE = #{record.submitDate,jdbcType=TIMESTAMP},
       PROC_INST_ID = #{record.procInstId,jdbcType=VARCHAR},
       APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
-      phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
       APP_STATUS = #{record.appStatus,jdbcType=VARCHAR},
-      TASK_ID = #{record.taskId,jdbcType=VARCHAR}
+      TASK_ID = #{record.taskId,jdbcType=VARCHAR},
+      SOURCE = #{record.source,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
