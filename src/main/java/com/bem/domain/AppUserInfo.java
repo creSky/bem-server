@@ -53,13 +53,13 @@ public class AppUserInfo {
      * 营业区域
      */
     @Column(name = "BUSINESS_PLACE_CODE")
-    private String businessPlaceCode;
+    private Integer businessPlaceCode;
 
     /**
      * 抄表区段
      */
-    @Column(name = "WRITE_SECT_NO")
-    private String writeSectNo;
+    @Column(name = "WRITE_SECT_ID")
+    private String writeSectId;
 
     /**
      * 合同容量
@@ -180,6 +180,12 @@ public class AppUserInfo {
      */
     @Column(name = "SOURCE")
     private String source;
+
+    /**
+     * 台区
+     */
+    @Column(name = "TG_ID")
+    private Long tgId;
 
     /**
      * 获取ID
@@ -312,7 +318,7 @@ public class AppUserInfo {
      *
      * @return BUSINESS_PLACE_CODE - 营业区域
      */
-    public String getBusinessPlaceCode() {
+    public Integer getBusinessPlaceCode() {
         return businessPlaceCode;
     }
 
@@ -321,26 +327,26 @@ public class AppUserInfo {
      *
      * @param businessPlaceCode 营业区域
      */
-    public void setBusinessPlaceCode(String businessPlaceCode) {
-        this.businessPlaceCode = businessPlaceCode == null ? null : businessPlaceCode.trim();
+    public void setBusinessPlaceCode(Integer businessPlaceCode) {
+        this.businessPlaceCode = businessPlaceCode;
     }
 
     /**
      * 获取抄表区段
      *
-     * @return WRITE_SECT_NO - 抄表区段
+     * @return WRITE_SECT_ID - 抄表区段
      */
-    public String getWriteSectNo() {
-        return writeSectNo;
+    public String getWriteSectId() {
+        return writeSectId;
     }
 
     /**
      * 设置抄表区段
      *
-     * @param writeSectNo 抄表区段
+     * @param writeSectId 抄表区段
      */
-    public void setWriteSectNo(String writeSectNo) {
-        this.writeSectNo = writeSectNo == null ? null : writeSectNo.trim();
+    public void setWriteSectId(String writeSectId) {
+        this.writeSectId = writeSectId == null ? null : writeSectId.trim();
     }
 
     /**
@@ -711,5 +717,23 @@ public class AppUserInfo {
      */
     public void setSource(String source) {
         this.source = source == null ? null : source.trim();
+    }
+
+    /**
+     * 获取台区
+     *
+     * @return TG_ID - 台区
+     */
+    public Long getTgId() {
+        return tgId;
+    }
+
+    /**
+     * 设置台区
+     *
+     * @param tgId 台区
+     */
+    public void setTgId(Long tgId) {
+        this.tgId = tgId;
     }
 }

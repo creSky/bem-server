@@ -12,8 +12,8 @@
     <result column="USER_NO" jdbcType="VARCHAR" property="userNo" />
     <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
     <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
-    <result column="BUSINESS_PLACE_CODE" jdbcType="VARCHAR" property="businessPlaceCode" />
-    <result column="WRITE_SECT_NO" jdbcType="VARCHAR" property="writeSectNo" />
+    <result column="BUSINESS_PLACE_CODE" jdbcType="INTEGER" property="businessPlaceCode" />
+    <result column="WRITE_SECT_ID" jdbcType="VARCHAR" property="writeSectId" />
     <result column="ALL_CAPACITY" jdbcType="DECIMAL" property="allCapacity" />
     <result column="TRADE_TYPE" jdbcType="SMALLINT" property="tradeType" />
     <result column="ELEC_TYPE" jdbcType="SMALLINT" property="elecType" />
@@ -35,6 +35,7 @@
     <result column="APP_STATUS" jdbcType="VARCHAR" property="appStatus" />
     <result column="TASK_ID" jdbcType="VARCHAR" property="taskId" />
     <result column="SOURCE" jdbcType="VARCHAR" property="source" />
+    <result column="TG_ID" jdbcType="BIGINT" property="tgId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -105,10 +106,10 @@
       WARNING - @mbg.generated
     -->
     ID, APP_NO, TEMPLATE_ID, CUSTOMER_ID, USER_NO, USER_NAME, ADDRESS, BUSINESS_PLACE_CODE, 
-    WRITE_SECT_NO, ALL_CAPACITY, TRADE_TYPE, ELEC_TYPE, VOLT_LEVEL_TYPE, MS_MODE_TYPE, 
+    WRITE_SECT_ID, ALL_CAPACITY, TRADE_TYPE, ELEC_TYPE, VOLT_LEVEL_TYPE, MS_MODE_TYPE, 
     LOAD_TYPE, IS_HIGH_TYPE, TEMP_TYPE, CREDIT_RANK_TYPE, WRITE_TYPE, USER_TYPE, REMARK, 
     STATUS, CREATE_DATE, SUBMIT_DATE, PROC_INST_ID, APPLY_DATE, PHONE_NUMBER, APP_STATUS, 
-    TASK_ID, SOURCE
+    TASK_ID, SOURCE, TG_ID
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppUserInfoExample" resultMap="BaseResultMap">
     <!--
@@ -173,10 +174,10 @@
         ADDRESS = #{record.address,jdbcType=VARCHAR},
       </if>
       <if test="record.businessPlaceCode != null">
-        BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=VARCHAR},
+        BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=INTEGER},
       </if>
-      <if test="record.writeSectNo != null">
-        WRITE_SECT_NO = #{record.writeSectNo,jdbcType=VARCHAR},
+      <if test="record.writeSectId != null">
+        WRITE_SECT_ID = #{record.writeSectId,jdbcType=VARCHAR},
       </if>
       <if test="record.allCapacity != null">
         ALL_CAPACITY = #{record.allCapacity,jdbcType=DECIMAL},
@@ -241,6 +242,9 @@
       <if test="record.source != null">
         SOURCE = #{record.source,jdbcType=VARCHAR},
       </if>
+      <if test="record.tgId != null">
+        TG_ID = #{record.tgId,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -258,8 +262,8 @@
       USER_NO = #{record.userNo,jdbcType=VARCHAR},
       USER_NAME = #{record.userName,jdbcType=VARCHAR},
       ADDRESS = #{record.address,jdbcType=VARCHAR},
-      BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=VARCHAR},
-      WRITE_SECT_NO = #{record.writeSectNo,jdbcType=VARCHAR},
+      BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=INTEGER},
+      WRITE_SECT_ID = #{record.writeSectId,jdbcType=VARCHAR},
       ALL_CAPACITY = #{record.allCapacity,jdbcType=DECIMAL},
       TRADE_TYPE = #{record.tradeType,jdbcType=SMALLINT},
       ELEC_TYPE = #{record.elecType,jdbcType=SMALLINT},
@@ -280,7 +284,8 @@
       PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
       APP_STATUS = #{record.appStatus,jdbcType=VARCHAR},
       TASK_ID = #{record.taskId,jdbcType=VARCHAR},
-      SOURCE = #{record.source,jdbcType=VARCHAR}
+      SOURCE = #{record.source,jdbcType=VARCHAR},
+      TG_ID = #{record.tgId,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

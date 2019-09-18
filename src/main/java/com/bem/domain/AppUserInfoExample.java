@@ -576,133 +576,123 @@ public class AppUserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeEqualTo(String value) {
+        public Criteria andBusinessPlaceCodeEqualTo(Integer value) {
             addCriterion("BUSINESS_PLACE_CODE =", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeNotEqualTo(String value) {
+        public Criteria andBusinessPlaceCodeNotEqualTo(Integer value) {
             addCriterion("BUSINESS_PLACE_CODE <>", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeGreaterThan(String value) {
+        public Criteria andBusinessPlaceCodeGreaterThan(Integer value) {
             addCriterion("BUSINESS_PLACE_CODE >", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeGreaterThanOrEqualTo(String value) {
+        public Criteria andBusinessPlaceCodeGreaterThanOrEqualTo(Integer value) {
             addCriterion("BUSINESS_PLACE_CODE >=", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeLessThan(String value) {
+        public Criteria andBusinessPlaceCodeLessThan(Integer value) {
             addCriterion("BUSINESS_PLACE_CODE <", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeLessThanOrEqualTo(String value) {
+        public Criteria andBusinessPlaceCodeLessThanOrEqualTo(Integer value) {
             addCriterion("BUSINESS_PLACE_CODE <=", value, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeLike(String value) {
-            addCriterion("BUSINESS_PLACE_CODE like", value, "businessPlaceCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andBusinessPlaceCodeNotLike(String value) {
-            addCriterion("BUSINESS_PLACE_CODE not like", value, "businessPlaceCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andBusinessPlaceCodeIn(List<String> values) {
+        public Criteria andBusinessPlaceCodeIn(List<Integer> values) {
             addCriterion("BUSINESS_PLACE_CODE in", values, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeNotIn(List<String> values) {
+        public Criteria andBusinessPlaceCodeNotIn(List<Integer> values) {
             addCriterion("BUSINESS_PLACE_CODE not in", values, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeBetween(String value1, String value2) {
+        public Criteria andBusinessPlaceCodeBetween(Integer value1, Integer value2) {
             addCriterion("BUSINESS_PLACE_CODE between", value1, value2, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessPlaceCodeNotBetween(String value1, String value2) {
+        public Criteria andBusinessPlaceCodeNotBetween(Integer value1, Integer value2) {
             addCriterion("BUSINESS_PLACE_CODE not between", value1, value2, "businessPlaceCode");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoIsNull() {
-            addCriterion("WRITE_SECT_NO is null");
+        public Criteria andWriteSectIdIsNull() {
+            addCriterion("WRITE_SECT_ID is null");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoIsNotNull() {
-            addCriterion("WRITE_SECT_NO is not null");
+        public Criteria andWriteSectIdIsNotNull() {
+            addCriterion("WRITE_SECT_ID is not null");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoEqualTo(String value) {
-            addCriterion("WRITE_SECT_NO =", value, "writeSectNo");
+        public Criteria andWriteSectIdEqualTo(String value) {
+            addCriterion("WRITE_SECT_ID =", value, "writeSectId");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoNotEqualTo(String value) {
-            addCriterion("WRITE_SECT_NO <>", value, "writeSectNo");
+        public Criteria andWriteSectIdNotEqualTo(String value) {
+            addCriterion("WRITE_SECT_ID <>", value, "writeSectId");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoGreaterThan(String value) {
-            addCriterion("WRITE_SECT_NO >", value, "writeSectNo");
+        public Criteria andWriteSectIdGreaterThan(String value) {
+            addCriterion("WRITE_SECT_ID >", value, "writeSectId");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoGreaterThanOrEqualTo(String value) {
-            addCriterion("WRITE_SECT_NO >=", value, "writeSectNo");
+        public Criteria andWriteSectIdGreaterThanOrEqualTo(String value) {
+            addCriterion("WRITE_SECT_ID >=", value, "writeSectId");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoLessThan(String value) {
-            addCriterion("WRITE_SECT_NO <", value, "writeSectNo");
+        public Criteria andWriteSectIdLessThan(String value) {
+            addCriterion("WRITE_SECT_ID <", value, "writeSectId");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoLessThanOrEqualTo(String value) {
-            addCriterion("WRITE_SECT_NO <=", value, "writeSectNo");
+        public Criteria andWriteSectIdLessThanOrEqualTo(String value) {
+            addCriterion("WRITE_SECT_ID <=", value, "writeSectId");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoLike(String value) {
-            addCriterion("WRITE_SECT_NO like", value, "writeSectNo");
+        public Criteria andWriteSectIdLike(String value) {
+            addCriterion("WRITE_SECT_ID like", value, "writeSectId");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoNotLike(String value) {
-            addCriterion("WRITE_SECT_NO not like", value, "writeSectNo");
+        public Criteria andWriteSectIdNotLike(String value) {
+            addCriterion("WRITE_SECT_ID not like", value, "writeSectId");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoIn(List<String> values) {
-            addCriterion("WRITE_SECT_NO in", values, "writeSectNo");
+        public Criteria andWriteSectIdIn(List<String> values) {
+            addCriterion("WRITE_SECT_ID in", values, "writeSectId");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoNotIn(List<String> values) {
-            addCriterion("WRITE_SECT_NO not in", values, "writeSectNo");
+        public Criteria andWriteSectIdNotIn(List<String> values) {
+            addCriterion("WRITE_SECT_ID not in", values, "writeSectId");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoBetween(String value1, String value2) {
-            addCriterion("WRITE_SECT_NO between", value1, value2, "writeSectNo");
+        public Criteria andWriteSectIdBetween(String value1, String value2) {
+            addCriterion("WRITE_SECT_ID between", value1, value2, "writeSectId");
             return (Criteria) this;
         }
 
-        public Criteria andWriteSectNoNotBetween(String value1, String value2) {
-            addCriterion("WRITE_SECT_NO not between", value1, value2, "writeSectNo");
+        public Criteria andWriteSectIdNotBetween(String value1, String value2) {
+            addCriterion("WRITE_SECT_ID not between", value1, value2, "writeSectId");
             return (Criteria) this;
         }
 
@@ -2023,6 +2013,66 @@ public class AppUserInfoExample {
 
         public Criteria andSourceNotBetween(String value1, String value2) {
             addCriterion("SOURCE not between", value1, value2, "source");
+            return (Criteria) this;
+        }
+
+        public Criteria andTgIdIsNull() {
+            addCriterion("TG_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTgIdIsNotNull() {
+            addCriterion("TG_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTgIdEqualTo(Long value) {
+            addCriterion("TG_ID =", value, "tgId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTgIdNotEqualTo(Long value) {
+            addCriterion("TG_ID <>", value, "tgId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTgIdGreaterThan(Long value) {
+            addCriterion("TG_ID >", value, "tgId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTgIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("TG_ID >=", value, "tgId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTgIdLessThan(Long value) {
+            addCriterion("TG_ID <", value, "tgId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTgIdLessThanOrEqualTo(Long value) {
+            addCriterion("TG_ID <=", value, "tgId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTgIdIn(List<Long> values) {
+            addCriterion("TG_ID in", values, "tgId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTgIdNotIn(List<Long> values) {
+            addCriterion("TG_ID not in", values, "tgId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTgIdBetween(Long value1, Long value2) {
+            addCriterion("TG_ID between", value1, value2, "tgId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTgIdNotBetween(Long value1, Long value2) {
+            addCriterion("TG_ID not between", value1, value2, "tgId");
             return (Criteria) this;
         }
     }

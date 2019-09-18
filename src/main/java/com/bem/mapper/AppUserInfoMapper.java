@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.common.BaseMapper;
-
 @Mapper
 @Component
 public interface AppUserInfoMapper extends BaseMapper<AppUserInfo> {
