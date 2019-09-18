@@ -58,7 +58,8 @@ public class AppBaseInfoController {
         JSONObject jsonObject = JSONObject.parseObject(appBaseInfoJson);
         RestultContent restultContent = new RestultContent();
         AppUserInfo appUserInfo = appUserInfoMapper.selectByPrimaryKey(jsonObject.getString("appId"));
-        AppCustomerInfo appCustomerInfo = appCustomerInfoMapper.selectByPrimaryKey(jsonObject.getString("appId"));
+        AppCustomerInfo appCustomerInfo =
+                appCustomerInfoMapper.selectByPrimaryKey(appUserInfo.getCustomerId());
         Map<String, Object> returnMap = new HashMap<>();
         returnMap.put("user", appUserInfo);
         returnMap.put("customer", appCustomerInfo);
@@ -146,7 +147,7 @@ public class AppBaseInfoController {
             appUserInfo.setCustomerId(appCustomerInfo.getId());
             appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
         } else {
-            appUserInfo.setId(appCustomerInfo.getId());
+            //appUserInfo.setId(appCustomerInfo.getId());
             appUserInfo.setAppNo(appNo);
             appUserInfo.setSubmitDate(new Date());
             appUserInfo.setCreateDate(new Date());
@@ -179,7 +180,7 @@ public class AppBaseInfoController {
         appUserInfo.setUserName(webJsonbject.getString("account_name"));
         appUserInfo.setAddress(webJsonbject.getString("power_address"));
         appUserInfo.setTemplateId(new Integer(webJsonbject.getString("template_id")));
-        appUserInfo.setBusinessPlaceCode(webJsonbject.getString("business_area"));
+        appUserInfo.setBusinessPlaceCode(new Integer(webJsonbject.getString("business_area")));
         appUserInfo.setPhoneNumber(webJsonbject.getString("contact_number"));
         appUserInfo.setRemark(webJsonbject.getString("remark"));
         appUserInfo.setApplyDate(DateUtil.stampToTime(webJsonbject.getString("create_time")));

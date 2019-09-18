@@ -91,6 +91,12 @@ public class AppCustomerInfo {
     private Date cancelDate;
 
     /**
+     * 营业区域
+     */
+    @Column(name = "BUSINESS_PLACE_CODE")
+    private String businessPlaceCode;
+
+    /**
      * 获取ID
      *
      * @return ID - ID
@@ -350,5 +356,23 @@ public class AppCustomerInfo {
      */
     public void setCancelDate(Date cancelDate) {
         this.cancelDate = cancelDate;
+    }
+
+    /**
+     * 获取营业区域
+     *
+     * @return BUSINESS_PLACE_CODE - 营业区域
+     */
+    public String getBusinessPlaceCode() {
+        return businessPlaceCode;
+    }
+
+    /**
+     * 设置营业区域
+     *
+     * @param businessPlaceCode 营业区域
+     */
+    public void setBusinessPlaceCode(String businessPlaceCode) {
+        this.businessPlaceCode = businessPlaceCode == null ? null : businessPlaceCode.trim();
     }
 }

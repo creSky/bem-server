@@ -8,6 +8,7 @@ import com.bem.service.ActivitiService;
 import com.bem.service.AppFileService;
 import com.bem.service.TaskListService;
 import com.bem.util.BemCommonUtil;
+import com.bem.util.PropertiesUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.activiti.engine.history.HistoricTaskInstance;
@@ -232,19 +233,7 @@ public class ActivitiController {
                 activitiService.isEnd(jsonObject.getString("processInstanceId"))) {
             appUserInfo.setId(new Long(jsonObject.getString("appId")));
             appUserInfo.setAppStatus("C");
-           /* //组装用户信息
-            AppUserInfo updateAppUserInfo =
-                    appUserInfoMapper.selectByPrimaryKey(jsonObject.getString("appId"));
-            AppCustomerInfo updateAppCustomer =
-                    appCustomerInfoMapper.selectByPrimaryKey(jsonObject.getString("appId"));
-            JSONObject postData = new JSONObject();
-            postData.put("userInfo", updateAppUserInfo);
-            postData.put("customerInfo", updateAppCustomer);
 
-            //发送到cim 更新档案
-            String result = restTemplate.postForObject(PropertiesUtil.getValue("bemAddReceive"), postData, String.class);
-
-            */
         } else {
             appUserInfo.setId(new Long(jsonObject.getString("appId")));
             appUserInfo.setAppStatus("Y");
@@ -488,6 +477,36 @@ public class ActivitiController {
         JSONObject userNoJSONObject = JSONObject.parseObject(userNoJson);
 
         return null;
+    }
+
+    @RequestMapping("/updateFiles")
+    @ResponseBody
+    public RestultContent  updateFiles(@RequestBody(required = false)String updateFilesJson) {
+            RestultContent restultContent = new RestultContent();
+            //组装用户信息
+            JSONObject updateJSONObject=JSONObject.parseObject(updateFilesJson);
+            AppUserInfo updateAppUserInfo =
+                    appUserInfoMapper.selectByPrimaryKey(updateJSONObject.getString("appId"));
+            AppCustomerInfo updateAppCustomer =
+                    appCustomerInfoMapper.selectByPrimaryKey(updateAppUserInfo.getCustomerId());
+            JSONObject postData = new JSONObject();
+            postData.put("userInfo", updateAppUserInfo);
+            postData.put("customerInfo", updateAppCustomer);
+            postData.put("templateId", updateAppUserInfo.getTemplateId());
+
+            //发送到cim 更新档案
+            String resturnJson=
+                    restTemplate.postForObject(PropertiesUtil.getValue("bemAddReceive"), postData, String.class);
+
+            JSONObject resturnJSONObject=JSONObject.parseObject(resturnJson);
+            if("200".equals(resturnJSONObject.getString("statusCode"))){
+                restultContent.setStatus(200);
+            }else{
+                restultContent.setStatus(300);
+                restultContent.setErrorMsg("档案更新失败");
+            }
+
+        return restultContent;
     }
 
 

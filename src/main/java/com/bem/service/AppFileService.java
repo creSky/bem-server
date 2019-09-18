@@ -56,6 +56,7 @@ public class AppFileService {
             appFile.setFilePath(jsonArray.get(i).toString());
             String fileName = jsonArray.get(i).toString();
             appFile.setFileType(fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()));
+            System.out.println("文件类型====="+appFile.getFileType());
             appFile.setFileName(fileName.substring(fileName.lastIndexOf(File.separator)+1, fileName.length()));
             appFileMapper.insert(appFile);
             appFiles.add(appFile);

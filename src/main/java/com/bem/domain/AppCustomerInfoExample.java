@@ -1104,6 +1104,76 @@ public class AppCustomerInfoExample {
             addCriterion("CANCEL_DATE not between", value1, value2, "cancelDate");
             return (Criteria) this;
         }
+
+        public Criteria andBusinessPlaceCodeIsNull() {
+            addCriterion("BUSINESS_PLACE_CODE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeIsNotNull() {
+            addCriterion("BUSINESS_PLACE_CODE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeEqualTo(String value) {
+            addCriterion("BUSINESS_PLACE_CODE =", value, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeNotEqualTo(String value) {
+            addCriterion("BUSINESS_PLACE_CODE <>", value, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeGreaterThan(String value) {
+            addCriterion("BUSINESS_PLACE_CODE >", value, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("BUSINESS_PLACE_CODE >=", value, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeLessThan(String value) {
+            addCriterion("BUSINESS_PLACE_CODE <", value, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeLessThanOrEqualTo(String value) {
+            addCriterion("BUSINESS_PLACE_CODE <=", value, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeLike(String value) {
+            addCriterion("BUSINESS_PLACE_CODE like", value, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeNotLike(String value) {
+            addCriterion("BUSINESS_PLACE_CODE not like", value, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeIn(List<String> values) {
+            addCriterion("BUSINESS_PLACE_CODE in", values, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeNotIn(List<String> values) {
+            addCriterion("BUSINESS_PLACE_CODE not in", values, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeBetween(String value1, String value2) {
+            addCriterion("BUSINESS_PLACE_CODE between", value1, value2, "businessPlaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessPlaceCodeNotBetween(String value1, String value2) {
+            addCriterion("BUSINESS_PLACE_CODE not between", value1, value2, "businessPlaceCode");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

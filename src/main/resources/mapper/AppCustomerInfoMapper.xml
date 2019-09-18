@@ -20,6 +20,7 @@
     <result column="REMARK" jdbcType="VARCHAR" property="remark" />
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
     <result column="CANCEL_DATE" jdbcType="TIMESTAMP" property="cancelDate" />
+    <result column="BUSINESS_PLACE_CODE" jdbcType="VARCHAR" property="businessPlaceCode" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -90,7 +91,8 @@
       WARNING - @mbg.generated
     -->
     ID, APP_NO, CUSTOMER_NO, CUSTOMER_NAME, CUSTOMER_NAME_SPELL, ADDRESS, ADDRESS_SPELL, 
-    CARD_TYPE, CARD_NO, LINK_MAN, CONTACT_INFORMATION, STATUS, REMARK, CREATE_DATE, CANCEL_DATE
+    CARD_TYPE, CARD_NO, LINK_MAN, CONTACT_INFORMATION, STATUS, REMARK, CREATE_DATE, CANCEL_DATE, 
+    BUSINESS_PLACE_CODE
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppCustomerInfoExample" resultMap="BaseResultMap">
     <!--
@@ -178,6 +180,9 @@
       <if test="record.cancelDate != null">
         CANCEL_DATE = #{record.cancelDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.businessPlaceCode != null">
+        BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -202,7 +207,8 @@
       STATUS = #{record.status,jdbcType=SMALLINT},
       REMARK = #{record.remark,jdbcType=VARCHAR},
       CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
-      CANCEL_DATE = #{record.cancelDate,jdbcType=TIMESTAMP}
+      CANCEL_DATE = #{record.cancelDate,jdbcType=TIMESTAMP},
+      BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
