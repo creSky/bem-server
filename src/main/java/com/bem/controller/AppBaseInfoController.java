@@ -115,14 +115,16 @@ public class AppBaseInfoController {
         String businessNo = restTemplate.getForObject("http://AUTH-DATA/auth-data/dept/getDeptById/" + appUserInfo.getBusinessPlaceCode(),
                 String.class);
         JSONObject preBusinessJson = JSONObject.parseObject(businessNo);
-
         JSONObject businessJson = JSONObject.parseObject(preBusinessJson.getString("data"));
-        //生成户号
-        appUserInfo.setUserNo(sysSequenceNoService.getUserNo(businessJson.getString("deptId")));
+
+        //生成户号和流程号 采用从档案服务读取的方式
+        JSONObject postData = new JSONObject();
+        postData.put("busi",businessJson.getString("deptId"));
+        String userNo=restTemplate.postForObject(PropertiesUtil.getValue("getUserNo") , postData,String.class);
+        appUserInfo.setUserNo(userNo);
 
         appUserInfo.setSource("4");
-
-        String appNo = sysSequenceNoService.getAppNo(businessJson.getString("deptId"));
+        String appNo=restTemplate.postForObject(PropertiesUtil.getValue("getAppNo") , postData,String.class);
 
         //判断客户是否存在
         boolean isExists = appCustomerInfoMapper.existsWithPrimaryKey(appCustomerInfo);
@@ -223,10 +225,15 @@ public class AppBaseInfoController {
         JSONObject preBusinessJson = JSONObject.parseObject(businessNo);
 
         JSONObject businessJson = JSONObject.parseObject(preBusinessJson.getString("data"));
-        //生成户号
-        appUserInfo.setUserNo(sysSequenceNoService.getUserNo(businessJson.getString("deptId")));
 
-        String appNo = sysSequenceNoService.getAppNo(businessJson.getString("deptId"));
+        //生成户号和流程号 采用从档案服务读取的方式
+        JSONObject postData = new JSONObject();
+        postData.put("busi",businessJson.getString("deptId"));
+        String userNo=restTemplate.postForObject(PropertiesUtil.getValue("getUserNo") , postData,String.class);
+        appUserInfo.setUserNo(userNo);
+
+        appUserInfo.setSource("4");
+        String appNo=restTemplate.postForObject(PropertiesUtil.getValue("getAppNo") , postData,String.class);
 
         //增加流程运行标识
         appUserInfo.setAppStatus("Y");
