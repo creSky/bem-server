@@ -63,10 +63,14 @@ public class AppFileContorller {
     @ResponseBody
     public RestultContent delete(@RequestBody String fileJson) {
         AppFile appFile = JSONObject.parseObject(fileJson, AppFile.class);
-        appFileMapper.deleteByPrimaryKey(appFile);
+        int num=appFileMapper.deleteByPrimaryKey(appFile);
         RestultContent restultContent=new RestultContent();
-        restultContent.setStatus(200);
-        restultContent.setData(appFile);
+        if(num>0){
+            restultContent.setStatus(200);
+        }else{
+            restultContent.setStatus(300);
+            restultContent.setErrorMsg("删除失败");
+        }
         return restultContent;
     }
 
