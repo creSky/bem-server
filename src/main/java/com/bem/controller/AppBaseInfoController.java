@@ -120,11 +120,11 @@ public class AppBaseInfoController {
         //生成户号和流程号 采用从档案服务读取的方式
         JSONObject postData = new JSONObject();
         postData.put("busi",businessJson.getString("deptId"));
-        String userNo=restTemplate.postForObject(PropertiesUtil.getValue("getUserNo") , postData,String.class);
+        String userNo=restTemplate.postForObject(PropertiesUtil.getValue("generateUserNo") , postData,String.class);
         appUserInfo.setUserNo(userNo);
 
         appUserInfo.setSource("4");
-        String appNo=restTemplate.postForObject(PropertiesUtil.getValue("getAppNo") , postData,String.class);
+        String appNo=restTemplate.postForObject(PropertiesUtil.getValue("generateAppNo") , postData,String.class);
 
         //判断客户是否存在
         boolean isExists = appCustomerInfoMapper.existsWithPrimaryKey(appCustomerInfo);
