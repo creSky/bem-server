@@ -17,9 +17,9 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class, DataSourceAutoConfiguration.class})
 @ComponentScan(basePackages = {"com.bem"})
 @MapperScan("com.bem.mapper")
-@Import({DynamicDataSourceRegister.class})
+//动态数据源
+//@Import({DynamicDataSourceRegister.class})
 @EnableTransactionManagement
-//@ImportResource("classpath:ureport-console-context.xml")
 public class BemApplication {
     @Bean
     @LoadBalanced

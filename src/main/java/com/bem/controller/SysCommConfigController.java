@@ -77,8 +77,13 @@ public class SysCommConfigController {
             restultContent.setStatus(500);
             return restultContent;
         }
-        this.sysCommConfigMapper.freeUpdate(userMap);
-        restultContent.setStatus(200);
+        int num=this.sysCommConfigMapper.freeUpdate(userMap);
+        if(num>0){
+            restultContent.setStatus(200);
+        }else{
+            restultContent.setStatus(300);
+            restultContent.setErrorMsg("流程还未到此环节，无法更新时间");
+        }
         return restultContent;
     }
 

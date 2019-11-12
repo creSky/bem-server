@@ -15,7 +15,7 @@
         </commentGenerator>-->
 
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="mappers" value="tk.mybatis.mapper.common.BaseMapper"/>
             <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
             <property name="caseSensitive" value="true"/>
         </plugin>
@@ -51,7 +51,7 @@
         </javaClientGenerator>
 
         <!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等 -->
-        <table tableName="METER_INFO" domainObjectName="MeterInfo">
+        <table tableName="Test" domainObjectName="test">
         </table>
     </context>
 </generatorConfiguration>

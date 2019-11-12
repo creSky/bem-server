@@ -302,15 +302,7 @@ left join  APP_COMPELETE c ON i.PROC_INST_ID=c.PROCESS_INSTANCE_ID
 left join APP_ASSEM a on i.PROC_INST_ID=a.PROCESS_INSTANCE_ID
 left join APP_CIRCUMSTANCE r on i.PROC_INST_ID=r.PROCESS_INSTANCE_ID
 WHERE
-	NOT EXISTS (
-		SELECT
-			1
-		FROM
-			ACT_RU_TASK act
-		WHERE
-			act.PROC_INST_ID_ = i.PROC_INST_ID
-	)
-        AND IFNULL(i.APP_STATUS,'Y')  &lt;&gt; 'N'
+        IFNULL(i.APP_STATUS,'Y')  &lt;&gt; 'N'
         <if test="userDepts != null and userDepts.trim().length()>0">
             AND i.BUSINESS_PLACE_CODE IN
             <foreach collection="userDepts.split(',')" item="item" index="index" open="(" close=")" separator=",">

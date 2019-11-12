@@ -51,6 +51,11 @@ public class AppBaseInfoController {
     @Autowired
     private AppWebLogMapper appWebLogMapper;
 
+    @RequestMapping("/getSystemTime")
+    @ResponseBody
+    public Date getSystemTime(@RequestBody(required = false) String getSystemTimeJson) throws Exception {
+        return new Date();
+    }
 
     @RequestMapping("/getAppBaseInfo")
     @ResponseBody
