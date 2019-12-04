@@ -1,12 +1,12 @@
 package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bem.common.RestultContent;
 import com.bem.domain.AppReplyAdvice;
 import com.bem.domain.AppReplyAdviceExample;
 import com.bem.domain.AppTransformerInfoExample;
 import com.bem.mapper.AppReplyAdviceMapper;
 import com.bem.mapper.AppTransformerInfoMapper;
+import com.riozenc.titanTool.spring.web.http.HttpResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,19 +31,16 @@ public class AppReplyController {
 
     @ResponseBody
     @RequestMapping("/getAppRely")
-    public RestultContent getAppRely(@RequestBody String appRelyJson) {
+    public HttpResult getAppRely(@RequestBody String appRelyJson) {
 
-        AppReplyAdvice appReplyAdvice = JSONObject.parseObject(appRelyJson,AppReplyAdvice.class);
-        RestultContent restultContent=new RestultContent();
+        AppReplyAdvice appReplyAdvice = JSONObject.parseObject(appRelyJson, AppReplyAdvice.class);
         //取记录
-        AppReplyAdviceExample appReplyAdviceExample=new AppReplyAdviceExample();
-        AppReplyAdviceExample.Criteria replayCriteria=appReplyAdviceExample.createCriteria();
+        AppReplyAdviceExample appReplyAdviceExample = new AppReplyAdviceExample();
+        AppReplyAdviceExample.Criteria replayCriteria = appReplyAdviceExample.createCriteria();
         replayCriteria.andAppIdEqualTo(appReplyAdvice.getAppId());
-        List<AppReplyAdvice> appReplyAdvices= appReplyAdviceMapper.selectByExample(appReplyAdviceExample);
-        if(null!=appReplyAdvices && 0<appReplyAdvices.size()){
-            restultContent.setStatus(200);
-            restultContent.setData(appReplyAdvices.get(0));
-            return restultContent;
+        List<AppReplyAdvice> appReplyAdvices = appReplyAdviceMapper.selectByExample(appReplyAdviceExample);
+        if (null != appReplyAdvices && 0 < appReplyAdvices.size()) {
+            return new HttpResult(HttpResult.SUCCESS, "查询成功", appReplyAdvices.get(0));
         }
 
         //自动生成审批方案
@@ -60,29 +57,25 @@ public class AppReplyController {
 
         appReplyAdvice.setReplyAdvice(passAdviceInfo.toString());
         appReplyAdviceMapper.insert(appReplyAdvice);
-        restultContent.setStatus(200);
-        restultContent.setData(appReplyAdvice);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", appReplyAdvice);
     }
 
     /**
      * 保存审批意见
+     *
      * @param appRelyJson
      * @return
      */
     @ResponseBody
     @RequestMapping("/save")
-    public RestultContent save(@RequestBody String appRelyJson){
-        RestultContent restultContent=new RestultContent();
-        AppReplyAdvice appReplyAdvice = JSONObject.parseObject(appRelyJson,AppReplyAdvice.class);
+    public HttpResult save(@RequestBody String appRelyJson) {
+        AppReplyAdvice appReplyAdvice = JSONObject.parseObject(appRelyJson, AppReplyAdvice.class);
         boolean isExists = appReplyAdviceMapper.existsWithPrimaryKey(appReplyAdvice);
         if (isExists) {
             appReplyAdviceMapper.updateByPrimaryKeySelective(appReplyAdvice);
         } else {
             appReplyAdviceMapper.insertSelective(appReplyAdvice);
         }
-        restultContent.setStatus(200);
-        restultContent.setData(appReplyAdvice);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "保存成功", appReplyAdvice);
     }
 }

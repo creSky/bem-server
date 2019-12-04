@@ -1,4 +1,4 @@
-package com.bem.controller;
+package com.bem.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bem.domain.*;
@@ -6,6 +6,7 @@ import com.bem.mapper.*;
 import com.bem.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,9 +14,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/appUpdateInformation")
-public class AppUpdateInformation {
+@Service
+public class AppUpdateInfoService {
     @Autowired
     private AppUserInfoMapper appUserInfoMapper;
 
@@ -38,10 +38,7 @@ public class AppUpdateInformation {
     @Autowired
     private RestTemplate restTemplate;
 
-    @ResponseBody
-    @RequestMapping("/update")
-    public String update(@RequestBody(required = false) String appIdJson) {
-        String appId = JSONObject.parseObject(appIdJson).getString("appId");
+    public String update(String appId) {
         //组装用户信息
         AppUserInfo appUserInfo = appUserInfoMapper.selectByPrimaryKey(appId);
 

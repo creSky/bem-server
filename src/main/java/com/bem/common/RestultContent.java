@@ -1,7 +1,7 @@
 package com.bem.common;
 
 /**
- * 返回消息实体
+ * 返回消息实体--弃用
  */
 public class RestultContent {
     /*

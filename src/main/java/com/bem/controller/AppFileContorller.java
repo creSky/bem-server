@@ -1,23 +1,17 @@
 package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bem.common.RestultContent;
 import com.bem.domain.AppFile;
-import com.bem.file.FileUtil;
 import com.bem.mapper.AppFileMapper;
 import com.bem.util.BemCommonUtil;
-import netscape.javascript.JSObject;
+import com.riozenc.titanTool.spring.web.http.HttpResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Date;
 
 @Controller
@@ -35,23 +29,20 @@ public class AppFileContorller {
      */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public RestultContent upload(String appFileJson,
-                                 HttpServletRequest request) {
-        RestultContent restultContent = new RestultContent();
+    public HttpResult upload(String appFileJson,
+                             HttpServletRequest request) {
         AppFile appFile = JSONObject.parseObject(appFileJson, AppFile.class);
         //补充文件上传人 工单号 环节号
         appFile.setUploadDate(new Date());
         appFile.setUploadManId(BemCommonUtil.getOpeartorId(appFileJson));
         boolean isExist = appFileMapper.existsWithPrimaryKey(appFile);
-        if(isExist){
+        if (isExist) {
             appFileMapper.insert(appFile);
-        }else{
+        } else {
 
         }
         appFileMapper.insert(appFile);
-        restultContent.setData(appFile);
-        restultContent.setStatus(200);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "保存成功", appFile);
     }
 
 
@@ -61,17 +52,14 @@ public class AppFileContorller {
      */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public RestultContent delete(@RequestBody String fileJson) {
+    public HttpResult delete(@RequestBody String fileJson) {
         AppFile appFile = JSONObject.parseObject(fileJson, AppFile.class);
-        int num=appFileMapper.deleteByPrimaryKey(appFile);
-        RestultContent restultContent=new RestultContent();
-        if(num>0){
-            restultContent.setStatus(200);
-        }else{
-            restultContent.setStatus(300);
-            restultContent.setErrorMsg("删除失败");
+        int num = appFileMapper.deleteByPrimaryKey(appFile);
+        if (num > 0) {
+            return new HttpResult(HttpResult.SUCCESS, "删除成功", null);
+        } else {
+            return new HttpResult(HttpResult.ERROR, "删除失败", null);
         }
-        return restultContent;
     }
 
 

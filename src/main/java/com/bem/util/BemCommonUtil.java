@@ -2,7 +2,6 @@ package com.bem.util;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.bem.common.RestultContent;
 import com.bem.domain.VerificationDomain;
 import org.apache.commons.lang.StringUtils;
 

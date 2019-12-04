@@ -6,6 +6,7 @@
         A.ID id,
         APP_NO appNo,
         CUSTOMER_NO customerNo,
+        CUSTOMER_ID customerId,
         CUSTOMER_NAME customerName,
         CUSTOMER_NAME_SPELL customerNoSpell,
         ADDRESS address,
@@ -62,6 +63,10 @@
         WRITE_TYPE writeType,
         USER_TYPE userType,
         REMARK remark,
+        STATUS status,
+        CUSTOMER_ID customerId,
+        PHONE_NUMBER phoneNumber,
+        A.USER_ID userId,
         A.BUSINESS_PLACE_CODE businessPlaceCode,
         V.ID taskId,
         V.PROC_INST_ID processInstanceId,
@@ -70,7 +75,7 @@
         V.TASK_DEF_KEY taskDefKey,
         V.CREATE_TIME createTime,
         V.GROUP_ID groupId,
-        V.USER_ID userId,
+        V.USER_ID operatorId,
         V.BUSINESS_KEY businessKey
         from V_TASKLIST V,APP_USER_INFO A
         WHERE V.BUSINESS_KEY = A.APP_NO
@@ -123,6 +128,9 @@
         b.WRITE_TYPE writeType,
         b.USER_TYPE userType,
         b.REMARK remark,
+        b.user_id userId,
+        b.status status,
+        b.phone_number phoneNumber,
         a.START_TIME_ startTime,
         a.END_TIME_ endTime,
         a.TASK_DEF_KEY_ taskDefKey,

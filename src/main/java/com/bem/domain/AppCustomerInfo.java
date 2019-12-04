@@ -19,6 +19,12 @@ public class AppCustomerInfo {
     private String appNo;
 
     /**
+     * 工作单号
+     */
+    @Column(name = "CUSTOMER_ID")
+    private Long customerId;
+
+    /**
      * 客户编号
      */
     @Column(name = "CUSTOMER_NO")
@@ -94,7 +100,7 @@ public class AppCustomerInfo {
      * 营业区域
      */
     @Column(name = "BUSINESS_PLACE_CODE")
-    private String businessPlaceCode;
+    private Integer businessPlaceCode;
 
     /**
      * 获取ID
@@ -130,6 +136,24 @@ public class AppCustomerInfo {
      */
     public void setAppNo(String appNo) {
         this.appNo = appNo == null ? null : appNo.trim();
+    }
+
+    /**
+     * 获取工作单号
+     *
+     * @return CUSTOMER_ID - 工作单号
+     */
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    /**
+     * 设置工作单号
+     *
+     * @param customerId 工作单号
+     */
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     /**
@@ -363,7 +387,7 @@ public class AppCustomerInfo {
      *
      * @return BUSINESS_PLACE_CODE - 营业区域
      */
-    public String getBusinessPlaceCode() {
+    public Integer getBusinessPlaceCode() {
         return businessPlaceCode;
     }
 
@@ -372,7 +396,7 @@ public class AppCustomerInfo {
      *
      * @param businessPlaceCode 营业区域
      */
-    public void setBusinessPlaceCode(String businessPlaceCode) {
-        this.businessPlaceCode = businessPlaceCode == null ? null : businessPlaceCode.trim();
+    public void setBusinessPlaceCode(Integer businessPlaceCode) {
+        this.businessPlaceCode = businessPlaceCode == null ? null : businessPlaceCode;
     }
 }

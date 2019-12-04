@@ -14,6 +14,12 @@ public class AppMeterInfo {
     private Long id;
 
     /**
+     * 计量点id
+     */
+    @Column(name = "METER_ID")
+    private Long meterId;
+
+    /**
      * 工作单号
      */
     @Column(name = "APP_ID")
@@ -157,6 +163,77 @@ public class AppMeterInfo {
     @Column(name = "TRANS_ASSETS_NO")
     private String transAssetsNo;
 
+    @Column(name = "WRITE_SECTION_ID")
+    private Long writeSectionId;
+
+    /**
+     * 抄表区段名称
+     */
+    @Column(name = "WRITE_SECT_NAME")
+    private String writeSectName;
+
+    /**
+     * 户号
+     */
+    @Column(name = "USER_NO")
+    private String userNo;
+
+    @Column(name = "USER_ID")
+    private Long userId;
+
+    /**
+     * 计量点序号
+     */
+    @Column(name = "METER_ORDER")
+    private Integer meterOrder;
+
+    /**
+     * 算费次数
+     */
+    @Column(name = "COUNT_TIMES")
+    private Integer countTimes;
+
+    /**
+     * 停电标识
+     */
+    @Column(name = "POWER_CUT_FLAG")
+    private Short powerCutFlag;
+
+    /**
+     * 抄表方式
+     */
+    @Column(name = "WRITE_METHOD")
+    private Short writeMethod;
+
+    /**
+     * 基本电价代码
+     */
+    @Column(name = "BASIC_PRICE")
+    private Short basicPrice;
+
+    /**
+     * 计费容量
+     */
+    @Column(name = "CHARGING_CAPACITY")
+    private BigDecimal chargingCapacity;
+
+    /**
+     * 环节号
+     */
+    @Column(name = "TASK_ID")
+    private Integer taskId;
+
+    @Transient
+    private  Integer templateId;
+
+    public Integer getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(Integer templateId) {
+        this.templateId = templateId;
+    }
+
     /**
      * 获取ID
      *
@@ -173,6 +250,24 @@ public class AppMeterInfo {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * 获取计量点id
+     *
+     * @return METER_ID - 计量点id
+     */
+    public Long getMeterId() {
+        return meterId;
+    }
+
+    /**
+     * 设置计量点id
+     *
+     * @param meterId 计量点id
+     */
+    public void setMeterId(Long meterId) {
+        this.meterId = meterId;
     }
 
     /**
@@ -615,5 +710,195 @@ public class AppMeterInfo {
      */
     public void setTransAssetsNo(String transAssetsNo) {
         this.transAssetsNo = transAssetsNo == null ? null : transAssetsNo.trim();
+    }
+
+    /**
+     * @return WRITE_SECTION_ID
+     */
+    public Long getWriteSectionId() {
+        return writeSectionId;
+    }
+
+    /**
+     * @param writeSectionId
+     */
+    public void setWriteSectionId(Long writeSectionId) {
+        this.writeSectionId = writeSectionId;
+    }
+
+    /**
+     * 获取抄表区段名称
+     *
+     * @return WRITE_SECT_NAME - 抄表区段名称
+     */
+    public String getWriteSectName() {
+        return writeSectName;
+    }
+
+    /**
+     * 设置抄表区段名称
+     *
+     * @param writeSectName 抄表区段名称
+     */
+    public void setWriteSectName(String writeSectName) {
+        this.writeSectName = writeSectName == null ? null : writeSectName.trim();
+    }
+
+    /**
+     * 获取户号
+     *
+     * @return USER_NO - 户号
+     */
+    public String getUserNo() {
+        return userNo;
+    }
+
+    /**
+     * 设置户号
+     *
+     * @param userNo 户号
+     */
+    public void setUserNo(String userNo) {
+        this.userNo = userNo == null ? null : userNo.trim();
+    }
+
+    /**
+     * @return USER_ID
+     */
+    public Long getUserId() {
+        return userId;
+    }
+
+    /**
+     * @param userId
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * 获取计量点序号
+     *
+     * @return METER_ORDER - 计量点序号
+     */
+    public Integer getMeterOrder() {
+        return meterOrder;
+    }
+
+    /**
+     * 设置计量点序号
+     *
+     * @param meterOrder 计量点序号
+     */
+    public void setMeterOrder(Integer meterOrder) {
+        this.meterOrder = meterOrder;
+    }
+
+    /**
+     * 获取算费次数
+     *
+     * @return COUNT_TIMES - 算费次数
+     */
+    public Integer getCountTimes() {
+        return countTimes;
+    }
+
+    /**
+     * 设置算费次数
+     *
+     * @param countTimes 算费次数
+     */
+    public void setCountTimes(Integer countTimes) {
+        this.countTimes = countTimes;
+    }
+
+    /**
+     * 获取停电标识
+     *
+     * @return POWER_CUT_FLAG - 停电标识
+     */
+    public Short getPowerCutFlag() {
+        return powerCutFlag;
+    }
+
+    /**
+     * 设置停电标识
+     *
+     * @param powerCutFlag 停电标识
+     */
+    public void setPowerCutFlag(Short powerCutFlag) {
+        this.powerCutFlag = powerCutFlag;
+    }
+
+    /**
+     * 获取抄表方式
+     *
+     * @return WRITE_METHOD - 抄表方式
+     */
+    public Short getWriteMethod() {
+        return writeMethod;
+    }
+
+    /**
+     * 设置抄表方式
+     *
+     * @param writeMethod 抄表方式
+     */
+    public void setWriteMethod(Short writeMethod) {
+        this.writeMethod = writeMethod;
+    }
+
+    /**
+     * 获取基本电价代码
+     *
+     * @return BASIC_PRICE - 基本电价代码
+     */
+    public Short getBasicPrice() {
+        return basicPrice;
+    }
+
+    /**
+     * 设置基本电价代码
+     *
+     * @param basicPrice 基本电价代码
+     */
+    public void setBasicPrice(Short basicPrice) {
+        this.basicPrice = basicPrice;
+    }
+
+    /**
+     * 获取计费容量
+     *
+     * @return CHARGING_CAPACITY - 计费容量
+     */
+    public BigDecimal getChargingCapacity() {
+        return chargingCapacity;
+    }
+
+    /**
+     * 设置计费容量
+     *
+     * @param chargingCapacity 计费容量
+     */
+    public void setChargingCapacity(BigDecimal chargingCapacity) {
+        this.chargingCapacity = chargingCapacity;
+    }
+
+    /**
+     * 获取环节号
+     *
+     * @return TASK_ID - 环节号
+     */
+    public Integer getTaskId() {
+        return taskId;
+    }
+
+    /**
+     * 设置环节号
+     *
+     * @param taskId 环节号
+     */
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
     }
 }

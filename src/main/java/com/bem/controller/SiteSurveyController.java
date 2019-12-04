@@ -1,14 +1,17 @@
 package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bem.common.RestultContent;
 import com.bem.common.SiteSurveyTree;
-import com.bem.domain.*;
+import com.bem.domain.AppInductorAssetsInfo;
+import com.bem.domain.AppMeterAssetsInfo;
+import com.bem.domain.AppMeterInfo;
+import com.bem.domain.AppTransformerInfo;
 import com.bem.mapper.AppInductorAssetsInfoMapper;
 import com.bem.mapper.AppMeterAssetsInfoMapper;
 import com.bem.mapper.AppMeterInfoMapper;
 import com.bem.mapper.AppTransformerInfoMapper;
 import com.bem.util.PropertiesUtil;
+import com.riozenc.titanTool.spring.web.http.HttpResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,9 +58,8 @@ public class SiteSurveyController {
      */
     @ResponseBody
     @RequestMapping("/getSiteSurveyTree")
-    public RestultContent getSiteSurveyTree(@RequestBody(required = false) String siteSurveyTreeJson) throws Exception {
+    public HttpResult getSiteSurveyTree(@RequestBody(required = false) String siteSurveyTreeJson) throws Exception {
         //返回实体
-        RestultContent restultContent = new RestultContent();
 
         List<SiteSurveyTree> treeList = new ArrayList<>();
 
@@ -92,9 +94,7 @@ public class SiteSurveyController {
             }
         }
         treeList.addAll(jlPointList);
-        restultContent.setStatus(200);
-        restultContent.setData(treeList);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", treeList);
 
     }
 
@@ -129,39 +129,29 @@ public class SiteSurveyController {
 
 
     /**
-     *
      * @param transformerAssetsNo
      * @return
      */
     @RequestMapping("/getUserTrans")
     @ResponseBody
-    public RestultContent getUserTrans(@RequestBody String transformerAssetsNo) throws Exception {
+    public HttpResult getUserTrans(@RequestBody String transformerAssetsNo) throws Exception {
         //查询变压器资产是否存在
-        RestultContent restultContent = new RestultContent();
-        String assetsNo=JSONObject.parseObject(transformerAssetsNo).getString("transformerAssetsNo");
+        String assetsNo = JSONObject.parseObject(transformerAssetsNo).getString("transformerAssetsNo");
         JSONObject postData = new JSONObject();
-        postData.put("transformerAssetsNo",assetsNo);
+        postData.put("transformerAssetsNo", assetsNo);
         String result = restTemplate.postForObject
                 (PropertiesUtil.getValue("getTransformerAssetsByWhere"), postData, String.class);
         List<AppTransformerInfo> appTransformerInfos = JSONObject.parseArray(result, AppTransformerInfo.class);
         if (appTransformerInfos.size() < 1) {
-            restultContent.setStatus(300);
-            restultContent.setErrorMsg("资产库没有该资产");
-            return restultContent;
+            return new HttpResult(HttpResult.ERROR, "资产库没有该资产", null);
         }
         if (appTransformerInfos.size() > 1) {
-            restultContent.setStatus(300);
-            restultContent.setErrorMsg("该资产编号"+assetsNo+"在变压器资产库存在多条记录");
-            return restultContent;
+            return new HttpResult(HttpResult.ERROR, "该资产编号" + assetsNo + "在变压器资产库存在多条记录", null);
         }
         result = restTemplate.postForObject
                 (PropertiesUtil.getValue("getTransformerByAsset"), postData, String.class);
 
-        restultContent.setStatus(200);
-        //cim-server 返回list数据
-        restultContent.setData(appTransformerInfos.get(0));
-        return restultContent;
-
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", appTransformerInfos.get(0));
     }
 
     /**
@@ -172,14 +162,11 @@ public class SiteSurveyController {
      */
     @RequestMapping("/getTrans")
     @ResponseBody
-    public RestultContent getTrans(@RequestBody String transJson) throws Exception {
-        RestultContent restultContent = new RestultContent();
+    public HttpResult getTrans(@RequestBody String transJson) throws Exception {
         JSONObject jsonObject = JSONObject.parseObject(transJson);
         AppTransformerInfo appTransformerInfo = new AppTransformerInfo();
         appTransformerInfo = appTransformerInfoMapper.selectByPrimaryKey(jsonObject.get("id"));
-        restultContent.setStatus(200);
-        restultContent.setData(appTransformerInfo);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", appTransformerInfo);
 
     }
 
@@ -191,10 +178,9 @@ public class SiteSurveyController {
      */
     @RequestMapping("/saveTrans")
     @ResponseBody
-    public RestultContent saveTrans(@RequestBody String transJson) throws Exception {
+    public HttpResult saveTrans(@RequestBody String transJson) throws Exception {
 
         AppTransformerInfo appTransformerInfo = JSONObject.parseObject(transJson, AppTransformerInfo.class);
-        RestultContent restultContent = new RestultContent();
         boolean isExist = appTransformerInfoMapper.existsWithPrimaryKey(appTransformerInfo);
         if (isExist) {
             appTransformerInfoMapper.updateByPrimaryKeySelective(appTransformerInfo);
@@ -202,9 +188,7 @@ public class SiteSurveyController {
             appTransformerInfo.setCreateDate(new Date());
             appTransformerInfoMapper.insertSelective(appTransformerInfo);
         }
-        restultContent.setStatus(200);
-        restultContent.setData(appTransformerInfo);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "保存成功", appTransformerInfo);
 
     }
 
@@ -245,15 +229,11 @@ public class SiteSurveyController {
      */
     @RequestMapping("/getJlPoint")
     @ResponseBody
-    public RestultContent getJlPoint(@RequestBody String jlPointJson) throws Exception {
+    public HttpResult getJlPoint(@RequestBody String jlPointJson) throws Exception {
         JSONObject jsonObject = JSONObject.parseObject(jlPointJson);
-        RestultContent restultContent = new RestultContent();
         AppMeterInfo appMeterInfo = new AppMeterInfo();
         appMeterInfo = appMeterInfoMapper.selectByPrimaryKey(jsonObject.get("id"));
-        restultContent.setStatus(200);
-        restultContent.setData(appMeterInfo);
-        return restultContent;
-
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", appMeterInfo);
     }
 
     /**
@@ -264,10 +244,9 @@ public class SiteSurveyController {
      */
     @RequestMapping("/saveJlPoint")
     @ResponseBody
-    public RestultContent saveJlPoint(@RequestBody String jlPointJson) throws Exception {
+    public HttpResult saveJlPoint(@RequestBody String jlPointJson) throws Exception {
 
         AppMeterInfo appMeterInfo = JSONObject.parseObject(jlPointJson, AppMeterInfo.class);
-        RestultContent restultContent = new RestultContent();
         boolean isExist = appMeterInfoMapper.existsWithPrimaryKey(appMeterInfo);
         if (isExist) {
             appMeterInfoMapper.updateByPrimaryKeySelective(appMeterInfo);
@@ -275,10 +254,7 @@ public class SiteSurveyController {
             appMeterInfo.setCreateDate(new Date());
             appMeterInfoMapper.insertSelective(appMeterInfo);
         }
-        restultContent.setStatus(200);
-        restultContent.setData(appMeterInfo);
-        return restultContent;
-
+        return new HttpResult(HttpResult.SUCCESS, "保存成功", appMeterInfo);
     }
 
     /**
@@ -311,44 +287,35 @@ public class SiteSurveyController {
 
 
     /**
-     *
      * @param meterAssets
      * @return
      */
     @RequestMapping("/getUserMeterAssets")
     @ResponseBody
-    public RestultContent getUserMeterAssets(@RequestBody String meterAssets) throws Exception {
+    public HttpResult getUserMeterAssets(@RequestBody String meterAssets) throws Exception {
         //查询电能表资产是否存在
-        RestultContent restultContent = new RestultContent();
-        String meterAssetsNo=JSONObject.parseObject(meterAssets).getString("meterAssetsNo");
+        String meterAssetsNo = JSONObject.parseObject(meterAssets).getString("meterAssetsNo");
         JSONObject postData = new JSONObject();
-        postData.put("meterAssetsNo",meterAssetsNo);
+        postData.put("meterAssetsNo", meterAssetsNo);
         String result = restTemplate.postForObject
-                (PropertiesUtil.getValue("getMeterAssetsByAssetsNo") , postData,String.class);
-        List<AppMeterAssetsInfo> appMeterAssetsInfos= JSONObject.parseArray(result, AppMeterAssetsInfo.class);
+                (PropertiesUtil.getValue("getMeterAssetsByAssetsNo"), postData, String.class);
+        List<AppMeterAssetsInfo> appMeterAssetsInfos = JSONObject.parseArray(result, AppMeterAssetsInfo.class);
         if (appMeterAssetsInfos.size() < 1) {
-            restultContent.setStatus(300);
-            restultContent.setErrorMsg("电能表资产库没有该资产");
-            return restultContent;
+            return new HttpResult(HttpResult.ERROR, "电能表资产库没有该资产", null);
         }
         if (appMeterAssetsInfos.size() > 1) {
-            restultContent.setStatus(300);
-            restultContent.setErrorMsg("该资产编号"+meterAssetsNo+"在电能表资产库存在多条记录");
-            return restultContent;
+            return new HttpResult(HttpResult.ERROR, "该资产编号" + meterAssetsNo + "在电能表资产库存在多条记录", null);
         }
 
         //查询电能表是否在用
-        result = restTemplate.postForObject(PropertiesUtil.getValue("getMeterByMeterAssestsNo"), postData,String.class);
+        result = restTemplate.postForObject(PropertiesUtil.getValue("getMeterByMeterAssestsNo"), postData, String.class);
 
-        List<AppMeterInfo> appMeterInfos= JSONObject.parseArray(result, AppMeterInfo.class);
-        if (0!=appMeterInfos.size()) {
-            restultContent.setStatus(300);
-            restultContent.setErrorMsg("该资产编号"+meterAssetsNo+"已在用");
-            return restultContent;
+        List<AppMeterInfo> appMeterInfos = JSONObject.parseArray(result, AppMeterInfo.class);
+        if (0 != appMeterInfos.size()) {
+            return new HttpResult(HttpResult.ERROR, "该资产编号" + meterAssetsNo + "已在用", null);
+
         }
-        restultContent.setStatus(200);
-        restultContent.setData(appMeterAssetsInfos.get(0));
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", appMeterAssetsInfos.get(0));
 
     }
 
@@ -360,14 +327,11 @@ public class SiteSurveyController {
      */
     @RequestMapping("/getMeter")
     @ResponseBody
-    public RestultContent getMeter(@RequestBody String meterJson) throws Exception {
+    public HttpResult getMeter(@RequestBody String meterJson) throws Exception {
         JSONObject jsonObject = JSONObject.parseObject(meterJson);
-        RestultContent restultContent = new RestultContent();
         AppMeterAssetsInfo appMeterAssetsInfo = new AppMeterAssetsInfo();
         appMeterAssetsInfo = appMeterAssetsInfoMapper.selectByPrimaryKey(jsonObject.get("id"));
-        restultContent.setStatus(200);
-        restultContent.setData(appMeterAssetsInfo);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", appMeterAssetsInfo);
 
     }
 
@@ -379,19 +343,16 @@ public class SiteSurveyController {
      */
     @RequestMapping("/saveMeter")
     @ResponseBody
-    public RestultContent saveMeter(@RequestBody String meterJson) throws Exception {
+    public HttpResult saveMeter(@RequestBody String meterJson) throws Exception {
 
         AppMeterAssetsInfo appMeterAssetsInfo = JSONObject.parseObject(meterJson, AppMeterAssetsInfo.class);
-        RestultContent restultContent = new RestultContent();
         boolean isExist = appMeterAssetsInfoMapper.existsWithPrimaryKey(appMeterAssetsInfo);
         if (isExist) {
             appMeterAssetsInfoMapper.updateByPrimaryKeySelective(appMeterAssetsInfo);
         } else {
             appMeterAssetsInfoMapper.insertSelective(appMeterAssetsInfo);
         }
-        restultContent.setStatus(200);
-        restultContent.setData(appMeterAssetsInfo);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "保存成功", appMeterAssetsInfo);
 
     }
 
@@ -426,42 +387,32 @@ public class SiteSurveyController {
 
 
     /**
-     *
      * @param indtAssets
      * @return
      */
     @RequestMapping("/getUserIndtAssets")
     @ResponseBody
-    public RestultContent getUserIndtAssets(@RequestBody String indtAssets) throws Exception {
+    public HttpResult getUserIndtAssets(@RequestBody String indtAssets) throws Exception {
         //查询电能表资产是否存在
-        RestultContent restultContent = new RestultContent();
         JSONObject postData = new JSONObject();
-        String inductorAssetsNo=JSONObject.parseObject(indtAssets).getString("inductorAssetsNo");
-        postData.put("inductorAssetsNo",inductorAssetsNo);
+        String inductorAssetsNo = JSONObject.parseObject(indtAssets).getString("inductorAssetsNo");
+        postData.put("inductorAssetsNo", inductorAssetsNo);
         String result = restTemplate.postForObject
                 (PropertiesUtil.getValue("getInductorAssetsByAssetsNo"), postData, String.class);
         List<AppInductorAssetsInfo> appInductorAssetsInfos = JSONObject.parseArray(result, AppInductorAssetsInfo.class);
         if (appInductorAssetsInfos.size() < 1) {
-            restultContent.setStatus(300);
-            restultContent.setErrorMsg("资产库没有该资产");
-            return restultContent;
+            return new HttpResult(HttpResult.ERROR, "资产库没有该资产", null);
         }
         if (appInductorAssetsInfos.size() > 1) {
-            restultContent.setStatus(300);
-            restultContent.setErrorMsg("该资产编号"+inductorAssetsNo+"在互感器资产库存在多条记录");
-            return restultContent;
+            return new HttpResult(HttpResult.ERROR, "该资产编号" + inductorAssetsNo + "在互感器资产库存在多条记录", null);
         }
         //查询互感器是否在用
-        result = restTemplate.postForObject(PropertiesUtil.getValue("getMeterByInductorAssestsNo"), postData,String.class);
-        List<AppMeterInfo>appMeterInfos= JSONObject.parseArray(result, AppMeterInfo.class);
-        if (0!=appMeterInfos.size()) {
-            restultContent.setStatus(300);
-            restultContent.setErrorMsg("该资产编号"+inductorAssetsNo+"已在用");
-            return restultContent;
+        result = restTemplate.postForObject(PropertiesUtil.getValue("getMeterByInductorAssestsNo"), postData, String.class);
+        List<AppMeterInfo> appMeterInfos = JSONObject.parseArray(result, AppMeterInfo.class);
+        if (0 != appMeterInfos.size()) {
+            return new HttpResult(HttpResult.ERROR, "该资产编号" + inductorAssetsNo + "已在用", null);
         }
-        restultContent.setStatus(200);
-        restultContent.setData(appInductorAssetsInfos.get(0));
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", appInductorAssetsInfos.get(0));
 
     }
 
@@ -473,14 +424,11 @@ public class SiteSurveyController {
      */
     @RequestMapping("/getIndt")
     @ResponseBody
-    public RestultContent getIndt(@RequestBody String indtJson) throws Exception {
+    public HttpResult getIndt(@RequestBody String indtJson) throws Exception {
         JSONObject jsonObject = JSONObject.parseObject(indtJson);
-        RestultContent restultContent = new RestultContent();
         AppInductorAssetsInfo appInductorAssetsInfo = new AppInductorAssetsInfo();
         appInductorAssetsInfo = appInductorAssetsInfoMapper.selectByPrimaryKey(jsonObject.get("id"));
-        restultContent.setStatus(200);
-        restultContent.setData(appInductorAssetsInfo);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", appInductorAssetsInfo);
 
     }
 
@@ -492,20 +440,16 @@ public class SiteSurveyController {
      */
     @RequestMapping("/saveIndt")
     @ResponseBody
-    public RestultContent saveIndt(@RequestBody String indtJson) throws Exception {
+    public HttpResult saveIndt(@RequestBody String indtJson) throws Exception {
 
         AppInductorAssetsInfo appInductorAssetsInfo = JSONObject.parseObject(indtJson, AppInductorAssetsInfo.class);
-        RestultContent restultContent = new RestultContent();
         boolean isExist = appInductorAssetsInfoMapper.existsWithPrimaryKey(appInductorAssetsInfo);
         if (isExist) {
             appInductorAssetsInfoMapper.updateByPrimaryKeySelective(appInductorAssetsInfo);
         } else {
             appInductorAssetsInfoMapper.insertSelective(appInductorAssetsInfo);
         }
-        restultContent.setStatus(200);
-        restultContent.setData(appInductorAssetsInfo);
-        return restultContent;
-
+        return new HttpResult(HttpResult.SUCCESS, "保存成功", appInductorAssetsInfo);
     }
 
 

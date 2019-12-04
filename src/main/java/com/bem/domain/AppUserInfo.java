@@ -38,6 +38,12 @@ public class AppUserInfo {
     private String userNo;
 
     /**
+     * 用户id
+     */
+    @Column(name = "USER_ID")
+    private Long userId;
+
+    /**
      * 用电户名称
      */
     @Column(name = "USER_NAME")
@@ -59,7 +65,7 @@ public class AppUserInfo {
      * 抄表区段
      */
     @Column(name = "WRITE_SECT_ID")
-    private String writeSectId;
+    private Integer writeSectId;
 
     /**
      * 合同容量
@@ -133,9 +139,6 @@ public class AppUserInfo {
     @Column(name = "REMARK")
     private String remark;
 
-    @Column(name = "STATUS")
-    private Short status;
-
     /**
      * 创建时间（短信通知依据时间）
      */
@@ -163,7 +166,7 @@ public class AppUserInfo {
     /**
      * 电话
      */
-    @Column(name = "PHONE_NUMBER")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     /**
@@ -172,8 +175,14 @@ public class AppUserInfo {
     @Column(name = "APP_STATUS")
     private String appStatus;
 
+    /**
+     * 环节id
+     */
     @Column(name = "TASK_ID")
     private String taskId;
+
+    @Column(name = "STATUS")
+    private Short status;
 
     /**
      * 1网站2微信3智能终端4大厅
@@ -186,6 +195,26 @@ public class AppUserInfo {
      */
     @Column(name = "TG_ID")
     private Long tgId;
+    @Transient
+    private String writeSectName;
+    @Transient
+    private String customerName;
+
+    public String getWriteSectName() {
+        return writeSectName;
+    }
+
+    public void setWriteSectName(String writeSectName) {
+        this.writeSectName = writeSectName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
     /**
      * 获取ID
@@ -278,6 +307,24 @@ public class AppUserInfo {
     }
 
     /**
+     * 获取用户id
+     *
+     * @return USER_ID - 用户id
+     */
+    public Long getUserId() {
+        return userId;
+    }
+
+    /**
+     * 设置用户id
+     *
+     * @param userId 用户id
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    /**
      * 获取用电户名称
      *
      * @return USER_NAME - 用电户名称
@@ -336,7 +383,7 @@ public class AppUserInfo {
      *
      * @return WRITE_SECT_ID - 抄表区段
      */
-    public String getWriteSectId() {
+    public Integer getWriteSectId() {
         return writeSectId;
     }
 
@@ -345,8 +392,8 @@ public class AppUserInfo {
      *
      * @param writeSectId 抄表区段
      */
-    public void setWriteSectId(String writeSectId) {
-        this.writeSectId = writeSectId == null ? null : writeSectId.trim();
+    public void setWriteSectId(Integer writeSectId) {
+        this.writeSectId = writeSectId == null ? null : writeSectId;
     }
 
     /**
@@ -566,20 +613,6 @@ public class AppUserInfo {
     }
 
     /**
-     * @return STATUS
-     */
-    public Short getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status
-     */
-    public void setStatus(Short status) {
-        this.status = status;
-    }
-
-    /**
      * 获取创建时间（短信通知依据时间）
      *
      * @return CREATE_DATE - 创建时间（短信通知依据时间）
@@ -654,7 +687,7 @@ public class AppUserInfo {
     /**
      * 获取电话
      *
-     * @return PHONE_NUMBER - 电话
+     * @return phone_number - 电话
      */
     public String getPhoneNumber() {
         return phoneNumber;
@@ -688,17 +721,35 @@ public class AppUserInfo {
     }
 
     /**
-     * @return TASK_ID
+     * 获取环节id
+     *
+     * @return TASK_ID - 环节id
      */
     public String getTaskId() {
         return taskId;
     }
 
     /**
-     * @param taskId
+     * 设置环节id
+     *
+     * @param taskId 环节id
      */
     public void setTaskId(String taskId) {
         this.taskId = taskId == null ? null : taskId.trim();
+    }
+
+    /**
+     * @return STATUS
+     */
+    public Short getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status
+     */
+    public void setStatus(Short status) {
+        this.status = status;
     }
 
     /**

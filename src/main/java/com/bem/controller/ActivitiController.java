@@ -1,16 +1,17 @@
 package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bem.common.RestultContent;
 import com.bem.domain.*;
 import com.bem.mapper.*;
 import com.bem.service.ActivitiService;
 import com.bem.service.AppFileService;
+import com.bem.service.AppUpdateInfoService;
 import com.bem.service.TaskListService;
 import com.bem.util.BemCommonUtil;
 import com.bem.util.PropertiesUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.riozenc.titanTool.spring.web.http.HttpResult;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,9 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping(value = "/activiti")
 public class ActivitiController {
+
+    @Autowired
+    private AppUpdateInfoService appUpdateInfoService;
 
     @Autowired
     private TaskListService taskListService;
@@ -66,6 +70,9 @@ public class ActivitiController {
     private AppCustomerInfoMapper appCustomerInfoMapper;
 
     @Autowired
+    private AppMeterInfoMapper appMeterInfoMapper;
+
+    @Autowired
     private AppFileService appFileService;
 
     @Autowired
@@ -73,8 +80,7 @@ public class ActivitiController {
 
     @RequestMapping(value = "/getTaskList")
     @ResponseBody
-    public RestultContent getTaskList(@RequestBody(required = false) String userRightJson) throws Exception {
-        RestultContent restultContent = new RestultContent();
+    public HttpResult getTaskList(@RequestBody(required = false) String userRightJson) throws Exception {
         //List<Map<String, Object>> taskMap = new ArrayList<>();
         Map<String, Object> userMap = new HashMap<>();
         JSONObject userRight = JSONObject.parseObject(userRightJson);
@@ -90,20 +96,17 @@ public class ActivitiController {
         //分页 gql
         boolean isNumeric = BemCommonUtil.isNumeric(userRight.getString("pageCurrent"), userRight.getString("pageSize"));
         PageInfo<Map<String, Object>> pageInfo = null;
-        if(isNumeric){
+        if (isNumeric) {
             pageInfo =
                     PageHelper.startPage(userRight.getInteger("pageCurrent"), userRight.getInteger("pageSize")).
                             doSelectPageInfo(() -> this.taskListService.selectUserByApp(userMap));
-        }else{
-             pageInfo =
+        } else {
+            pageInfo =
                     PageHelper.startPage(1, 10).
                             doSelectPageInfo(() -> this.taskListService.selectUserByApp(userMap));
         }
 
-        //taskMap=pageInfo.getList();
-        restultContent.setStatus(200);
-        restultContent.setData(pageInfo);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", pageInfo);
     }
 
 
@@ -113,9 +116,8 @@ public class ActivitiController {
      */
     @RequestMapping("/submit")
     @ResponseBody
-    public RestultContent submit(@RequestBody(required = false) String submitJson) throws Exception {
+    public HttpResult submit(@RequestBody(required = false) String submitJson) throws Exception {
         JSONObject jsonObject = JSONObject.parseObject(submitJson);
-        RestultContent restultContent = new RestultContent();
         Map<String, Object> candidate = new HashMap<>();
         candidate.put("candidate", BemCommonUtil.getOpeartorId(submitJson));
 
@@ -127,9 +129,7 @@ public class ActivitiController {
                     andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
             List<AppPassAdvice> appPassAdvices = appPassAdviceMapper.selectByExample(appPassAdviceExample);
             if (appPassAdvices.size() < 1) {
-                restultContent.setStatus(300);
-                restultContent.setErrorMsg("该环节没有办理无法提交");
-                return restultContent;
+                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
             }
             candidate.put("haveProject", 0 == appPassAdvices.size() ? null : appPassAdvices.get(0).getHavaProject());
         }
@@ -142,9 +142,8 @@ public class ActivitiController {
                     andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
             List<AppDispatch> appDispatches = appDispatchMapper.selectByExample(appDispatchExample);
             if (appDispatches.size() < 1) {
-                restultContent.setStatus(300);
-                restultContent.setErrorMsg("该环节没有办理无法提交");
-                return restultContent;
+                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+
             }
             if (0 < appDispatches.size()) {
                 candidate.put("dispatchMan",
@@ -160,15 +159,27 @@ public class ActivitiController {
                     andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
             List<AppCircumstance> appCircumstances = appCircumstanceMapper.selectByExample(appCircumstanceExample);
             if (appCircumstances.size() < 1) {
-                restultContent.setStatus(300);
-                restultContent.setErrorMsg("该环节没有办理无法提交");
-                return restultContent;
+                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+
             }
             candidate.put("haveProject", 0 == appCircumstances.size() ? null :
                     appCircumstances.get(0).getHavaProject());
             candidate.put("isAccess", 0 == appCircumstances.size() ? null : appCircumstances.get(0).getIsAccess());
             candidate.put("isAnswer", 0 == appCircumstances.size() ? null : appCircumstances.get(0).getIsAnswer());
 
+        }
+
+        if ("bem-f1-p24".equals(jsonObject.get("taskDefKey"))) {
+            AppMeterInfoExample appMeterInfoExample = new AppMeterInfoExample();
+            com.bem.domain.AppMeterInfoExample.Criteria appMeterInfoExampleCriteria =
+                    appMeterInfoExample.createCriteria();
+            appMeterInfoExampleCriteria.andAppIdEqualTo(jsonObject.getLong("appId")).
+                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+            List<AppMeterInfo> appMeterInfos =    appMeterInfoMapper.selectByExample(appMeterInfoExample);
+            if (appMeterInfos.size() < 1) {
+                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+
+            }
         }
 
         //录入工程信息
@@ -180,9 +191,8 @@ public class ActivitiController {
                     andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
             List<AppDeclareInfo> appDeclareInfos = appDeclareInfoMapper.selectByExample(appDeclareInfoExample);
             if (appDeclareInfos.size() < 1) {
-                restultContent.setStatus(300);
-                restultContent.setErrorMsg("该环节没有办理无法提交");
-                return restultContent;
+                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+
             }
             candidate.put("designType", 0 == appDeclareInfos.size() ? null : appDeclareInfos.get(0).getDesignType());
 
@@ -206,18 +216,15 @@ public class ActivitiController {
             List<AppCircumstance> appCircumstances = appCircumstanceMapper.selectByExample(appCircumstanceExample);
 
             if (appAssems.size() < 1 || appCircumstances.size() < 1) {
-                restultContent.setStatus(300);
-                restultContent.setErrorMsg("该环节没有办理无法提交");
-                return restultContent;
+                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+
             }
             //判断文件
-            boolean existsFile=
+            boolean existsFile =
                     appFileService.existsFile(jsonObject.getString("appId"),
                             jsonObject.getString("taskId"));
-            if(!existsFile){
-                restultContent.setStatus(300);
-                restultContent.setErrorMsg("该环节没有上传文件");
-                return restultContent;
+            if (!existsFile) {
+                return new HttpResult(HttpResult.ERROR, "该环节没有上传文件", null);
             }
 
         }
@@ -233,16 +240,17 @@ public class ActivitiController {
                 activitiService.isEnd(jsonObject.getString("processInstanceId"))) {
             appUserInfo.setId(new Long(jsonObject.getString("appId")));
             appUserInfo.setAppStatus("C");
-
+            appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
+            //流程结束自动更新档案
+            appUpdateInfoService.update(jsonObject.getString("appId"));
         } else {
             appUserInfo.setId(new Long(jsonObject.getString("appId")));
             appUserInfo.setAppStatus("Y");
+            appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
+
         }
-        appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
 
-
-        restultContent.setStatus(200);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "提交成功", null);
     }
 
     /**
@@ -259,12 +267,20 @@ public class ActivitiController {
      */
     @RequestMapping("/queryHistoricTask")
     @ResponseBody
-    public RestultContent queryHistoricTask(@RequestBody String processInstanceIdJson) {
-        JSONObject jsonObject = JSONObject.parseObject(processInstanceIdJson);
-        RestultContent restultContent = new RestultContent();
-        restultContent.setStatus(200);
-        restultContent.setData(taskListService.queryHistoricTask(jsonObject.getString("processInstanceId")));
-        return restultContent;
+    public HttpResult queryHistoricTask(@RequestBody String processInstanceIdJson) {
+        JSONObject processInstanceIdObject = JSONObject.parseObject(processInstanceIdJson);
+        List<Map<String,Object>> taskList=
+                taskListService.queryHistoricTask(processInstanceIdObject.getString("processInstanceId"));
+        taskList.forEach(t->{
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("id",t.get("writeSectId"));
+            String writeSectJson=
+                    restTemplate.postForObject(PropertiesUtil.getValue("getWriteSectByKey"), jsonObject, String.class);
+            t.put("writeSectName",
+                    JSONObject.parseObject(writeSectJson).getString("writeSectName"));
+        });
+
+        return new HttpResult(HttpResult.SUCCESS, "查询成功",taskList);
 
     }
 
@@ -274,8 +290,7 @@ public class ActivitiController {
      */
     @RequestMapping("/queryFinishApp")
     @ResponseBody
-    public RestultContent queryFinishApp(@RequestBody(required = false) String processInstanceIdJson) {
-        RestultContent restultContent = new RestultContent();
+    public HttpResult queryFinishApp(@RequestBody(required = false) String processInstanceIdJson) {
         JSONObject hignOrlow = JSONObject.parseObject(processInstanceIdJson);
         List<Map<String, Object>> finishApps = new ArrayList<>();
         Map<String, Object> userMap = new HashMap<>();
@@ -290,22 +305,22 @@ public class ActivitiController {
         //出现传参问题 默认查前十条
         boolean isNumeric = BemCommonUtil.isNumeric(userRight.getString("pageCurrent"), userRight.getString("pageSize"));
         if ("high".equals(hignOrlow.getString("val"))) {
-            if(isNumeric){
+            if (isNumeric) {
                 pageInfo =
                         PageHelper.startPage(userRight.getInteger("pageCurrent"), userRight.getInteger("pageSize")).
                                 doSelectPageInfo(() -> this.taskListService.queryHighFinishApp(userMap));
-            }else{
+            } else {
                 pageInfo =
                         PageHelper.startPage(1, 10).doSelectPageInfo(() -> this.taskListService.queryHighFinishApp(userMap));
             }
             finishApps = pageInfo.getList();
             //finishApps=taskListService.queryHighFinishApp(userMap);
         } else {
-            if(isNumeric){
+            if (isNumeric) {
                 pageInfo =
                         PageHelper.startPage(userRight.getInteger("pageCurrent"), userRight.getInteger("pageSize")).
                                 doSelectPageInfo(() -> this.taskListService.queryLowFinishApp(userMap));
-            }else{
+            } else {
                 pageInfo =
                         PageHelper.startPage(1, 10).
                                 doSelectPageInfo(() -> this.taskListService.queryLowFinishApp(userMap));
@@ -314,10 +329,7 @@ public class ActivitiController {
             //finishApps=taskListService.queryLowFinishApp(userMap);
         }
         if (finishApps == null || finishApps.size() <= 0) {
-            restultContent.setStatus(200);
-            restultContent.setData(finishApps);
-            restultContent.setErrorMsg("无完成数据");
-            return restultContent;
+            return new HttpResult(HttpResult.ERROR, "无完成数据", null);
         }
         for (int i = 0; i < finishApps.size(); i++) {
             List<Map<String, Object>> finishTasks = taskListService.queryFinishTask(finishApps.get(i).get("processInstanceId").toString());
@@ -374,9 +386,7 @@ public class ActivitiController {
 
         }
         pageInfo.setList(finishApps);
-        restultContent.setStatus(200);
-        restultContent.setData(pageInfo);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", pageInfo);
 
     }
 
@@ -386,8 +396,7 @@ public class ActivitiController {
      */
     @RequestMapping("/queryFinishAppDage")
     @ResponseBody
-    public RestultContent queryFinishAppDage(@RequestBody(required = false) String processInstanceIdJson) {
-        RestultContent restultContent = new RestultContent();
+    public HttpResult queryFinishAppDage(@RequestBody(required = false) String processInstanceIdJson) {
         JSONObject hignOrlow = JSONObject.parseObject(processInstanceIdJson);
         List<Map<String, Object>> finishApps = new ArrayList<>();
         Map<String, Object> userMap = new HashMap<>();
@@ -396,17 +405,13 @@ public class ActivitiController {
         userMap.put("appNo", userRight.getString("appNo"));
         userMap.put("userName", userRight.getString("userName"));
         finishApps = taskListService.queryFinishAppDate(userMap);
-        restultContent.setStatus(200);
-        restultContent.setData(finishApps);
-        return restultContent;
-
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", finishApps);
     }
 
     //流程作废
     @RequestMapping("/stopProcessInstance")
     @ResponseBody
-    public RestultContent stopProcessInstance(@RequestBody(required = false) String stopJson) {
-        RestultContent restultContent=new RestultContent();
+    public HttpResult stopProcessInstance(@RequestBody(required = false) String stopJson) {
         JSONObject stopObject = JSONObject.parseObject(stopJson);
         AppUserInfoExample appUserInfoExample = new AppUserInfoExample();
         try {
@@ -416,16 +421,13 @@ public class ActivitiController {
             appUserInfo.setAppStatus("N");
             appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
             //若已完成无法作废
-            if(!activitiService.isEnd(stopObject.getString("processInstanceId"))){
+            if (!activitiService.isEnd(stopObject.getString("processInstanceId"))) {
                 activitiService.stopProcessInstance(stopObject.getString("processInstanceId"), BemCommonUtil.getOpeartorId(stopJson));
             }
-            restultContent.setStatus(200);
-            restultContent.setData(appUserInfo);
-        }catch(Exception e){
-            restultContent.setStatus(300);
-            restultContent.setErrorMsg("作废失败");
+            return new HttpResult(HttpResult.SUCCESS, "作废成功", appUserInfo);
+        } catch (Exception e) {
+            return new HttpResult(HttpResult.SUCCESS, "作废失败", null);
         }
-        return restultContent;
     }
 
     @RequestMapping("/isEnd")
@@ -459,21 +461,19 @@ public class ActivitiController {
      */
     @RequestMapping("/taskRollback")
     @ResponseBody
-    public RestultContent taskRollback(String taskRollbackJson) {
+    public HttpResult taskRollback(String taskRollbackJson) {
         JSONObject taskRollback = JSONObject.parseObject(taskRollbackJson);
         List<HistoricTaskInstance> list = activitiService.queryHistoricTask(taskRollback.getString("processInstanceId"));
         if (list != null) {
             activitiService.turnTask(taskRollback.getString("taskId"), list.get(0).getId(),
                     BemCommonUtil.getOpeartorId(taskRollbackJson));
         }
-        RestultContent restultContent = new RestultContent();
-        restultContent.setStatus(200);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "回退成功", null);
     }
 
     @RequestMapping("/getWebStatus")
     @ResponseBody
-    public String  getStatus(@RequestBody(required = false)String userNoJson) {
+    public String getStatus(@RequestBody(required = false) String userNoJson) {
         JSONObject userNoJSONObject = JSONObject.parseObject(userNoJson);
 
         return null;
@@ -481,32 +481,33 @@ public class ActivitiController {
 
     @RequestMapping("/updateFiles")
     @ResponseBody
-    public RestultContent  updateFiles(@RequestBody(required = false)String updateFilesJson) {
-            RestultContent restultContent = new RestultContent();
-            //组装用户信息
-            JSONObject updateJSONObject=JSONObject.parseObject(updateFilesJson);
-            AppUserInfo updateAppUserInfo =
-                    appUserInfoMapper.selectByPrimaryKey(updateJSONObject.getString("appId"));
-            AppCustomerInfo updateAppCustomer =
-                    appCustomerInfoMapper.selectByPrimaryKey(updateAppUserInfo.getCustomerId());
-            JSONObject postData = new JSONObject();
-            postData.put("userInfo", updateAppUserInfo);
-            postData.put("customerInfo", updateAppCustomer);
-            postData.put("templateId", updateAppUserInfo.getTemplateId());
+    public HttpResult updateFiles(@RequestBody(required = false) String updateFilesJson) {
+        //组装用户信息
+        JSONObject updateJSONObject = JSONObject.parseObject(updateFilesJson);
+        AppUserInfo updateAppUserInfo =
+                appUserInfoMapper.selectByPrimaryKey(updateJSONObject.getString("appId"));
+        AppCustomerInfo updateAppCustomer =
+                appCustomerInfoMapper.selectByPrimaryKey(updateAppUserInfo.getCustomerId());
+        AppMeterInfo appMeterInfo=new AppMeterInfo();
+        appMeterInfo.setAppId(updateJSONObject.getLong("appId"));
+        List<AppMeterInfo> updateAppMeterInfos=appMeterInfoMapper.select(appMeterInfo);
+        JSONObject postData = new JSONObject();
+        postData.put("userInfo", updateAppUserInfo);
+        postData.put("customerInfo", updateAppCustomer);
+        postData.put("meterInfo", updateAppMeterInfos);
+        postData.put("templateId", updateAppUserInfo.getTemplateId());
 
-            //发送到cim 更新档案
-            String resturnJson=
-                    restTemplate.postForObject(PropertiesUtil.getValue("bemAddReceive"), postData, String.class);
+        //发送到cim 更新档案
+        String resturnJson =
+                restTemplate.postForObject(PropertiesUtil.getValue("bemAddReceive"), postData, String.class);
 
-            JSONObject resturnJSONObject=JSONObject.parseObject(resturnJson);
-            if("200".equals(resturnJSONObject.getString("statusCode"))){
-                restultContent.setStatus(200);
-            }else{
-                restultContent.setStatus(300);
-                restultContent.setErrorMsg("档案更新失败");
-            }
+        JSONObject resturnJSONObject = JSONObject.parseObject(resturnJson);
+        if ("200".equals(resturnJSONObject.getString("statusCode"))) {
+            return new HttpResult(HttpResult.SUCCESS, "更新档案成功", null);
+        } else {
+            return new HttpResult(HttpResult.ERROR, "更新档案失败", null);
+        }
 
-        return restultContent;
     }
 
 

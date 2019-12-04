@@ -6,6 +6,7 @@
       WARNING - @mbg.generated
     -->
     <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="METER_ID" jdbcType="BIGINT" property="meterId" />
     <result column="APP_ID" jdbcType="BIGINT" property="appId" />
     <result column="METER_NO" jdbcType="VARCHAR" property="meterNo" />
     <result column="METER_NAME" jdbcType="VARCHAR" property="meterName" />
@@ -31,6 +32,17 @@
     <result column="REMARK" jdbcType="VARCHAR" property="remark" />
     <result column="STATUS" jdbcType="SMALLINT" property="status" />
     <result column="TRANS_ASSETS_NO" jdbcType="VARCHAR" property="transAssetsNo" />
+    <result column="WRITE_SECTION_ID" jdbcType="BIGINT" property="writeSectionId" />
+    <result column="WRITE_SECT_NAME" jdbcType="VARCHAR" property="writeSectName" />
+    <result column="USER_NO" jdbcType="VARCHAR" property="userNo" />
+    <result column="USER_ID" jdbcType="BIGINT" property="userId" />
+    <result column="METER_ORDER" jdbcType="INTEGER" property="meterOrder" />
+    <result column="COUNT_TIMES" jdbcType="INTEGER" property="countTimes" />
+    <result column="POWER_CUT_FLAG" jdbcType="SMALLINT" property="powerCutFlag" />
+    <result column="WRITE_METHOD" jdbcType="SMALLINT" property="writeMethod" />
+    <result column="BASIC_PRICE" jdbcType="SMALLINT" property="basicPrice" />
+    <result column="CHARGING_CAPACITY" jdbcType="DECIMAL" property="chargingCapacity" />
+    <result column="TASK_ID" jdbcType="INTEGER" property="taskId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -100,10 +112,12 @@
     <!--
       WARNING - @mbg.generated
     -->
-    ID, APP_ID, METER_NO, METER_NAME, SET_ADDRESS, PRICE_TYPE, NEED_INDEX, VOLT_LEVEL_TYPE, 
-    METER_TYPE, METER_CLASS_TYPE, MS_TYPE, ELEC_TYPE_CODE, BASE_MONEY_FLAG, COS_TYPE, 
-    TRADE_TYPE, TS_TYPE, TRANS_LOST_TYPE, TRANS_LOST_NUM, Q_TRANS_LOST_NUM, LINE_LOST_TYPE, 
-    LINE_LOST_NUM, Q_LINE_LOST_NUM, CREATE_DATE, REMARK, STATUS, TRANS_ASSETS_NO
+    ID, METER_ID, APP_ID, METER_NO, METER_NAME, SET_ADDRESS, PRICE_TYPE, NEED_INDEX, 
+    VOLT_LEVEL_TYPE, METER_TYPE, METER_CLASS_TYPE, MS_TYPE, ELEC_TYPE_CODE, BASE_MONEY_FLAG, 
+    COS_TYPE, TRADE_TYPE, TS_TYPE, TRANS_LOST_TYPE, TRANS_LOST_NUM, Q_TRANS_LOST_NUM, 
+    LINE_LOST_TYPE, LINE_LOST_NUM, Q_LINE_LOST_NUM, CREATE_DATE, REMARK, STATUS, TRANS_ASSETS_NO, 
+    WRITE_SECTION_ID, WRITE_SECT_NAME, USER_NO, USER_ID, METER_ORDER, COUNT_TIMES, POWER_CUT_FLAG, 
+    WRITE_METHOD, BASIC_PRICE, CHARGING_CAPACITY, TASK_ID
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppMeterInfoExample" resultMap="BaseResultMap">
     <!--
@@ -148,6 +162,9 @@
     <set>
       <if test="record.id != null">
         ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.meterId != null">
+        METER_ID = #{record.meterId,jdbcType=BIGINT},
       </if>
       <if test="record.appId != null">
         APP_ID = #{record.appId,jdbcType=BIGINT},
@@ -224,6 +241,39 @@
       <if test="record.transAssetsNo != null">
         TRANS_ASSETS_NO = #{record.transAssetsNo,jdbcType=VARCHAR},
       </if>
+      <if test="record.writeSectionId != null">
+        WRITE_SECTION_ID = #{record.writeSectionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.writeSectName != null">
+        WRITE_SECT_NAME = #{record.writeSectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userNo != null">
+        USER_NO = #{record.userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        USER_ID = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.meterOrder != null">
+        METER_ORDER = #{record.meterOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.countTimes != null">
+        COUNT_TIMES = #{record.countTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.powerCutFlag != null">
+        POWER_CUT_FLAG = #{record.powerCutFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="record.writeMethod != null">
+        WRITE_METHOD = #{record.writeMethod,jdbcType=SMALLINT},
+      </if>
+      <if test="record.basicPrice != null">
+        BASIC_PRICE = #{record.basicPrice,jdbcType=SMALLINT},
+      </if>
+      <if test="record.chargingCapacity != null">
+        CHARGING_CAPACITY = #{record.chargingCapacity,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskId != null">
+        TASK_ID = #{record.taskId,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -235,6 +285,7 @@
     -->
     update APP_METER_INFO
     set ID = #{record.id,jdbcType=BIGINT},
+      METER_ID = #{record.meterId,jdbcType=BIGINT},
       APP_ID = #{record.appId,jdbcType=BIGINT},
       METER_NO = #{record.meterNo,jdbcType=VARCHAR},
       METER_NAME = #{record.meterName,jdbcType=VARCHAR},
@@ -259,7 +310,18 @@
       CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
       REMARK = #{record.remark,jdbcType=VARCHAR},
       STATUS = #{record.status,jdbcType=SMALLINT},
-      TRANS_ASSETS_NO = #{record.transAssetsNo,jdbcType=VARCHAR}
+      TRANS_ASSETS_NO = #{record.transAssetsNo,jdbcType=VARCHAR},
+      WRITE_SECTION_ID = #{record.writeSectionId,jdbcType=BIGINT},
+      WRITE_SECT_NAME = #{record.writeSectName,jdbcType=VARCHAR},
+      USER_NO = #{record.userNo,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=BIGINT},
+      METER_ORDER = #{record.meterOrder,jdbcType=INTEGER},
+      COUNT_TIMES = #{record.countTimes,jdbcType=INTEGER},
+      POWER_CUT_FLAG = #{record.powerCutFlag,jdbcType=SMALLINT},
+      WRITE_METHOD = #{record.writeMethod,jdbcType=SMALLINT},
+      BASIC_PRICE = #{record.basicPrice,jdbcType=SMALLINT},
+      CHARGING_CAPACITY = #{record.chargingCapacity,jdbcType=DECIMAL},
+      TASK_ID = #{record.taskId,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

@@ -7,6 +7,7 @@
     -->
     <id column="ID" jdbcType="BIGINT" property="id" />
     <result column="APP_NO" jdbcType="VARCHAR" property="appNo" />
+    <result column="CUSTOMER_ID" jdbcType="BIGINT" property="customerId" />
     <result column="CUSTOMER_NO" jdbcType="VARCHAR" property="customerNo" />
     <result column="CUSTOMER_NAME" jdbcType="VARCHAR" property="customerName" />
     <result column="CUSTOMER_NAME_SPELL" jdbcType="VARCHAR" property="customerNameSpell" />
@@ -90,9 +91,9 @@
     <!--
       WARNING - @mbg.generated
     -->
-    ID, APP_NO, CUSTOMER_NO, CUSTOMER_NAME, CUSTOMER_NAME_SPELL, ADDRESS, ADDRESS_SPELL, 
-    CARD_TYPE, CARD_NO, LINK_MAN, CONTACT_INFORMATION, STATUS, REMARK, CREATE_DATE, CANCEL_DATE, 
-    BUSINESS_PLACE_CODE
+    ID, APP_NO, CUSTOMER_ID, CUSTOMER_NO, CUSTOMER_NAME, CUSTOMER_NAME_SPELL, ADDRESS, 
+    ADDRESS_SPELL, CARD_TYPE, CARD_NO, LINK_MAN, CONTACT_INFORMATION, STATUS, REMARK, 
+    CREATE_DATE, CANCEL_DATE, BUSINESS_PLACE_CODE
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppCustomerInfoExample" resultMap="BaseResultMap">
     <!--
@@ -140,6 +141,9 @@
       </if>
       <if test="record.appNo != null">
         APP_NO = #{record.appNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerId != null">
+        CUSTOMER_ID = #{record.customerId,jdbcType=BIGINT},
       </if>
       <if test="record.customerNo != null">
         CUSTOMER_NO = #{record.customerNo,jdbcType=VARCHAR},
@@ -195,6 +199,7 @@
     update APP_CUSTOMER_INFO
     set ID = #{record.id,jdbcType=BIGINT},
       APP_NO = #{record.appNo,jdbcType=VARCHAR},
+      CUSTOMER_ID = #{record.customerId,jdbcType=BIGINT},
       CUSTOMER_NO = #{record.customerNo,jdbcType=VARCHAR},
       CUSTOMER_NAME = #{record.customerName,jdbcType=VARCHAR},
       CUSTOMER_NAME_SPELL = #{record.customerNameSpell,jdbcType=VARCHAR},

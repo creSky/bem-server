@@ -10,6 +10,7 @@
     <result column="TEMPLATE_ID" jdbcType="INTEGER" property="templateId" />
     <result column="CUSTOMER_ID" jdbcType="BIGINT" property="customerId" />
     <result column="USER_NO" jdbcType="VARCHAR" property="userNo" />
+    <result column="USER_ID" jdbcType="BIGINT" property="userId" />
     <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
     <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
     <result column="BUSINESS_PLACE_CODE" jdbcType="INTEGER" property="businessPlaceCode" />
@@ -26,14 +27,14 @@
     <result column="WRITE_TYPE" jdbcType="SMALLINT" property="writeType" />
     <result column="USER_TYPE" jdbcType="SMALLINT" property="userType" />
     <result column="REMARK" jdbcType="VARCHAR" property="remark" />
-    <result column="STATUS" jdbcType="SMALLINT" property="status" />
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
     <result column="SUBMIT_DATE" jdbcType="TIMESTAMP" property="submitDate" />
     <result column="PROC_INST_ID" jdbcType="VARCHAR" property="procInstId" />
     <result column="APPLY_DATE" jdbcType="TIMESTAMP" property="applyDate" />
-    <result column="PHONE_NUMBER" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
     <result column="APP_STATUS" jdbcType="VARCHAR" property="appStatus" />
     <result column="TASK_ID" jdbcType="VARCHAR" property="taskId" />
+    <result column="STATUS" jdbcType="SMALLINT" property="status" />
     <result column="SOURCE" jdbcType="VARCHAR" property="source" />
     <result column="TG_ID" jdbcType="BIGINT" property="tgId" />
   </resultMap>
@@ -105,11 +106,11 @@
     <!--
       WARNING - @mbg.generated
     -->
-    ID, APP_NO, TEMPLATE_ID, CUSTOMER_ID, USER_NO, USER_NAME, ADDRESS, BUSINESS_PLACE_CODE, 
+    ID, APP_NO, TEMPLATE_ID, CUSTOMER_ID, USER_NO, USER_ID, USER_NAME, ADDRESS, BUSINESS_PLACE_CODE, 
     WRITE_SECT_ID, ALL_CAPACITY, TRADE_TYPE, ELEC_TYPE, VOLT_LEVEL_TYPE, MS_MODE_TYPE, 
     LOAD_TYPE, IS_HIGH_TYPE, TEMP_TYPE, CREDIT_RANK_TYPE, WRITE_TYPE, USER_TYPE, REMARK, 
-    STATUS, CREATE_DATE, SUBMIT_DATE, PROC_INST_ID, APPLY_DATE, PHONE_NUMBER, APP_STATUS, 
-    TASK_ID, SOURCE, TG_ID
+    CREATE_DATE, SUBMIT_DATE, PROC_INST_ID, APPLY_DATE, phone_number, APP_STATUS, TASK_ID, 
+    STATUS, SOURCE, TG_ID
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppUserInfoExample" resultMap="BaseResultMap">
     <!--
@@ -167,6 +168,9 @@
       <if test="record.userNo != null">
         USER_NO = #{record.userNo,jdbcType=VARCHAR},
       </if>
+      <if test="record.userId != null">
+        USER_ID = #{record.userId,jdbcType=BIGINT},
+      </if>
       <if test="record.userName != null">
         USER_NAME = #{record.userName,jdbcType=VARCHAR},
       </if>
@@ -215,9 +219,6 @@
       <if test="record.remark != null">
         REMARK = #{record.remark,jdbcType=VARCHAR},
       </if>
-      <if test="record.status != null">
-        STATUS = #{record.status,jdbcType=SMALLINT},
-      </if>
       <if test="record.createDate != null">
         CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
       </if>
@@ -231,13 +232,16 @@
         APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.phoneNumber != null">
-        PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
+        phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
       </if>
       <if test="record.appStatus != null">
         APP_STATUS = #{record.appStatus,jdbcType=VARCHAR},
       </if>
       <if test="record.taskId != null">
         TASK_ID = #{record.taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=SMALLINT},
       </if>
       <if test="record.source != null">
         SOURCE = #{record.source,jdbcType=VARCHAR},
@@ -260,6 +264,7 @@
       TEMPLATE_ID = #{record.templateId,jdbcType=INTEGER},
       CUSTOMER_ID = #{record.customerId,jdbcType=BIGINT},
       USER_NO = #{record.userNo,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=BIGINT},
       USER_NAME = #{record.userName,jdbcType=VARCHAR},
       ADDRESS = #{record.address,jdbcType=VARCHAR},
       BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=INTEGER},
@@ -276,14 +281,14 @@
       WRITE_TYPE = #{record.writeType,jdbcType=SMALLINT},
       USER_TYPE = #{record.userType,jdbcType=SMALLINT},
       REMARK = #{record.remark,jdbcType=VARCHAR},
-      STATUS = #{record.status,jdbcType=SMALLINT},
       CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
       SUBMIT_DATE = #{record.submitDate,jdbcType=TIMESTAMP},
       PROC_INST_ID = #{record.procInstId,jdbcType=VARCHAR},
       APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
-      PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
+      phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
       APP_STATUS = #{record.appStatus,jdbcType=VARCHAR},
       TASK_ID = #{record.taskId,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=SMALLINT},
       SOURCE = #{record.source,jdbcType=VARCHAR},
       TG_ID = #{record.tgId,jdbcType=BIGINT}
     <if test="_parameter != null">

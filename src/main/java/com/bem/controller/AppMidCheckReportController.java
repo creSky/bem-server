@@ -1,10 +1,10 @@
 package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bem.common.RestultContent;
 import com.bem.domain.AppMidCheckReport;
 import com.bem.domain.AppMidCheckReportExample;
 import com.bem.mapper.AppMidCheckReportMapper;
+import com.riozenc.titanTool.spring.web.http.HttpResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,20 +29,21 @@ public class AppMidCheckReportController {
 
     @RequestMapping("/getAppMidCheckReport")
     @ResponseBody
-    public RestultContent getAppDeclareInfo(@RequestBody String appMidCheckReportJson) throws Exception {
+    public HttpResult getAppDeclareInfo(@RequestBody String appMidCheckReportJson) throws Exception {
         AppMidCheckReport appMidCheckReport = JSONObject.parseObject(appMidCheckReportJson, AppMidCheckReport.class);
         List<AppMidCheckReport> returnAppDeclareInfo = new ArrayList<>();
-        RestultContent restultContent = new RestultContent();
+        HttpResult httpResult = new HttpResult();
         AppMidCheckReportExample appMidCheckReportExample = new AppMidCheckReportExample();
         AppMidCheckReportExample.Criteria criteria = appMidCheckReportExample.createCriteria();
         criteria.andAppIdEqualTo(appMidCheckReport.getAppId());
         returnAppDeclareInfo = appMidCheckReportMapper.selectByExample(appMidCheckReportExample);
         //返回值
-        restultContent.setStatus(200);
+        httpResult.setStatusCode(HttpResult.SUCCESS);
         if (null != returnAppDeclareInfo && returnAppDeclareInfo.size() > 0) {
-            restultContent.setData(returnAppDeclareInfo.get(0));
+            httpResult.setResultData(returnAppDeclareInfo.get(0));
         }
-        return restultContent;
+        httpResult.setMessage("查询成功");
+        return httpResult;
 
     }
 
@@ -53,17 +54,14 @@ public class AppMidCheckReportController {
      */
     @RequestMapping("/save")
     @ResponseBody
-    public RestultContent save(@RequestBody String appMidCheckReportJson) throws Exception {
+    public HttpResult save(@RequestBody String appMidCheckReportJson) throws Exception {
         AppMidCheckReport appMidCheckReport = JSONObject.parseObject(appMidCheckReportJson, AppMidCheckReport.class);
-        RestultContent restultContent = new RestultContent();
         boolean isExist = appMidCheckReportMapper.existsWithPrimaryKey(appMidCheckReport);
         if (isExist) {
             appMidCheckReportMapper.updateByPrimaryKeySelective(appMidCheckReport);
         } else {
             appMidCheckReportMapper.insertSelective(appMidCheckReport);
         }
-        restultContent.setStatus(200);
-        restultContent.setData(appMidCheckReport);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "保存成功", appMidCheckReport);
     }
 }

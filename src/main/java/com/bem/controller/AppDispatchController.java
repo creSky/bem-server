@@ -1,12 +1,12 @@
 package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bem.common.RestultContent;
 import com.bem.domain.AppDispatch;
 import com.bem.domain.AppDispatchExample;
 import com.bem.mapper.AppDispatchMapper;
 import com.bem.service.ActivitiService;
 import com.bem.util.BemCommonUtil;
+import com.riozenc.titanTool.spring.web.http.HttpResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,21 +36,22 @@ public class AppDispatchController {
      */
     @RequestMapping("/getAppDispatch")
     @ResponseBody
-    public RestultContent getAppDispatch(@RequestBody String appDispatchJson) throws Exception {
-        String userId=BemCommonUtil.getOpeartorId(appDispatchJson);
+    public HttpResult getAppDispatch(@RequestBody String appDispatchJson) throws Exception {
+        String userId = BemCommonUtil.getOpeartorId(appDispatchJson);
         AppDispatch appDispatch = JSONObject.parseObject(appDispatchJson, AppDispatch.class);
         List<AppDispatch> returnAppDispatch = new ArrayList<>();
-        RestultContent restultContent = new RestultContent();
+        HttpResult httpResult = new HttpResult();
         AppDispatchExample appDispatchExample = new AppDispatchExample();
         AppDispatchExample.Criteria criteria = appDispatchExample.createCriteria();
-             criteria.andAppIdEqualTo(appDispatch.getAppId()).
-                     andProcessInstanceIdEqualTo(appDispatch.getProcessInstanceId());
+        criteria.andAppIdEqualTo(appDispatch.getAppId()).
+                andProcessInstanceIdEqualTo(appDispatch.getProcessInstanceId());
         returnAppDispatch = appDispatchMapper.selectByExample(appDispatchExample);
-        restultContent.setStatus(200);
-        if(null!=returnAppDispatch && returnAppDispatch.size()>0){
-            restultContent.setData(returnAppDispatch.get(0));
+        httpResult.setStatusCode(HttpResult.SUCCESS);
+        if (null != returnAppDispatch && returnAppDispatch.size() > 0) {
+            httpResult.setResultData(returnAppDispatch.get(0));
         }
-        return restultContent;
+        httpResult.setMessage("查询成功");
+        return httpResult;
 
     }
 
@@ -60,9 +61,8 @@ public class AppDispatchController {
      */
     @RequestMapping("/save")
     @ResponseBody
-    public RestultContent save(@RequestBody String appDispatchJson) throws Exception {
+    public HttpResult save(@RequestBody String appDispatchJson) throws Exception {
         AppDispatch appDispatch = JSONObject.parseObject(appDispatchJson, AppDispatch.class);
-        RestultContent restultContent = new RestultContent();
         boolean isExist = appDispatchMapper.existsWithPrimaryKey(appDispatch);
         appDispatch.setCreateDate(new Date());
         appDispatch.setCreateMan(new Integer(BemCommonUtil.getOpeartorId(appDispatchJson)));
@@ -71,9 +71,7 @@ public class AppDispatchController {
         } else {
             appDispatchMapper.insertSelective(appDispatch);
         }
-        restultContent.setStatus(200);
-        restultContent.setData(appDispatch);
-        return restultContent;
+        return new HttpResult(HttpResult.SUCCESS, "保存成功", appDispatch);
     }
 
 
