@@ -221,10 +221,10 @@ public class AppMeterInfo {
      * 环节号
      */
     @Column(name = "TASK_ID")
-    private Integer taskId;
+    private Long taskId;
 
     @Transient
-    private  Integer templateId;
+    private Integer templateId;
 
     public Integer getTemplateId() {
         return templateId;
@@ -889,7 +889,7 @@ public class AppMeterInfo {
      *
      * @return TASK_ID - 环节号
      */
-    public Integer getTaskId() {
+    public Long getTaskId() {
         return taskId;
     }
 
@@ -898,7 +898,7 @@ public class AppMeterInfo {
      *
      * @param taskId 环节号
      */
-    public void setTaskId(Integer taskId) {
+    public void setTaskId(Long taskId) {
         this.taskId = taskId;
     }
 }

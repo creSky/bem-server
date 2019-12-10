@@ -5,7 +5,6 @@ import com.bem.domain.*;
 import com.bem.mapper.*;
 import com.bem.service.ActivitiService;
 import com.bem.service.AppFileService;
-import com.bem.service.AppUpdateInfoService;
 import com.bem.service.TaskListService;
 import com.bem.util.BemCommonUtil;
 import com.bem.util.PropertiesUtil;
@@ -15,15 +14,13 @@ import com.riozenc.titanTool.spring.web.http.HttpResult;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -35,8 +32,6 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/activiti")
 public class ActivitiController {
 
-    @Autowired
-    private AppUpdateInfoService appUpdateInfoService;
 
     @Autowired
     private TaskListService taskListService;
@@ -74,6 +69,9 @@ public class ActivitiController {
 
     @Autowired
     private AppFileService appFileService;
+
+    @Autowired
+    private AppTransformerInfoMapper appTransformerInfoMapper;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -116,6 +114,7 @@ public class ActivitiController {
      */
     @RequestMapping("/submit")
     @ResponseBody
+    @Transactional
     public HttpResult submit(@RequestBody(required = false) String submitJson) throws Exception {
         JSONObject jsonObject = JSONObject.parseObject(submitJson);
         Map<String, Object> candidate = new HashMap<>();
@@ -126,7 +125,7 @@ public class ActivitiController {
             AppPassAdviceExample appPassAdviceExample = new AppPassAdviceExample();
             com.bem.domain.AppPassAdviceExample.Criteria appPassAdvicecriteria = appPassAdviceExample.createCriteria();
             appPassAdvicecriteria.andAppIdEqualTo(jsonObject.getString("appId")).
-                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+                    andTaskIdEqualTo(jsonObject.getInteger("taskId"));
             List<AppPassAdvice> appPassAdvices = appPassAdviceMapper.selectByExample(appPassAdviceExample);
             if (appPassAdvices.size() < 1) {
                 return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
@@ -139,7 +138,7 @@ public class ActivitiController {
             AppDispatchExample appDispatchExample = new AppDispatchExample();
             com.bem.domain.AppDispatchExample.Criteria appDispatchcriteria = appDispatchExample.createCriteria();
             appDispatchcriteria.andAppIdEqualTo(jsonObject.getString("appId")).
-                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+                    andTaskIdEqualTo(jsonObject.getInteger("taskId"));
             List<AppDispatch> appDispatches = appDispatchMapper.selectByExample(appDispatchExample);
             if (appDispatches.size() < 1) {
                 return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
@@ -156,7 +155,7 @@ public class ActivitiController {
             com.bem.domain.AppCircumstanceExample.Criteria appCircumstancecriteria =
                     appCircumstanceExample.createCriteria();
             appCircumstancecriteria.andAppIdEqualTo(jsonObject.getString("appId")).
-                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+                    andTaskIdEqualTo(jsonObject.getInteger("taskId"));
             List<AppCircumstance> appCircumstances = appCircumstanceMapper.selectByExample(appCircumstanceExample);
             if (appCircumstances.size() < 1) {
                 return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
@@ -174,8 +173,8 @@ public class ActivitiController {
             com.bem.domain.AppMeterInfoExample.Criteria appMeterInfoExampleCriteria =
                     appMeterInfoExample.createCriteria();
             appMeterInfoExampleCriteria.andAppIdEqualTo(jsonObject.getLong("appId")).
-                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
-            List<AppMeterInfo> appMeterInfos =    appMeterInfoMapper.selectByExample(appMeterInfoExample);
+                    andTaskIdEqualTo(jsonObject.getLong("taskId"));
+            List<AppMeterInfo> appMeterInfos = appMeterInfoMapper.selectByExample(appMeterInfoExample);
             if (appMeterInfos.size() < 1) {
                 return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
 
@@ -188,7 +187,7 @@ public class ActivitiController {
             com.bem.domain.AppDeclareInfoExample.Criteria appDeclareInfoExampleCriteria =
                     appDeclareInfoExample.createCriteria();
             appDeclareInfoExampleCriteria.andAppIdEqualTo(jsonObject.getString("appId")).
-                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+                    andTaskIdEqualTo(jsonObject.getInteger("taskId"));
             List<AppDeclareInfo> appDeclareInfos = appDeclareInfoMapper.selectByExample(appDeclareInfoExample);
             if (appDeclareInfos.size() < 1) {
                 return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
@@ -204,7 +203,7 @@ public class ActivitiController {
             com.bem.domain.AppAssemExample.Criteria appAssemExampleCriteria =
                     appAssemExample.createCriteria();
             appAssemExampleCriteria.andAppIdEqualTo(jsonObject.getString("appId")).
-                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+                    andTaskIdEqualTo(jsonObject.getInteger("taskId"));
             List<AppAssem> appAssems = appAssemMapper.selectByExample(appAssemExample);
 
 
@@ -212,7 +211,7 @@ public class ActivitiController {
             com.bem.domain.AppCircumstanceExample.Criteria appCircumstanceExampleCriteria =
                     appCircumstanceExample.createCriteria();
             appCircumstanceExampleCriteria.andAppIdEqualTo(jsonObject.getString("appId")).
-                    andTaskIdEqualTo(new Integer(jsonObject.getString("taskId")));
+                    andTaskIdEqualTo(jsonObject.getInteger("taskId"));
             List<AppCircumstance> appCircumstances = appCircumstanceMapper.selectByExample(appCircumstanceExample);
 
             if (appAssems.size() < 1 || appCircumstances.size() < 1) {
@@ -230,19 +229,87 @@ public class ActivitiController {
         }
 
 
+        //增减容
+        if ("bem-f1-p25".equals(jsonObject.get("taskDefKey"))) {
+            AppTransformerInfoExample appTransformerInfoExample =
+                    new AppTransformerInfoExample();
+            com.bem.domain.AppTransformerInfoExample.Criteria appTransformerInfoExampleCriteria =
+                    appTransformerInfoExample.createCriteria();
+            appTransformerInfoExampleCriteria.andAppIdEqualTo(jsonObject.getLong("appId")).
+                    andTaskIdEqualTo(jsonObject.getLong("taskId"));
+            List<AppTransformerInfo> appTransformerInfos =
+                    appTransformerInfoMapper.selectByExample(appTransformerInfoExample);
+            if (appTransformerInfos.size() < 1) {
+                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+
+            }
+            /*按照变压器号去重
+            List<AppTransformerInfo> returnAppTransformer =
+                    appTransformerInfos.stream().collect(
+                            Collectors.collectingAndThen(Collectors.toCollection(
+                                    () -> new TreeSet<>(Comparator.comparing(t->t.getTransformerNo()))),
+                                    ArrayList::new));*/
+
+            //按照计量点号 分组
+            Map<Long, List<AppTransformerInfo>> returnAppTransformerMap =
+                    appTransformerInfos.stream().collect(Collectors.groupingBy(AppTransformerInfo::getMeterId));
+
+            for(Map.Entry<Long, List<AppTransformerInfo>> entry :
+                    returnAppTransformerMap.entrySet()){
+                //一个计量点只有一块变压器资产号 组号置空
+                if (entry.getValue().size() == 1) {
+                    entry.getValue().forEach(t -> {
+                        t.setTransformerGroupNo(null);
+                        appTransformerInfoMapper.updateByPrimaryKey(t);
+                    });
+                }
+                //有一个以上的变压器资产号 判断有无组号 并且是否一致
+                if (entry.getValue().size() > 1) {
+                    //按变压器组号分组包含null 筛选非拆的
+                    List<AppTransformerInfo>  returnAppTransformer=
+                            entry.getValue().stream().filter(t->!Objects.equals(t.getLoadChangeSign(),1)).
+                                    collect(Collectors.collectingAndThen(
+                                            Collectors.toCollection(() ->
+                                                    new TreeSet<>(Comparator.comparing(AppTransformerInfo::getTransformerGroupNo,Comparator.nullsLast(String::compareTo)))),
+                                    ArrayList::new));
+
+                    if (returnAppTransformer.size() > 1) {
+                        return new HttpResult(HttpResult.ERROR,
+                                "同一计量点下的变压器组号必须相同，请更改完再传递", null);
+                    }
+                    if(returnAppTransformer.get(0).getTransformerGroupNo()==null
+                            || "".equals(returnAppTransformer.get(0).getTransformerGroupNo())){
+                        return new HttpResult(HttpResult.ERROR,
+                                "同一计量点下的变压器组号必须相同且不能为空，请更改完再传递", null);
+                    }
+
+                    returnAppTransformer=
+                            entry.getValue().stream().filter(t->!Objects.equals(t.getLoadChangeSign(),1)).
+                            collect(Collectors.collectingAndThen(
+                                    Collectors.toCollection(() ->
+                                            new TreeSet<>(Comparator.comparing(AppTransformerInfo::getMsType))),
+                                    ArrayList::new));
+
+                    if (returnAppTransformer.size() > 1) {
+                        return new HttpResult(HttpResult.ERROR,
+                                "同一计量点下的变压器计量方式必须相同，请更改完再传递", null);
+                    }
+
+                }
+            }
+        }
         //提交设置当前提交人为办理人
         activitiService.setAssignee(jsonObject.getString("taskId"), BemCommonUtil.getOpeartorId(submitJson));
         activitiService.compleTask(jsonObject.getString("taskId"), candidate);
 
         //判断流程是否结束 加结束标识
         AppUserInfo appUserInfo = new AppUserInfo();
-        if (null != jsonObject.getString("processInstanceId") &&
-                activitiService.isEnd(jsonObject.getString("processInstanceId"))) {
+        if (null != jsonObject.getString("processInstanceId") && activitiService.isEnd(jsonObject.getString("processInstanceId"))) {
             appUserInfo.setId(new Long(jsonObject.getString("appId")));
             appUserInfo.setAppStatus("C");
             appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
             //流程结束自动更新档案
-            appUpdateInfoService.update(jsonObject.getString("appId"));
+            updateFiles(jsonObject.toJSONString());
         } else {
             appUserInfo.setId(new Long(jsonObject.getString("appId")));
             appUserInfo.setAppStatus("Y");
@@ -269,18 +336,18 @@ public class ActivitiController {
     @ResponseBody
     public HttpResult queryHistoricTask(@RequestBody String processInstanceIdJson) {
         JSONObject processInstanceIdObject = JSONObject.parseObject(processInstanceIdJson);
-        List<Map<String,Object>> taskList=
+        List<Map<String, Object>> taskList =
                 taskListService.queryHistoricTask(processInstanceIdObject.getString("processInstanceId"));
-        taskList.forEach(t->{
-            JSONObject jsonObject=new JSONObject();
-            jsonObject.put("id",t.get("writeSectId"));
-            String writeSectJson=
+        taskList.forEach(t -> {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", t.get("writeSectId"));
+            String writeSectJson =
                     restTemplate.postForObject(PropertiesUtil.getValue("getWriteSectByKey"), jsonObject, String.class);
             t.put("writeSectName",
                     JSONObject.parseObject(writeSectJson).getString("writeSectName"));
         });
 
-        return new HttpResult(HttpResult.SUCCESS, "查询成功",taskList);
+        return new HttpResult(HttpResult.SUCCESS, "查询成功", taskList);
 
     }
 
@@ -484,18 +551,45 @@ public class ActivitiController {
     public HttpResult updateFiles(@RequestBody(required = false) String updateFilesJson) {
         //组装用户信息
         JSONObject updateJSONObject = JSONObject.parseObject(updateFilesJson);
+        Long appId=updateJSONObject.getLong("appId");
+        //用户信息
         AppUserInfo updateAppUserInfo =
-                appUserInfoMapper.selectByPrimaryKey(updateJSONObject.getString("appId"));
+                appUserInfoMapper.selectByPrimaryKey(appId);
+        // 客户信息
         AppCustomerInfo updateAppCustomer =
                 appCustomerInfoMapper.selectByPrimaryKey(updateAppUserInfo.getCustomerId());
-        AppMeterInfo appMeterInfo=new AppMeterInfo();
-        appMeterInfo.setAppId(updateJSONObject.getLong("appId"));
-        List<AppMeterInfo> updateAppMeterInfos=appMeterInfoMapper.select(appMeterInfo);
+        //计量点信息
+        AppMeterInfo appMeterInfo = new AppMeterInfo();
+        appMeterInfo.setAppId(appId);
+        List<AppMeterInfo> updateAppMeterInfos = appMeterInfoMapper.select(appMeterInfo);
+        //变压器信息
+        AppTransformerInfo appTransformerInfo=new AppTransformerInfo();
+        appTransformerInfo.setAppId(appId);
+        List<AppTransformerInfo>updateAppTransformers= appTransformerInfoMapper.select(appTransformerInfo);
+
+        List<TransformerMeterRelationEntity> updateTransMeterRelEntities
+                =new ArrayList<>();
+        //构造变压器关系实体
+        updateAppTransformers.forEach(t->{
+            TransformerMeterRelationEntity transformerMeterRelationEntity=
+                    new TransformerMeterRelationEntity();
+            transformerMeterRelationEntity.setId(t.getTransformerRelId());
+            transformerMeterRelationEntity.setTransformerId(t.getTransformerId());
+            transformerMeterRelationEntity.setMeterId(t.getMeterId());
+            transformerMeterRelationEntity.setMsType(t.getMsType());
+            transformerMeterRelationEntity.setCreateDate(new Date());
+            transformerMeterRelationEntity.setTransformerGroupNo(t.getTransformerGroupNo());
+            transformerMeterRelationEntity.setLoadChangeSign(t.getLoadChangeSign());
+            transformerMeterRelationEntity.setStatus((byte)1);
+            updateTransMeterRelEntities.add(transformerMeterRelationEntity);
+        });
+
         JSONObject postData = new JSONObject();
         postData.put("userInfo", updateAppUserInfo);
         postData.put("customerInfo", updateAppCustomer);
         postData.put("meterInfo", updateAppMeterInfos);
         postData.put("templateId", updateAppUserInfo.getTemplateId());
+        postData.put("transformerRel", updateTransMeterRelEntities);
 
         //发送到cim 更新档案
         String resturnJson =

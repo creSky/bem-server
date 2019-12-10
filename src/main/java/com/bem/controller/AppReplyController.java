@@ -52,7 +52,7 @@ public class AppReplyController {
 
         passAdviceInfo.append("　　1、 ");
         appTransformerInfoMapper.selectByExample(appTransformerInfoExample).forEach(n -> {
-            passAdviceInfo.append("变压器_" + n.getTransformerAssetsNo() + "属于" + n.getStationCode() + "变电站," + n.getLineCode() + "线路\r\n");
+            passAdviceInfo.append("变压器资产号_" + n.getTransformerNo());
         });
 
         appReplyAdvice.setReplyAdvice(passAdviceInfo.toString());

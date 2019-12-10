@@ -16,6 +16,9 @@ public class AppTransformerInfo {
     @Column(name = "APP_ID")
     private Long appId;
 
+    @Column(name = "METER_ID")
+    private Long meterId;
+
     /**
      * 装拆表示 0新装
      */
@@ -23,22 +26,33 @@ public class AppTransformerInfo {
     private Integer loadChangeSign;
 
     /**
-     * 变压器资产编号
+     * 组号
      */
-    @Column(name = "TRANSFORMER_ASSETS_NO")
-    private String transformerAssetsNo;
+    @Column(name = "TRANSFORMER_GROUP_NO")
+    private String transformerGroupNo;
+
+    @Column(name = "TRANSFORMER_ID")
+    private Long transformerId;
 
     /**
-     * 变压器名称
+     * 变电站
      */
-    @Column(name = "DESK_NAME")
-    private String deskName;
+    @Column(name = "SUBS_ID")
+    private Long subsId;
 
     /**
-     * 考核功率因数
+     * 线路号
      */
-    @Column(name = "COS_STD_CODE")
-    private Integer cosStdCode;
+    @Column(name = "LINE_ID")
+    private Long lineId;
+
+    /**
+     * 高
+            中
+            低
+     */
+    @Column(name = "MS_TYPE")
+    private Short msType;
 
     /**
      * 变压器容量
@@ -47,124 +61,16 @@ public class AppTransformerInfo {
     private BigDecimal capacity;
 
     /**
-     * 变压器组号_高压
-     */
-    @Column(name = "TRANSFORMER_GROUP_HP")
-    private Short transformerGroupHp;
-
-    /**
-     * 变压器组号_低压
-     */
-    @Column(name = "TRANSFORMER_GROUP_LP")
-    private Short transformerGroupLp;
-
-    /**
      * 公用变标志
      */
     @Column(name = "IS_PUB_TYPE")
     private Short isPubType;
 
     /**
-     * 变损计算方法
-     */
-    @Column(name = "TRANSFORMER_LOSS_TYPE")
-    private Short transformerLossType;
-
-    /**
-     * 供电所
-     */
-    @Column(name = "BUSINESS_PLACE_CODE")
-    private String businessPlaceCode;
-
-    /**
-     * 投运日期
-     */
-    @Column(name = "RUN_DATE")
-    private Date runDate;
-
-    /**
      * 标准时间
      */
     @Column(name = "STAND_TIME")
     private Integer standTime;
-
-    /**
-     * 变损类型
-     */
-    @Column(name = "LOSS_TYPE")
-    private Short lossType;
-
-    /**
-     * 变电站
-     */
-    @Column(name = "STATION_CODE")
-    private Integer stationCode;
-
-    /**
-     * 线路
-     */
-    @Column(name = "LINE_CODE")
-    private Integer lineCode;
-
-    /**
-     * 供电电压
-     */
-    @Column(name = "VOLT_TYPE")
-    private Short voltType;
-
-    /**
-     * 责任人
-     */
-    @Column(name = "CHARGE_MAN")
-    private String chargeMan;
-
-    /**
-     * 考核班组
-     */
-    @Column(name = "WORK_AREA_NO")
-    private String workAreaNo;
-
-    /**
-     * 安装形式
-     */
-    @Column(name = "SET_FORMAT")
-    private Short setFormat;
-
-    /**
-     * 片区号
-     */
-    @Column(name = "AREA_NO")
-    private String areaNo;
-
-    /**
-     * 配电房编号
-     */
-    @Column(name = "SUPPLY_ROOM")
-    private String supplyRoom;
-
-    /**
-     * 村别
-     */
-    @Column(name = "VILLAGE_NO")
-    private String villageNo;
-
-    /**
-     * 变台改造情况
-     */
-    @Column(name = "TRANS_CHANGE")
-    private String transChange;
-
-    /**
-     * 接入线路对应结束节点编号
-     */
-    @Column(name = "INPUT_NODE_CODE")
-    private String inputNodeCode;
-
-    /**
-     * 补偿电容器总容量
-     */
-    @Column(name = "CAPCITOR_CAPACITY")
-    private BigDecimal capcitorCapacity;
 
     /**
      * 创建日期
@@ -209,6 +115,54 @@ public class AppTransformerInfo {
     private String chgAddress;
 
     /**
+     * 变压器名称
+     */
+    @Column(name = "DESK_NAME")
+    private String deskName;
+
+    @Column(name = "TRANSFORMER_REL_ID")
+    private Long transformerRelId;
+
+    /**
+     * 资产号
+     */
+    @Column(name = "TRANSFORMER_NO")
+    private Long transformerNo;
+
+    /**
+     * 变电站号
+     */
+    @Column(name = "SUBS_NAME")
+    private String subsName;
+
+    /**
+     * 线路号
+     */
+    @Column(name = "LINE_NAME")
+    private String lineName;
+
+    /**
+     * 变损计算方法
+     */
+    @Column(name = "TRANSFORMER_LOSS_TYPE")
+    private Short transformerLossType;
+
+    /**
+     * 供电所
+     */
+    @Column(name = "BUSINESS_PLACE_CODE")
+    private Long businessPlaceCode;
+
+    @Column(name = "TASK_ID")
+    private Long taskId;
+
+    /**
+     * 初始化处理标识
+     */
+    @Column(name = "FLAG")
+    private Short flag;
+
+    /**
      * 获取ID
      *
      * @return ID - ID
@@ -241,6 +195,20 @@ public class AppTransformerInfo {
     }
 
     /**
+     * @return METER_ID
+     */
+    public Long getMeterId() {
+        return meterId;
+    }
+
+    /**
+     * @param meterId
+     */
+    public void setMeterId(Long meterId) {
+        this.meterId = meterId;
+    }
+
+    /**
      * 获取装拆表示 0新装
      *
      * @return LOAD_CHANGE_SIGN - 装拆表示 0新装
@@ -259,57 +227,97 @@ public class AppTransformerInfo {
     }
 
     /**
-     * 获取变压器资产编号
+     * 获取组号
      *
-     * @return TRANSFORMER_ASSETS_NO - 变压器资产编号
+     * @return TRANSFORMER_GROUP_NO - 组号
      */
-    public String getTransformerAssetsNo() {
-        return transformerAssetsNo;
+    public String getTransformerGroupNo() {
+        return transformerGroupNo;
     }
 
     /**
-     * 设置变压器资产编号
+     * 设置组号
      *
-     * @param transformerAssetsNo 变压器资产编号
+     * @param transformerGroupNo 组号
      */
-    public void setTransformerAssetsNo(String transformerAssetsNo) {
-        this.transformerAssetsNo = transformerAssetsNo == null ? null : transformerAssetsNo.trim();
+    public void setTransformerGroupNo(String transformerGroupNo) {
+        this.transformerGroupNo = transformerGroupNo == null ? null : transformerGroupNo.trim();
     }
 
     /**
-     * 获取变压器名称
-     *
-     * @return DESK_NAME - 变压器名称
+     * @return TRANSFORMER_ID
      */
-    public String getDeskName() {
-        return deskName;
+    public Long getTransformerId() {
+        return transformerId;
     }
 
     /**
-     * 设置变压器名称
-     *
-     * @param deskName 变压器名称
+     * @param transformerId
      */
-    public void setDeskName(String deskName) {
-        this.deskName = deskName == null ? null : deskName.trim();
+    public void setTransformerId(Long transformerId) {
+        this.transformerId = transformerId;
     }
 
     /**
-     * 获取考核功率因数
+     * 获取变电站
      *
-     * @return COS_STD_CODE - 考核功率因数
+     * @return SUBS_ID - 变电站
      */
-    public Integer getCosStdCode() {
-        return cosStdCode;
+    public Long getSubsId() {
+        return subsId;
     }
 
     /**
-     * 设置考核功率因数
+     * 设置变电站
      *
-     * @param cosStdCode 考核功率因数
+     * @param subsId 变电站
      */
-    public void setCosStdCode(Integer cosStdCode) {
-        this.cosStdCode = cosStdCode;
+    public void setSubsId(Long subsId) {
+        this.subsId = subsId;
+    }
+
+    /**
+     * 获取线路号
+     *
+     * @return LINE_ID - 线路号
+     */
+    public Long getLineId() {
+        return lineId;
+    }
+
+    /**
+     * 设置线路号
+     *
+     * @param lineId 线路号
+     */
+    public void setLineId(Long lineId) {
+        this.lineId = lineId;
+    }
+
+    /**
+     * 获取高
+            中
+            低
+     *
+     * @return MS_TYPE - 高
+            中
+            低
+     */
+    public Short getMsType() {
+        return msType;
+    }
+
+    /**
+     * 设置高
+            中
+            低
+     *
+     * @param msType 高
+            中
+            低
+     */
+    public void setMsType(Short msType) {
+        this.msType = msType;
     }
 
     /**
@@ -331,42 +339,6 @@ public class AppTransformerInfo {
     }
 
     /**
-     * 获取变压器组号_高压
-     *
-     * @return TRANSFORMER_GROUP_HP - 变压器组号_高压
-     */
-    public Short getTransformerGroupHp() {
-        return transformerGroupHp;
-    }
-
-    /**
-     * 设置变压器组号_高压
-     *
-     * @param transformerGroupHp 变压器组号_高压
-     */
-    public void setTransformerGroupHp(Short transformerGroupHp) {
-        this.transformerGroupHp = transformerGroupHp;
-    }
-
-    /**
-     * 获取变压器组号_低压
-     *
-     * @return TRANSFORMER_GROUP_LP - 变压器组号_低压
-     */
-    public Short getTransformerGroupLp() {
-        return transformerGroupLp;
-    }
-
-    /**
-     * 设置变压器组号_低压
-     *
-     * @param transformerGroupLp 变压器组号_低压
-     */
-    public void setTransformerGroupLp(Short transformerGroupLp) {
-        this.transformerGroupLp = transformerGroupLp;
-    }
-
-    /**
      * 获取公用变标志
      *
      * @return IS_PUB_TYPE - 公用变标志
@@ -385,60 +357,6 @@ public class AppTransformerInfo {
     }
 
     /**
-     * 获取变损计算方法
-     *
-     * @return TRANSFORMER_LOSS_TYPE - 变损计算方法
-     */
-    public Short getTransformerLossType() {
-        return transformerLossType;
-    }
-
-    /**
-     * 设置变损计算方法
-     *
-     * @param transformerLossType 变损计算方法
-     */
-    public void setTransformerLossType(Short transformerLossType) {
-        this.transformerLossType = transformerLossType;
-    }
-
-    /**
-     * 获取供电所
-     *
-     * @return BUSINESS_PLACE_CODE - 供电所
-     */
-    public String getBusinessPlaceCode() {
-        return businessPlaceCode;
-    }
-
-    /**
-     * 设置供电所
-     *
-     * @param businessPlaceCode 供电所
-     */
-    public void setBusinessPlaceCode(String businessPlaceCode) {
-        this.businessPlaceCode = businessPlaceCode == null ? null : businessPlaceCode.trim();
-    }
-
-    /**
-     * 获取投运日期
-     *
-     * @return RUN_DATE - 投运日期
-     */
-    public Date getRunDate() {
-        return runDate;
-    }
-
-    /**
-     * 设置投运日期
-     *
-     * @param runDate 投运日期
-     */
-    public void setRunDate(Date runDate) {
-        this.runDate = runDate;
-    }
-
-    /**
      * 获取标准时间
      *
      * @return STAND_TIME - 标准时间
@@ -454,240 +372,6 @@ public class AppTransformerInfo {
      */
     public void setStandTime(Integer standTime) {
         this.standTime = standTime;
-    }
-
-    /**
-     * 获取变损类型
-     *
-     * @return LOSS_TYPE - 变损类型
-     */
-    public Short getLossType() {
-        return lossType;
-    }
-
-    /**
-     * 设置变损类型
-     *
-     * @param lossType 变损类型
-     */
-    public void setLossType(Short lossType) {
-        this.lossType = lossType;
-    }
-
-    /**
-     * 获取变电站
-     *
-     * @return STATION_CODE - 变电站
-     */
-    public Integer getStationCode() {
-        return stationCode;
-    }
-
-    /**
-     * 设置变电站
-     *
-     * @param stationCode 变电站
-     */
-    public void setStationCode(Integer stationCode) {
-        this.stationCode = stationCode;
-    }
-
-    /**
-     * 获取线路
-     *
-     * @return LINE_CODE - 线路
-     */
-    public Integer getLineCode() {
-        return lineCode;
-    }
-
-    /**
-     * 设置线路
-     *
-     * @param lineCode 线路
-     */
-    public void setLineCode(Integer lineCode) {
-        this.lineCode = lineCode;
-    }
-
-    /**
-     * 获取供电电压
-     *
-     * @return VOLT_TYPE - 供电电压
-     */
-    public Short getVoltType() {
-        return voltType;
-    }
-
-    /**
-     * 设置供电电压
-     *
-     * @param voltType 供电电压
-     */
-    public void setVoltType(Short voltType) {
-        this.voltType = voltType;
-    }
-
-    /**
-     * 获取责任人
-     *
-     * @return CHARGE_MAN - 责任人
-     */
-    public String getChargeMan() {
-        return chargeMan;
-    }
-
-    /**
-     * 设置责任人
-     *
-     * @param chargeMan 责任人
-     */
-    public void setChargeMan(String chargeMan) {
-        this.chargeMan = chargeMan == null ? null : chargeMan.trim();
-    }
-
-    /**
-     * 获取考核班组
-     *
-     * @return WORK_AREA_NO - 考核班组
-     */
-    public String getWorkAreaNo() {
-        return workAreaNo;
-    }
-
-    /**
-     * 设置考核班组
-     *
-     * @param workAreaNo 考核班组
-     */
-    public void setWorkAreaNo(String workAreaNo) {
-        this.workAreaNo = workAreaNo == null ? null : workAreaNo.trim();
-    }
-
-    /**
-     * 获取安装形式
-     *
-     * @return SET_FORMAT - 安装形式
-     */
-    public Short getSetFormat() {
-        return setFormat;
-    }
-
-    /**
-     * 设置安装形式
-     *
-     * @param setFormat 安装形式
-     */
-    public void setSetFormat(Short setFormat) {
-        this.setFormat = setFormat;
-    }
-
-    /**
-     * 获取片区号
-     *
-     * @return AREA_NO - 片区号
-     */
-    public String getAreaNo() {
-        return areaNo;
-    }
-
-    /**
-     * 设置片区号
-     *
-     * @param areaNo 片区号
-     */
-    public void setAreaNo(String areaNo) {
-        this.areaNo = areaNo == null ? null : areaNo.trim();
-    }
-
-    /**
-     * 获取配电房编号
-     *
-     * @return SUPPLY_ROOM - 配电房编号
-     */
-    public String getSupplyRoom() {
-        return supplyRoom;
-    }
-
-    /**
-     * 设置配电房编号
-     *
-     * @param supplyRoom 配电房编号
-     */
-    public void setSupplyRoom(String supplyRoom) {
-        this.supplyRoom = supplyRoom == null ? null : supplyRoom.trim();
-    }
-
-    /**
-     * 获取村别
-     *
-     * @return VILLAGE_NO - 村别
-     */
-    public String getVillageNo() {
-        return villageNo;
-    }
-
-    /**
-     * 设置村别
-     *
-     * @param villageNo 村别
-     */
-    public void setVillageNo(String villageNo) {
-        this.villageNo = villageNo == null ? null : villageNo.trim();
-    }
-
-    /**
-     * 获取变台改造情况
-     *
-     * @return TRANS_CHANGE - 变台改造情况
-     */
-    public String getTransChange() {
-        return transChange;
-    }
-
-    /**
-     * 设置变台改造情况
-     *
-     * @param transChange 变台改造情况
-     */
-    public void setTransChange(String transChange) {
-        this.transChange = transChange == null ? null : transChange.trim();
-    }
-
-    /**
-     * 获取接入线路对应结束节点编号
-     *
-     * @return INPUT_NODE_CODE - 接入线路对应结束节点编号
-     */
-    public String getInputNodeCode() {
-        return inputNodeCode;
-    }
-
-    /**
-     * 设置接入线路对应结束节点编号
-     *
-     * @param inputNodeCode 接入线路对应结束节点编号
-     */
-    public void setInputNodeCode(String inputNodeCode) {
-        this.inputNodeCode = inputNodeCode == null ? null : inputNodeCode.trim();
-    }
-
-    /**
-     * 获取补偿电容器总容量
-     *
-     * @return CAPCITOR_CAPACITY - 补偿电容器总容量
-     */
-    public BigDecimal getCapcitorCapacity() {
-        return capcitorCapacity;
-    }
-
-    /**
-     * 设置补偿电容器总容量
-     *
-     * @param capcitorCapacity 补偿电容器总容量
-     */
-    public void setCapcitorCapacity(BigDecimal capcitorCapacity) {
-        this.capcitorCapacity = capcitorCapacity;
     }
 
     /**
@@ -814,5 +498,159 @@ public class AppTransformerInfo {
      */
     public void setChgAddress(String chgAddress) {
         this.chgAddress = chgAddress == null ? null : chgAddress.trim();
+    }
+
+    /**
+     * 获取变压器名称
+     *
+     * @return DESK_NAME - 变压器名称
+     */
+    public String getDeskName() {
+        return deskName;
+    }
+
+    /**
+     * 设置变压器名称
+     *
+     * @param deskName 变压器名称
+     */
+    public void setDeskName(String deskName) {
+        this.deskName = deskName == null ? null : deskName.trim();
+    }
+
+    /**
+     * @return TRANSFORMER_REL_ID
+     */
+    public Long getTransformerRelId() {
+        return transformerRelId;
+    }
+
+    /**
+     * @param transformerRelId
+     */
+    public void setTransformerRelId(Long transformerRelId) {
+        this.transformerRelId = transformerRelId;
+    }
+
+    /**
+     * 获取资产号
+     *
+     * @return TRANSFORMER_NO - 资产号
+     */
+    public Long getTransformerNo() {
+        return transformerNo;
+    }
+
+    /**
+     * 设置资产号
+     *
+     * @param transformerNo 资产号
+     */
+    public void setTransformerNo(Long transformerNo) {
+        this.transformerNo = transformerNo;
+    }
+
+    /**
+     * 获取变电站号
+     *
+     * @return SUBS_NAME - 变电站号
+     */
+    public String getSubsName() {
+        return subsName;
+    }
+
+    /**
+     * 设置变电站号
+     *
+     * @param subsName 变电站号
+     */
+    public void setSubsName(String subsName) {
+        this.subsName = subsName == null ? null : subsName.trim();
+    }
+
+    /**
+     * 获取线路号
+     *
+     * @return LINE_NAME - 线路号
+     */
+    public String getLineName() {
+        return lineName;
+    }
+
+    /**
+     * 设置线路号
+     *
+     * @param lineName 线路号
+     */
+    public void setLineName(String lineName) {
+        this.lineName = lineName == null ? null : lineName.trim();
+    }
+
+    /**
+     * 获取变损计算方法
+     *
+     * @return TRANSFORMER_LOSS_TYPE - 变损计算方法
+     */
+    public Short getTransformerLossType() {
+        return transformerLossType;
+    }
+
+    /**
+     * 设置变损计算方法
+     *
+     * @param transformerLossType 变损计算方法
+     */
+    public void setTransformerLossType(Short transformerLossType) {
+        this.transformerLossType = transformerLossType;
+    }
+
+    /**
+     * 获取供电所
+     *
+     * @return BUSINESS_PLACE_CODE - 供电所
+     */
+    public Long getBusinessPlaceCode() {
+        return businessPlaceCode;
+    }
+
+    /**
+     * 设置供电所
+     *
+     * @param businessPlaceCode 供电所
+     */
+    public void setBusinessPlaceCode(Long businessPlaceCode) {
+        this.businessPlaceCode = businessPlaceCode;
+    }
+
+    /**
+     * @return TASK_ID
+     */
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    /**
+     * @param taskId
+     */
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
+    }
+
+    /**
+     * 获取初始化处理标识
+     *
+     * @return FLAG - 初始化处理标识
+     */
+    public Short getFlag() {
+        return flag;
+    }
+
+    /**
+     * 设置初始化处理标识
+     *
+     * @param flag 初始化处理标识
+     */
+    public void setFlag(Short flag) {
+        this.flag = flag;
     }
 }

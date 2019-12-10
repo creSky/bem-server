@@ -2406,52 +2406,52 @@ public class AppMeterInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdEqualTo(Integer value) {
+        public Criteria andTaskIdEqualTo(Long value) {
             addCriterion("TASK_ID =", value, "taskId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdNotEqualTo(Integer value) {
+        public Criteria andTaskIdNotEqualTo(Long value) {
             addCriterion("TASK_ID <>", value, "taskId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdGreaterThan(Integer value) {
+        public Criteria andTaskIdGreaterThan(Long value) {
             addCriterion("TASK_ID >", value, "taskId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andTaskIdGreaterThanOrEqualTo(Long value) {
             addCriterion("TASK_ID >=", value, "taskId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdLessThan(Integer value) {
+        public Criteria andTaskIdLessThan(Long value) {
             addCriterion("TASK_ID <", value, "taskId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdLessThanOrEqualTo(Integer value) {
+        public Criteria andTaskIdLessThanOrEqualTo(Long value) {
             addCriterion("TASK_ID <=", value, "taskId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdIn(List<Integer> values) {
+        public Criteria andTaskIdIn(List<Long> values) {
             addCriterion("TASK_ID in", values, "taskId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdNotIn(List<Integer> values) {
+        public Criteria andTaskIdNotIn(List<Long> values) {
             addCriterion("TASK_ID not in", values, "taskId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdBetween(Integer value1, Integer value2) {
+        public Criteria andTaskIdBetween(Long value1, Long value2) {
             addCriterion("TASK_ID between", value1, value2, "taskId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andTaskIdNotBetween(Long value1, Long value2) {
             addCriterion("TASK_ID not between", value1, value2, "taskId");
             return (Criteria) this;
         }

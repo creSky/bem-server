@@ -42,7 +42,7 @@
     <result column="WRITE_METHOD" jdbcType="SMALLINT" property="writeMethod" />
     <result column="BASIC_PRICE" jdbcType="SMALLINT" property="basicPrice" />
     <result column="CHARGING_CAPACITY" jdbcType="DECIMAL" property="chargingCapacity" />
-    <result column="TASK_ID" jdbcType="INTEGER" property="taskId" />
+    <result column="TASK_ID" jdbcType="BIGINT" property="taskId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -272,7 +272,7 @@
         CHARGING_CAPACITY = #{record.chargingCapacity,jdbcType=DECIMAL},
       </if>
       <if test="record.taskId != null">
-        TASK_ID = #{record.taskId,jdbcType=INTEGER},
+        TASK_ID = #{record.taskId,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -321,7 +321,7 @@
       WRITE_METHOD = #{record.writeMethod,jdbcType=SMALLINT},
       BASIC_PRICE = #{record.basicPrice,jdbcType=SMALLINT},
       CHARGING_CAPACITY = #{record.chargingCapacity,jdbcType=DECIMAL},
-      TASK_ID = #{record.taskId,jdbcType=INTEGER}
+      TASK_ID = #{record.taskId,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -341,4 +341,14 @@
     WHERE
     T.APP_ID=#{appId}
   </select>
+
+  <select id="getMeterInformationByAppid" parameterType="java.lang.Long" resultType="com.bem.domain.MeterInformationEntity">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    APP_METER_INFO T
+    WHERE
+    T.APP_ID=#{appId}
+  </select>
+
 </mapper>

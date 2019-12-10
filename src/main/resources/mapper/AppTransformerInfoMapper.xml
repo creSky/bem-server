@@ -7,38 +7,32 @@
     -->
     <id column="ID" jdbcType="BIGINT" property="id" />
     <result column="APP_ID" jdbcType="BIGINT" property="appId" />
+    <result column="METER_ID" jdbcType="BIGINT" property="meterId" />
     <result column="LOAD_CHANGE_SIGN" jdbcType="INTEGER" property="loadChangeSign" />
-    <result column="TRANSFORMER_ASSETS_NO" jdbcType="VARCHAR" property="transformerAssetsNo" />
-    <result column="DESK_NAME" jdbcType="VARCHAR" property="deskName" />
-    <result column="COS_STD_CODE" jdbcType="INTEGER" property="cosStdCode" />
+    <result column="TRANSFORMER_GROUP_NO" jdbcType="VARCHAR" property="transformerGroupNo" />
+    <result column="TRANSFORMER_ID" jdbcType="BIGINT" property="transformerId" />
+    <result column="SUBS_ID" jdbcType="BIGINT" property="subsId" />
+    <result column="LINE_ID" jdbcType="BIGINT" property="lineId" />
+    <result column="MS_TYPE" jdbcType="SMALLINT" property="msType" />
     <result column="CAPACITY" jdbcType="DECIMAL" property="capacity" />
-    <result column="TRANSFORMER_GROUP_HP" jdbcType="SMALLINT" property="transformerGroupHp" />
-    <result column="TRANSFORMER_GROUP_LP" jdbcType="SMALLINT" property="transformerGroupLp" />
     <result column="IS_PUB_TYPE" jdbcType="SMALLINT" property="isPubType" />
-    <result column="TRANSFORMER_LOSS_TYPE" jdbcType="SMALLINT" property="transformerLossType" />
-    <result column="BUSINESS_PLACE_CODE" jdbcType="VARCHAR" property="businessPlaceCode" />
-    <result column="RUN_DATE" jdbcType="TIMESTAMP" property="runDate" />
     <result column="STAND_TIME" jdbcType="INTEGER" property="standTime" />
-    <result column="LOSS_TYPE" jdbcType="SMALLINT" property="lossType" />
-    <result column="STATION_CODE" jdbcType="INTEGER" property="stationCode" />
-    <result column="LINE_CODE" jdbcType="INTEGER" property="lineCode" />
-    <result column="VOLT_TYPE" jdbcType="SMALLINT" property="voltType" />
-    <result column="CHARGE_MAN" jdbcType="VARCHAR" property="chargeMan" />
-    <result column="WORK_AREA_NO" jdbcType="VARCHAR" property="workAreaNo" />
-    <result column="SET_FORMAT" jdbcType="SMALLINT" property="setFormat" />
-    <result column="AREA_NO" jdbcType="VARCHAR" property="areaNo" />
-    <result column="SUPPLY_ROOM" jdbcType="VARCHAR" property="supplyRoom" />
-    <result column="VILLAGE_NO" jdbcType="VARCHAR" property="villageNo" />
-    <result column="TRANS_CHANGE" jdbcType="CHAR" property="transChange" />
-    <result column="INPUT_NODE_CODE" jdbcType="VARCHAR" property="inputNodeCode" />
-    <result column="CAPCITOR_CAPACITY" jdbcType="DECIMAL" property="capcitorCapacity" />
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
     <result column="REMARK" jdbcType="VARCHAR" property="remark" />
     <result column="STATUS" jdbcType="SMALLINT" property="status" />
-    <result column="START_DATE" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="START_DATE" jdbcType="DATE" property="startDate" />
     <result column="CHG_MAN" jdbcType="INTEGER" property="chgMan" />
     <result column="CHG_DATE" jdbcType="DATE" property="chgDate" />
     <result column="CHG_ADDRESS" jdbcType="VARCHAR" property="chgAddress" />
+    <result column="DESK_NAME" jdbcType="VARCHAR" property="deskName" />
+    <result column="TRANSFORMER_REL_ID" jdbcType="BIGINT" property="transformerRelId" />
+    <result column="TRANSFORMER_NO" jdbcType="BIGINT" property="transformerNo" />
+    <result column="SUBS_NAME" jdbcType="VARCHAR" property="subsName" />
+    <result column="LINE_NAME" jdbcType="VARCHAR" property="lineName" />
+    <result column="TRANSFORMER_LOSS_TYPE" jdbcType="SMALLINT" property="transformerLossType" />
+    <result column="BUSINESS_PLACE_CODE" jdbcType="BIGINT" property="businessPlaceCode" />
+    <result column="TASK_ID" jdbcType="BIGINT" property="taskId" />
+    <result column="FLAG" jdbcType="SMALLINT" property="flag" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -108,11 +102,10 @@
     <!--
       WARNING - @mbg.generated
     -->
-    ID, APP_ID, LOAD_CHANGE_SIGN, TRANSFORMER_ASSETS_NO, DESK_NAME, COS_STD_CODE, CAPACITY, 
-    TRANSFORMER_GROUP_HP, TRANSFORMER_GROUP_LP, IS_PUB_TYPE, TRANSFORMER_LOSS_TYPE, BUSINESS_PLACE_CODE, 
-    RUN_DATE, STAND_TIME, LOSS_TYPE, STATION_CODE, LINE_CODE, VOLT_TYPE, CHARGE_MAN, 
-    WORK_AREA_NO, SET_FORMAT, AREA_NO, SUPPLY_ROOM, VILLAGE_NO, TRANS_CHANGE, INPUT_NODE_CODE, 
-    CAPCITOR_CAPACITY, CREATE_DATE, REMARK, STATUS, START_DATE, CHG_MAN, CHG_DATE, CHG_ADDRESS
+    ID, APP_ID, METER_ID, LOAD_CHANGE_SIGN, TRANSFORMER_GROUP_NO, TRANSFORMER_ID, SUBS_ID, 
+    LINE_ID, MS_TYPE, CAPACITY, IS_PUB_TYPE, STAND_TIME, CREATE_DATE, REMARK, STATUS, 
+    START_DATE, CHG_MAN, CHG_DATE, CHG_ADDRESS, DESK_NAME, TRANSFORMER_REL_ID, TRANSFORMER_NO, 
+    SUBS_NAME, LINE_NAME, TRANSFORMER_LOSS_TYPE, BUSINESS_PLACE_CODE, TASK_ID, FLAG
   </sql>
   <select id="selectByExample" parameterType="com.bem.domain.AppTransformerInfoExample" resultMap="BaseResultMap">
     <!--
@@ -161,80 +154,35 @@
       <if test="record.appId != null">
         APP_ID = #{record.appId,jdbcType=BIGINT},
       </if>
+      <if test="record.meterId != null">
+        METER_ID = #{record.meterId,jdbcType=BIGINT},
+      </if>
       <if test="record.loadChangeSign != null">
         LOAD_CHANGE_SIGN = #{record.loadChangeSign,jdbcType=INTEGER},
       </if>
-      <if test="record.transformerAssetsNo != null">
-        TRANSFORMER_ASSETS_NO = #{record.transformerAssetsNo,jdbcType=VARCHAR},
+      <if test="record.transformerGroupNo != null">
+        TRANSFORMER_GROUP_NO = #{record.transformerGroupNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.deskName != null">
-        DESK_NAME = #{record.deskName,jdbcType=VARCHAR},
+      <if test="record.transformerId != null">
+        TRANSFORMER_ID = #{record.transformerId,jdbcType=BIGINT},
       </if>
-      <if test="record.cosStdCode != null">
-        COS_STD_CODE = #{record.cosStdCode,jdbcType=INTEGER},
+      <if test="record.subsId != null">
+        SUBS_ID = #{record.subsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.lineId != null">
+        LINE_ID = #{record.lineId,jdbcType=BIGINT},
+      </if>
+      <if test="record.msType != null">
+        MS_TYPE = #{record.msType,jdbcType=SMALLINT},
       </if>
       <if test="record.capacity != null">
         CAPACITY = #{record.capacity,jdbcType=DECIMAL},
       </if>
-      <if test="record.transformerGroupHp != null">
-        TRANSFORMER_GROUP_HP = #{record.transformerGroupHp,jdbcType=SMALLINT},
-      </if>
-      <if test="record.transformerGroupLp != null">
-        TRANSFORMER_GROUP_LP = #{record.transformerGroupLp,jdbcType=SMALLINT},
-      </if>
       <if test="record.isPubType != null">
         IS_PUB_TYPE = #{record.isPubType,jdbcType=SMALLINT},
       </if>
-      <if test="record.transformerLossType != null">
-        TRANSFORMER_LOSS_TYPE = #{record.transformerLossType,jdbcType=SMALLINT},
-      </if>
-      <if test="record.businessPlaceCode != null">
-        BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.runDate != null">
-        RUN_DATE = #{record.runDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.standTime != null">
         STAND_TIME = #{record.standTime,jdbcType=INTEGER},
-      </if>
-      <if test="record.lossType != null">
-        LOSS_TYPE = #{record.lossType,jdbcType=SMALLINT},
-      </if>
-      <if test="record.stationCode != null">
-        STATION_CODE = #{record.stationCode,jdbcType=INTEGER},
-      </if>
-      <if test="record.lineCode != null">
-        LINE_CODE = #{record.lineCode,jdbcType=INTEGER},
-      </if>
-      <if test="record.voltType != null">
-        VOLT_TYPE = #{record.voltType,jdbcType=SMALLINT},
-      </if>
-      <if test="record.chargeMan != null">
-        CHARGE_MAN = #{record.chargeMan,jdbcType=VARCHAR},
-      </if>
-      <if test="record.workAreaNo != null">
-        WORK_AREA_NO = #{record.workAreaNo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.setFormat != null">
-        SET_FORMAT = #{record.setFormat,jdbcType=SMALLINT},
-      </if>
-      <if test="record.areaNo != null">
-        AREA_NO = #{record.areaNo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.supplyRoom != null">
-        SUPPLY_ROOM = #{record.supplyRoom,jdbcType=VARCHAR},
-      </if>
-      <if test="record.villageNo != null">
-        VILLAGE_NO = #{record.villageNo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.transChange != null">
-        TRANS_CHANGE = #{record.transChange,jdbcType=CHAR},
-      </if>
-      <if test="record.inputNodeCode != null">
-        INPUT_NODE_CODE = #{record.inputNodeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.capcitorCapacity != null">
-        CAPCITOR_CAPACITY = #{record.capcitorCapacity,jdbcType=DECIMAL},
       </if>
       <if test="record.createDate != null">
         CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
@@ -246,7 +194,7 @@
         STATUS = #{record.status,jdbcType=SMALLINT},
       </if>
       <if test="record.startDate != null">
-        START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+        START_DATE = #{record.startDate,jdbcType=DATE},
       </if>
       <if test="record.chgMan != null">
         CHG_MAN = #{record.chgMan,jdbcType=INTEGER},
@@ -256,6 +204,33 @@
       </if>
       <if test="record.chgAddress != null">
         CHG_ADDRESS = #{record.chgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deskName != null">
+        DESK_NAME = #{record.deskName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transformerRelId != null">
+        TRANSFORMER_REL_ID = #{record.transformerRelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.transformerNo != null">
+        TRANSFORMER_NO = #{record.transformerNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.subsName != null">
+        SUBS_NAME = #{record.subsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lineName != null">
+        LINE_NAME = #{record.lineName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transformerLossType != null">
+        TRANSFORMER_LOSS_TYPE = #{record.transformerLossType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.businessPlaceCode != null">
+        BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskId != null">
+        TASK_ID = #{record.taskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.flag != null">
+        FLAG = #{record.flag,jdbcType=SMALLINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -269,38 +244,32 @@
     update APP_TRANSFORMER_INFO
     set ID = #{record.id,jdbcType=BIGINT},
       APP_ID = #{record.appId,jdbcType=BIGINT},
+      METER_ID = #{record.meterId,jdbcType=BIGINT},
       LOAD_CHANGE_SIGN = #{record.loadChangeSign,jdbcType=INTEGER},
-      TRANSFORMER_ASSETS_NO = #{record.transformerAssetsNo,jdbcType=VARCHAR},
-      DESK_NAME = #{record.deskName,jdbcType=VARCHAR},
-      COS_STD_CODE = #{record.cosStdCode,jdbcType=INTEGER},
+      TRANSFORMER_GROUP_NO = #{record.transformerGroupNo,jdbcType=VARCHAR},
+      TRANSFORMER_ID = #{record.transformerId,jdbcType=BIGINT},
+      SUBS_ID = #{record.subsId,jdbcType=BIGINT},
+      LINE_ID = #{record.lineId,jdbcType=BIGINT},
+      MS_TYPE = #{record.msType,jdbcType=SMALLINT},
       CAPACITY = #{record.capacity,jdbcType=DECIMAL},
-      TRANSFORMER_GROUP_HP = #{record.transformerGroupHp,jdbcType=SMALLINT},
-      TRANSFORMER_GROUP_LP = #{record.transformerGroupLp,jdbcType=SMALLINT},
       IS_PUB_TYPE = #{record.isPubType,jdbcType=SMALLINT},
-      TRANSFORMER_LOSS_TYPE = #{record.transformerLossType,jdbcType=SMALLINT},
-      BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=VARCHAR},
-      RUN_DATE = #{record.runDate,jdbcType=TIMESTAMP},
       STAND_TIME = #{record.standTime,jdbcType=INTEGER},
-      LOSS_TYPE = #{record.lossType,jdbcType=SMALLINT},
-      STATION_CODE = #{record.stationCode,jdbcType=INTEGER},
-      LINE_CODE = #{record.lineCode,jdbcType=INTEGER},
-      VOLT_TYPE = #{record.voltType,jdbcType=SMALLINT},
-      CHARGE_MAN = #{record.chargeMan,jdbcType=VARCHAR},
-      WORK_AREA_NO = #{record.workAreaNo,jdbcType=VARCHAR},
-      SET_FORMAT = #{record.setFormat,jdbcType=SMALLINT},
-      AREA_NO = #{record.areaNo,jdbcType=VARCHAR},
-      SUPPLY_ROOM = #{record.supplyRoom,jdbcType=VARCHAR},
-      VILLAGE_NO = #{record.villageNo,jdbcType=VARCHAR},
-      TRANS_CHANGE = #{record.transChange,jdbcType=CHAR},
-      INPUT_NODE_CODE = #{record.inputNodeCode,jdbcType=VARCHAR},
-      CAPCITOR_CAPACITY = #{record.capcitorCapacity,jdbcType=DECIMAL},
       CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
       REMARK = #{record.remark,jdbcType=VARCHAR},
       STATUS = #{record.status,jdbcType=SMALLINT},
-      START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+      START_DATE = #{record.startDate,jdbcType=DATE},
       CHG_MAN = #{record.chgMan,jdbcType=INTEGER},
       CHG_DATE = #{record.chgDate,jdbcType=DATE},
-      CHG_ADDRESS = #{record.chgAddress,jdbcType=VARCHAR}
+      CHG_ADDRESS = #{record.chgAddress,jdbcType=VARCHAR},
+      DESK_NAME = #{record.deskName,jdbcType=VARCHAR},
+      TRANSFORMER_REL_ID = #{record.transformerRelId,jdbcType=BIGINT},
+      TRANSFORMER_NO = #{record.transformerNo,jdbcType=BIGINT},
+      SUBS_NAME = #{record.subsName,jdbcType=VARCHAR},
+      LINE_NAME = #{record.lineName,jdbcType=VARCHAR},
+      TRANSFORMER_LOSS_TYPE = #{record.transformerLossType,jdbcType=SMALLINT},
+      BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=BIGINT},
+      TASK_ID = #{record.taskId,jdbcType=BIGINT},
+      FLAG = #{record.flag,jdbcType=SMALLINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -314,6 +283,20 @@
     T.TRANSFORMER_ASSETS_NO sn,
     T.LOAD_CHANGE_SIGN loadChangeSign,
     'TRANS' siteSurveyType
+    FROM
+    APP_TRANSFORMER_INFO T
+    WHERE
+    T.APP_ID=#{appId}
+  </select>
+
+  <select id="getTransformeerByAppid" parameterType="java.lang.Long" resultType="com.bem.domain.TransformerInfoEntity">
+    SELECT
+    <include refid="Base_Column_List" />,
+    0 parent,
+    '变压器信息' showName1,
+    CONCAT(TRANSFORMER_NO,'(资产号)') showName2,
+    CONCAT(DESK_NAME,'(名称)') showName3,
+    CONCAT(CAPACITY,'(容量)')  showName4
     FROM
     APP_TRANSFORMER_INFO T
     WHERE

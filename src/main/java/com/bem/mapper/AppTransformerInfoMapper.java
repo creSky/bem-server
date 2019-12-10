@@ -5,11 +5,11 @@ import com.bem.domain.AppTransformerInfo;
 import com.bem.domain.AppTransformerInfoExample;
 import java.util.List;
 
+import com.bem.domain.TransformerInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.common.BaseMapper;
-
 @Mapper
 @Component
 public interface AppTransformerInfoMapper extends BaseMapper<AppTransformerInfo> {
@@ -22,7 +22,7 @@ public interface AppTransformerInfoMapper extends BaseMapper<AppTransformerInfo>
     int updateByExampleSelective(@Param("record") AppTransformerInfo record, @Param("example") AppTransformerInfoExample example);
 
     int updateByExample(@Param("record") AppTransformerInfo record, @Param("example") AppTransformerInfoExample example);
+    List<SiteSurveyTree> getSiteSurveyTransTree(String appId);
 
-    List<SiteSurveyTree> getSiteSurveyTransTree(String  appId);
-
+    List<TransformerInfoEntity> getTransformeerByAppid(Long appId);
 }

@@ -12,7 +12,7 @@ public enum BemEnum {
     BemEnum2("3","LowVoltageNewGSV1"),
     BemEnum3("4","ChangeInformation"),
     BemEnum4("5","ChangeType"),
-    BemEnum5("6","HighVoltageAddCapacity"),
+    BemEnum5("6","ChangeCapacity"),
     BemEnum6("7","ChangeMeterInfo"),
     BemEnum7("8","CancelAccount"),
     BemEnum8("9","ChangePriceType");

@@ -5,6 +5,7 @@ import com.bem.domain.AppMeterInfo;
 import com.bem.domain.AppMeterInfoExample;
 import java.util.List;
 
+import com.bem.domain.MeterInformationEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -24,4 +25,5 @@ public interface AppMeterInfoMapper extends BaseMapper<AppMeterInfo> {
 
     List<SiteSurveyTree> getSiteSurveyMeterInfoTree(String appId);
 
+    List<MeterInformationEntity> getMeterInformationByAppid(Long appId);
 }
