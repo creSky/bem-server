@@ -41,7 +41,7 @@ public class AppPassAdviceController {
         String userId = BemCommonUtil.getOpeartorId(appPassAdviceJson);
         AppPassAdvice appPassAdvice = JSONObject.parseObject(appPassAdviceJson, AppPassAdvice.class);
         List<AppPassAdvice> returnAppPassAdvice = new ArrayList<>();
-        HttpResult httpResult = new HttpResult();
+        HttpResult<AppPassAdvice> httpResult = new HttpResult();
         AppPassAdviceExample appPassAdviceExample = new AppPassAdviceExample();
         com.bem.domain.AppPassAdviceExample.Criteria criteria = appPassAdviceExample.createCriteria();
         criteria.andAppIdEqualTo(appPassAdvice.getAppId()).
@@ -51,6 +51,8 @@ public class AppPassAdviceController {
         httpResult.setStatusCode(HttpResult.SUCCESS);
         if (null != returnAppPassAdvice && returnAppPassAdvice.size() > 0) {
             httpResult.setResultData(returnAppPassAdvice.get(0));
+        }else{
+            httpResult.setResultData(new AppPassAdvice());
         }
         httpResult.setMessage("查询成功");
         return httpResult;
@@ -74,7 +76,7 @@ public class AppPassAdviceController {
             appPassAdvice.setCreateDate(new Date());
             appPassAdviceMapper.insertSelective(appPassAdvice);
         }
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appPassAdvice);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appPassAdvice);
     }
 
 

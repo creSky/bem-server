@@ -54,7 +54,7 @@ public class AppDesignAppraiseController {
         returnMaps.put("appFiles", appFiles);
         returnMaps.put("appDesignAppraise", appDesignAppraise);
 
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", returnMaps);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", returnMaps);
     }
 
     @RequestMapping(value = "/getAppDesignAppraise")
@@ -81,7 +81,7 @@ public class AppDesignAppraiseController {
         List<AppFile> appFiles = appFileMapper.selectByExample(appFileExample);
         returnMap.put("appFiles", appFiles.size() == 0 ? null : appFiles);
 
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", returnMap);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", returnMap);
     }
 
 

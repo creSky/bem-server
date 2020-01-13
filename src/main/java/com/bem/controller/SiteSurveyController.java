@@ -94,7 +94,7 @@ public class SiteSurveyController {
             }
         }
         treeList.addAll(jlPointList);
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", treeList);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", treeList);
 
     }
 
@@ -143,15 +143,17 @@ public class SiteSurveyController {
                 (PropertiesUtil.getValue("getTransformerAssetsByWhere"), postData, String.class);
         List<AppTransformerInfo> appTransformerInfos = JSONObject.parseArray(result, AppTransformerInfo.class);
         if (appTransformerInfos.size() < 1) {
-            return new HttpResult(HttpResult.ERROR, "资产库没有该资产", null);
+            return new HttpResult<>(HttpResult.ERROR, "资产库没有该资产", null);
         }
         if (appTransformerInfos.size() > 1) {
-            return new HttpResult(HttpResult.ERROR, "该资产编号" + assetsNo + "在变压器资产库存在多条记录", null);
+            return new HttpResult<>(HttpResult.ERROR, "该资产编号" + assetsNo +
+                    "在变压器资产库存在多条记录", null);
         }
         result = restTemplate.postForObject
                 (PropertiesUtil.getValue("getTransformerByAsset"), postData, String.class);
 
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", appTransformerInfos.get(0));
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功",
+                appTransformerInfos.get(0));
     }
 
     /**
@@ -166,7 +168,7 @@ public class SiteSurveyController {
         JSONObject jsonObject = JSONObject.parseObject(transJson);
         AppTransformerInfo appTransformerInfo = new AppTransformerInfo();
         appTransformerInfo = appTransformerInfoMapper.selectByPrimaryKey(jsonObject.get("id"));
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", appTransformerInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", appTransformerInfo);
 
     }
 
@@ -188,7 +190,7 @@ public class SiteSurveyController {
             appTransformerInfo.setCreateDate(new Date());
             appTransformerInfoMapper.insertSelective(appTransformerInfo);
         }
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appTransformerInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appTransformerInfo);
 
     }
 
@@ -233,7 +235,7 @@ public class SiteSurveyController {
         JSONObject jsonObject = JSONObject.parseObject(jlPointJson);
         AppMeterInfo appMeterInfo = new AppMeterInfo();
         appMeterInfo = appMeterInfoMapper.selectByPrimaryKey(jsonObject.get("id"));
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", appMeterInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", appMeterInfo);
     }
 
     /**
@@ -254,7 +256,7 @@ public class SiteSurveyController {
             appMeterInfo.setCreateDate(new Date());
             appMeterInfoMapper.insertSelective(appMeterInfo);
         }
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appMeterInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appMeterInfo);
     }
 
     /**
@@ -301,10 +303,11 @@ public class SiteSurveyController {
                 (PropertiesUtil.getValue("getMeterAssetsByAssetsNo"), postData, String.class);
         List<AppMeterAssetsInfo> appMeterAssetsInfos = JSONObject.parseArray(result, AppMeterAssetsInfo.class);
         if (appMeterAssetsInfos.size() < 1) {
-            return new HttpResult(HttpResult.ERROR, "电能表资产库没有该资产", null);
+            return new HttpResult<>(HttpResult.ERROR, "电能表资产库没有该资产", null);
         }
         if (appMeterAssetsInfos.size() > 1) {
-            return new HttpResult(HttpResult.ERROR, "该资产编号" + meterAssetsNo + "在电能表资产库存在多条记录", null);
+            return new HttpResult<>(HttpResult.ERROR,
+                    "该资产编号" + meterAssetsNo + "在电能表资产库存在多条记录", null);
         }
 
         //查询电能表是否在用
@@ -312,10 +315,12 @@ public class SiteSurveyController {
 
         List<AppMeterInfo> appMeterInfos = JSONObject.parseArray(result, AppMeterInfo.class);
         if (0 != appMeterInfos.size()) {
-            return new HttpResult(HttpResult.ERROR, "该资产编号" + meterAssetsNo + "已在用", null);
+            return new HttpResult<>(HttpResult.ERROR,
+                    "该资产编号" + meterAssetsNo + "已在用", null);
 
         }
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", appMeterAssetsInfos.get(0));
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功",
+                appMeterAssetsInfos.get(0));
 
     }
 
@@ -331,7 +336,7 @@ public class SiteSurveyController {
         JSONObject jsonObject = JSONObject.parseObject(meterJson);
         AppMeterAssetsInfo appMeterAssetsInfo = new AppMeterAssetsInfo();
         appMeterAssetsInfo = appMeterAssetsInfoMapper.selectByPrimaryKey(jsonObject.get("id"));
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", appMeterAssetsInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", appMeterAssetsInfo);
 
     }
 
@@ -352,7 +357,7 @@ public class SiteSurveyController {
         } else {
             appMeterAssetsInfoMapper.insertSelective(appMeterAssetsInfo);
         }
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appMeterAssetsInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appMeterAssetsInfo);
 
     }
 
@@ -401,18 +406,21 @@ public class SiteSurveyController {
                 (PropertiesUtil.getValue("getInductorAssetsByAssetsNo"), postData, String.class);
         List<AppInductorAssetsInfo> appInductorAssetsInfos = JSONObject.parseArray(result, AppInductorAssetsInfo.class);
         if (appInductorAssetsInfos.size() < 1) {
-            return new HttpResult(HttpResult.ERROR, "资产库没有该资产", null);
+            return new HttpResult<>(HttpResult.ERROR, "资产库没有该资产", null);
         }
         if (appInductorAssetsInfos.size() > 1) {
-            return new HttpResult(HttpResult.ERROR, "该资产编号" + inductorAssetsNo + "在互感器资产库存在多条记录", null);
+            return new HttpResult<>(HttpResult.ERROR,
+                    "该资产编号" + inductorAssetsNo + "在互感器资产库存在多条记录", null);
         }
         //查询互感器是否在用
         result = restTemplate.postForObject(PropertiesUtil.getValue("getMeterByInductorAssestsNo"), postData, String.class);
         List<AppMeterInfo> appMeterInfos = JSONObject.parseArray(result, AppMeterInfo.class);
         if (0 != appMeterInfos.size()) {
-            return new HttpResult(HttpResult.ERROR, "该资产编号" + inductorAssetsNo + "已在用", null);
+            return new HttpResult<>(HttpResult.ERROR,
+                    "该资产编号" + inductorAssetsNo + "已在用", null);
         }
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", appInductorAssetsInfos.get(0));
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功",
+                appInductorAssetsInfos.get(0));
 
     }
 
@@ -428,7 +436,8 @@ public class SiteSurveyController {
         JSONObject jsonObject = JSONObject.parseObject(indtJson);
         AppInductorAssetsInfo appInductorAssetsInfo = new AppInductorAssetsInfo();
         appInductorAssetsInfo = appInductorAssetsInfoMapper.selectByPrimaryKey(jsonObject.get("id"));
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", appInductorAssetsInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功",
+                appInductorAssetsInfo);
 
     }
 
@@ -449,7 +458,8 @@ public class SiteSurveyController {
         } else {
             appInductorAssetsInfoMapper.insertSelective(appInductorAssetsInfo);
         }
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appInductorAssetsInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功",
+                appInductorAssetsInfo);
     }
 
 

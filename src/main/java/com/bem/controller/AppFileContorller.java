@@ -42,7 +42,7 @@ public class AppFileContorller {
 
         }
         appFileMapper.insert(appFile);
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appFile);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appFile);
     }
 
 
@@ -56,9 +56,9 @@ public class AppFileContorller {
         AppFile appFile = JSONObject.parseObject(fileJson, AppFile.class);
         int num = appFileMapper.deleteByPrimaryKey(appFile);
         if (num > 0) {
-            return new HttpResult(HttpResult.SUCCESS, "删除成功", null);
+            return new HttpResult<>(HttpResult.SUCCESS, "删除成功", null);
         } else {
-            return new HttpResult(HttpResult.ERROR, "删除失败", null);
+            return new HttpResult<>(HttpResult.ERROR, "删除失败", null);
         }
     }
 

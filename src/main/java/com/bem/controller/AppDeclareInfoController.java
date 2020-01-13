@@ -39,7 +39,7 @@ public class AppDeclareInfoController {
     public HttpResult getAppDeclareInfo(@RequestBody String appDeclareInfoJson) throws Exception {
         AppDeclareInfo appDeclareInfo = JSONObject.parseObject(appDeclareInfoJson, AppDeclareInfo.class);
         List<AppDeclareInfo> returnAppDeclareInfo = new ArrayList<>();
-        HttpResult httpResult = new HttpResult();
+        HttpResult<AppDeclareInfo> httpResult = new HttpResult();
         AppDeclareInfoExample appDeclareInfoExample = new AppDeclareInfoExample();
         AppDeclareInfoExample.Criteria criteria = appDeclareInfoExample.createCriteria();
         criteria.andAppIdEqualTo(appDeclareInfo.getAppId());
@@ -48,6 +48,8 @@ public class AppDeclareInfoController {
         httpResult.setStatusCode(HttpResult.SUCCESS);
         if (null != returnAppDeclareInfo && returnAppDeclareInfo.size() > 0) {
             httpResult.setResultData(returnAppDeclareInfo.get(0));
+        }else{
+            httpResult.setResultData(new AppDeclareInfo());
         }
         httpResult.setMessage("查询成功");
         return httpResult;
@@ -68,7 +70,7 @@ public class AppDeclareInfoController {
         } else {
             appDeclareInfoMapper.insertSelective(appDeclareInfo);
         }
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appDeclareInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appDeclareInfo);
     }
 
 }

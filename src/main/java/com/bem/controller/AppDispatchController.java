@@ -40,7 +40,7 @@ public class AppDispatchController {
         String userId = BemCommonUtil.getOpeartorId(appDispatchJson);
         AppDispatch appDispatch = JSONObject.parseObject(appDispatchJson, AppDispatch.class);
         List<AppDispatch> returnAppDispatch = new ArrayList<>();
-        HttpResult httpResult = new HttpResult();
+        HttpResult<AppDispatch> httpResult = new HttpResult();
         AppDispatchExample appDispatchExample = new AppDispatchExample();
         AppDispatchExample.Criteria criteria = appDispatchExample.createCriteria();
         criteria.andAppIdEqualTo(appDispatch.getAppId()).
@@ -49,6 +49,8 @@ public class AppDispatchController {
         httpResult.setStatusCode(HttpResult.SUCCESS);
         if (null != returnAppDispatch && returnAppDispatch.size() > 0) {
             httpResult.setResultData(returnAppDispatch.get(0));
+        }else{
+            httpResult.setResultData(new AppDispatch());
         }
         httpResult.setMessage("查询成功");
         return httpResult;
@@ -71,7 +73,7 @@ public class AppDispatchController {
         } else {
             appDispatchMapper.insertSelective(appDispatch);
         }
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appDispatch);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appDispatch);
     }
 
 

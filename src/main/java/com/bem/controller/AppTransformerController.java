@@ -50,12 +50,12 @@ public class AppTransformerController {
         Long taskId = JSONObject.parseObject(appTransformerJson).getLong("taskId");
         Long appId = JSONObject.parseObject(appTransformerJson).getLong("appId");
         if (appId == null || "".equals(appId)) {
-            return new HttpResult(HttpResult.ERROR, "缺少流程参数", null);
+            return new HttpResult<>(HttpResult.ERROR, "缺少流程参数", null);
         }
 
         String userNo=JSONObject.parseObject(appTransformerJson).getString("userNo");
         if (userNo == null || "".equals(userNo)) {
-            return new HttpResult(HttpResult.ERROR, "缺少用户参数", null);
+            return new HttpResult<>(HttpResult.ERROR, "缺少用户参数", null);
         }
         // 构造查询实体
 
@@ -79,7 +79,7 @@ public class AppTransformerController {
                     JSONObject.parseArray(JSONObject.parseObject(resultMeters).getString("list"), MeterInformationEntity.class);
 
             if(meterInformationEntities==null||meterInformationEntities.size()<1){
-                return new HttpResult(HttpResult.ERROR, "该用户下没有计量点，无法增减容",
+                return new HttpResult<>(HttpResult.ERROR, "该用户下没有计量点，无法增减容",
                         null);
             }
 
@@ -176,7 +176,8 @@ public class AppTransformerController {
             t.setParent("1");
             t.setTransformerInfos(transformMap.get(t.getMeterId()));
         });
-        return new HttpResult(HttpResult.SUCCESS,"查询成功",meterInformationEntities);
+        return new HttpResult<>(HttpResult.SUCCESS,"查询成功",
+                meterInformationEntities);
     }
 
     /**
@@ -202,7 +203,7 @@ public class AppTransformerController {
                     JSONObject.parseArray(transGroupNo,
                             AppTransformerInfo.class);
             if(appTransformerInfos!=null && appTransformerInfos.size()>0){
-                return new HttpResult(HttpResult.ERROR, "输入的变压器组号已存在", null);
+                return new HttpResult<>(HttpResult.ERROR, "输入的变压器组号已存在", null);
             }
         }
 
@@ -230,7 +231,7 @@ public class AppTransformerController {
             appTransformerInfo.setCreateDate(new Date());
             appTransformerInfoMapper.insertSelective(appTransformerInfo);
         }
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appTransformerInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appTransformerInfo);
     }
 
     //调用cim 查询变压器档案
@@ -260,6 +261,6 @@ public class AppTransformerController {
             });
         }
         jsonObject.put("list",appTransformerInfos);
-        return new HttpResult(HttpResult.SUCCESS,"查询成功", jsonObject);
+        return new HttpResult<>(HttpResult.SUCCESS,"查询成功", jsonObject);
     }
 }

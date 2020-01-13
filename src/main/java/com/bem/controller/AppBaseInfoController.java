@@ -74,14 +74,14 @@ public class AppBaseInfoController {
                 "user_no="+appUserInfo.getUserNo()
                 +"&template_id="+appUserInfo.getTemplateId(),
                 "utf-8",30);*/
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", returnMap);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", returnMap);
     }
 
 
     @RequestMapping(value = "/getCustomer")
     @ResponseBody
     public HttpResult getCustomer(@RequestBody(required = false) String appBaseInfoObject) throws Exception {
-        HttpResult httpResult = new HttpResult();
+        HttpResult<Object> httpResult = new HttpResult();
         AppCustomerInfo appCustomerInfo = JSONObject.parseObject(appBaseInfoObject, AppCustomerInfo.class);
 
         List<AppCustomerInfo> taskMap = new ArrayList<>();
@@ -172,7 +172,7 @@ public class AppBaseInfoController {
         Map<String, Object> appBaseInfo = new HashMap<>();
         appBaseInfo.put("customer", appCustomerInfo);
         appBaseInfo.put("user", appUserInfo);
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appBaseInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appBaseInfo);
     }
 
 
@@ -206,10 +206,10 @@ public class AppBaseInfoController {
             HttpResult returnResult = saveFromWeb(appCustomerInfoJson);
             appWebLog.setOutJson(JSONObject.toJSONString(returnResult));
             appWebLogMapper.insert(appWebLog);
-            return new HttpResult(HttpResult.SUCCESS, "提交营销系统成功", null);
+            return new HttpResult<>(HttpResult.SUCCESS, "提交营销系统成功", null);
         } catch (Exception e) {
             e.printStackTrace();
-            return new HttpResult(HttpResult.ERROR, "提交营销系统失败", null);
+            return new HttpResult<>(HttpResult.ERROR, "提交营销系统失败", null);
         }
     }
 
@@ -259,7 +259,7 @@ public class AppBaseInfoController {
         }
         Map<String, Object> appBaseInfo = new HashMap<>();
         appBaseInfo.put("user", appUserInfo);
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appBaseInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appBaseInfo);
     }
 
 
@@ -354,7 +354,8 @@ public class AppBaseInfoController {
                         JSONObject.parseArray(resultArrearages);
                 //判断有无欠费记录
                 if (arrearagesJsonArray!=null && arrearagesJsonArray.size()>0){
-                    return new HttpResult(HttpResult.ERROR, "当前用户存在欠费记录，无法销户！",null);
+                    return new HttpResult<>(HttpResult.ERROR,
+                            "当前用户存在欠费记录，无法销户！",null);
                 }
                 //判断计量点所在结算户有无余额
                 String resultSettlements= restTemplate.postForObject
@@ -368,7 +369,8 @@ public class AppBaseInfoController {
 
                 //判断有无欠费记录
                 if (preCharge!=null && preCharge.size()>0){
-                    return new HttpResult(HttpResult.ERROR, "当前用户有余额，无法销户！",null);
+                    return new HttpResult<>(HttpResult.ERROR, "当前用户有余额，无法销户！",
+                            null);
                 }
 
 
@@ -399,7 +401,7 @@ public class AppBaseInfoController {
         Map<String, Object> returnMap = new HashMap<>();
         returnMap.put("user", appUserInfo);
         returnMap.put("customer", appCustomerInfo);
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", returnMap);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", returnMap);
     }
 
 }

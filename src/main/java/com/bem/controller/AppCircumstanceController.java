@@ -44,7 +44,7 @@ public class AppCircumstanceController {
     public HttpResult getAppDispatch(@RequestBody String appCircumstanceJson) throws Exception {
         AppCircumstance appCircumstance = JSONObject.parseObject(appCircumstanceJson, AppCircumstance.class);
         List<AppCircumstance> returnAppCircumstance = new ArrayList<>();
-        HttpResult httpResult = new HttpResult();
+        HttpResult<AppCircumstance> httpResult = new HttpResult<>();
         AppCircumstanceExample appCircumstanceExample = new AppCircumstanceExample();
         AppCircumstanceExample.Criteria criteria = appCircumstanceExample.createCriteria();
         criteria.andAppIdEqualTo(appCircumstance.getAppId()).
@@ -53,6 +53,8 @@ public class AppCircumstanceController {
         httpResult.setStatusCode(HttpResult.SUCCESS);
         if (null != returnAppCircumstance && returnAppCircumstance.size() > 0) {
             httpResult.setResultData(returnAppCircumstance.get(0));
+        }else{
+            httpResult.setResultData(new AppCircumstance());
         }
         httpResult.setMessage("查询成功");
         return httpResult;
@@ -72,7 +74,7 @@ public class AppCircumstanceController {
         VerificationDomain verificationDomain = JSONObject.parseObject(appCircumstanceJson, VerificationDomain.class);
         String verificationData = BemCommonUtil.verificationData(verificationDomain);
         if (!"200".equals(verificationData)) {
-            return new HttpResult(HttpResult.ERROR, "关键数据缺失", null);
+            return new HttpResult<>(HttpResult.ERROR, "关键数据缺失", null);
         }
 
 
@@ -86,7 +88,7 @@ public class AppCircumstanceController {
             appCircumstance.setSubmitDate(new Date());
         }
         appCircumstanceMapper.insertSelective(appCircumstance);
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appCircumstance);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appCircumstance);
     }
 
 }

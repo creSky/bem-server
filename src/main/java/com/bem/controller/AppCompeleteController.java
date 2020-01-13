@@ -63,7 +63,7 @@ public class AppCompeleteController {
         List<AppFile> appFiles = appFileMapper.selectByExample(appFileExample);
         returnMap.put("appFiles", appFiles.size() == 0 ? null : appFiles);
 
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", returnMap);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", returnMap);
 
     }
 
@@ -80,7 +80,7 @@ public class AppCompeleteController {
         VerificationDomain verificationDomain = JSONObject.parseObject(appCompeleteJson, VerificationDomain.class);
         String verificationData = BemCommonUtil.verificationData(verificationDomain);
         if (!"200".equals(verificationData)) {
-            return new HttpResult(HttpResult.ERROR, "关键数据缺失", null);
+            return new HttpResult<>(HttpResult.ERROR, "关键数据缺失", null);
         }
 
         boolean isExist = appCompeleteMapper.existsWithPrimaryKey(appCompelete);
@@ -97,7 +97,7 @@ public class AppCompeleteController {
         returnMaps.put("appFiles", appFiles);
         returnMaps.put("appCompelete", appCompelete);
 
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", returnMaps);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", returnMaps);
     }
 
 

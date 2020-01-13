@@ -59,7 +59,7 @@ public class AppMeterInfoController {
             AppUserInfo returnAppBaseInfo=
                     appUserInfoMapper.selectByPrimaryKey(appUserInfo);
             if (returnAppBaseInfo==null){
-                return new HttpResult(HttpResult.ERROR,"查询不到此流程",null);
+                return new HttpResult<>(HttpResult.ERROR,"查询不到此流程",null);
             }
             //从档案查询
             JSONObject jsonObject=new JSONObject();
@@ -87,10 +87,11 @@ public class AppMeterInfoController {
                 t.setUserNo(JSONObject.parseObject(userJson).getString("userNo"));
                 t.setTemplateId(returnAppBaseInfo.getTemplateId());
             });
-            return new HttpResult(HttpResult.SUCCESS,"查询成功",appMeterInfosByCim);
+            return new HttpResult<>(HttpResult.SUCCESS,"查询成功",
+                    appMeterInfosByCim);
         }
 
-       return new HttpResult(HttpResult.SUCCESS,"查询成功",appMeterInfosByBem);
+       return new HttpResult<>(HttpResult.SUCCESS,"查询成功",appMeterInfosByBem);
 
     }
 
@@ -120,7 +121,7 @@ public class AppMeterInfoController {
             appMeterInfoMapper.insertSelective(appMeterInfos);
         }
 
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appMeterInfos);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appMeterInfos);
     }
 
 

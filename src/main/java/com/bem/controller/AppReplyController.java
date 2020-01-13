@@ -40,7 +40,8 @@ public class AppReplyController {
         replayCriteria.andAppIdEqualTo(appReplyAdvice.getAppId());
         List<AppReplyAdvice> appReplyAdvices = appReplyAdviceMapper.selectByExample(appReplyAdviceExample);
         if (null != appReplyAdvices && 0 < appReplyAdvices.size()) {
-            return new HttpResult(HttpResult.SUCCESS, "查询成功", appReplyAdvices.get(0));
+            return new HttpResult<>(HttpResult.SUCCESS, "查询成功",
+                    appReplyAdvices.get(0));
         }
 
         //自动生成审批方案
@@ -57,7 +58,7 @@ public class AppReplyController {
 
         appReplyAdvice.setReplyAdvice(passAdviceInfo.toString());
         appReplyAdviceMapper.insert(appReplyAdvice);
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", appReplyAdvice);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", appReplyAdvice);
     }
 
     /**
@@ -76,6 +77,6 @@ public class AppReplyController {
         } else {
             appReplyAdviceMapper.insertSelective(appReplyAdvice);
         }
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appReplyAdvice);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appReplyAdvice);
     }
 }

@@ -74,13 +74,13 @@ public class SysCommConfigController {
         }
         userMap.put("where", sb.toString());
         if ("".equals(sb.toString())) {
-            return new HttpResult(500, "无修改记录", null);
+            return new HttpResult<>(500, "无修改记录", null);
         }
         int num = this.sysCommConfigMapper.freeUpdate(userMap);
         if (num > 0) {
-            return new HttpResult(HttpResult.SUCCESS, "更新成功", null);
+            return new HttpResult<>(HttpResult.SUCCESS, "更新成功", null);
         } else {
-            return new HttpResult(HttpResult.ERROR, "流程还未到此环节，无法更新时间", null);
+            return new HttpResult<>(HttpResult.ERROR, "流程还未到此环节，无法更新时间", null);
 
         }
     }

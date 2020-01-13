@@ -32,7 +32,7 @@ public class AppMidCheckReportController {
     public HttpResult getAppDeclareInfo(@RequestBody String appMidCheckReportJson) throws Exception {
         AppMidCheckReport appMidCheckReport = JSONObject.parseObject(appMidCheckReportJson, AppMidCheckReport.class);
         List<AppMidCheckReport> returnAppDeclareInfo = new ArrayList<>();
-        HttpResult httpResult = new HttpResult();
+        HttpResult<AppMidCheckReport> httpResult = new HttpResult();
         AppMidCheckReportExample appMidCheckReportExample = new AppMidCheckReportExample();
         AppMidCheckReportExample.Criteria criteria = appMidCheckReportExample.createCriteria();
         criteria.andAppIdEqualTo(appMidCheckReport.getAppId());
@@ -41,6 +41,8 @@ public class AppMidCheckReportController {
         httpResult.setStatusCode(HttpResult.SUCCESS);
         if (null != returnAppDeclareInfo && returnAppDeclareInfo.size() > 0) {
             httpResult.setResultData(returnAppDeclareInfo.get(0));
+        }else{
+            httpResult.setResultData(new AppMidCheckReport());
         }
         httpResult.setMessage("查询成功");
         return httpResult;
@@ -62,6 +64,6 @@ public class AppMidCheckReportController {
         } else {
             appMidCheckReportMapper.insertSelective(appMidCheckReport);
         }
-        return new HttpResult(HttpResult.SUCCESS, "保存成功", appMidCheckReport);
+        return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appMidCheckReport);
     }
 }

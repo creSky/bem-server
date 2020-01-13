@@ -104,7 +104,7 @@ public class ActivitiController {
                             doSelectPageInfo(() -> this.taskListService.selectUserByApp(userMap));
         }
 
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", pageInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", pageInfo);
     }
 
 
@@ -128,7 +128,7 @@ public class ActivitiController {
                     andTaskIdEqualTo(jsonObject.getInteger("taskId"));
             List<AppPassAdvice> appPassAdvices = appPassAdviceMapper.selectByExample(appPassAdviceExample);
             if (appPassAdvices.size() < 1) {
-                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+                return new HttpResult<>(HttpResult.ERROR, "该环节没有办理无法提交", null);
             }
             candidate.put("haveProject", 0 == appPassAdvices.size() ? null : appPassAdvices.get(0).getHavaProject());
         }
@@ -141,7 +141,7 @@ public class ActivitiController {
                     andTaskIdEqualTo(jsonObject.getInteger("taskId"));
             List<AppDispatch> appDispatches = appDispatchMapper.selectByExample(appDispatchExample);
             if (appDispatches.size() < 1) {
-                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+                return new HttpResult<>(HttpResult.ERROR, "该环节没有办理无法提交", null);
 
             }
             if (0 < appDispatches.size()) {
@@ -158,7 +158,7 @@ public class ActivitiController {
                     andTaskIdEqualTo(jsonObject.getInteger("taskId"));
             List<AppCircumstance> appCircumstances = appCircumstanceMapper.selectByExample(appCircumstanceExample);
             if (appCircumstances.size() < 1) {
-                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+                return new HttpResult<>(HttpResult.ERROR, "该环节没有办理无法提交", null);
 
             }
             candidate.put("haveProject", 0 == appCircumstances.size() ? null :
@@ -176,7 +176,7 @@ public class ActivitiController {
                     andTaskIdEqualTo(jsonObject.getLong("taskId"));
             List<AppMeterInfo> appMeterInfos = appMeterInfoMapper.selectByExample(appMeterInfoExample);
             if (appMeterInfos.size() < 1) {
-                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+                return new HttpResult<>(HttpResult.ERROR, "该环节没有办理无法提交", null);
 
             }
         }
@@ -190,7 +190,7 @@ public class ActivitiController {
                     andTaskIdEqualTo(jsonObject.getInteger("taskId"));
             List<AppDeclareInfo> appDeclareInfos = appDeclareInfoMapper.selectByExample(appDeclareInfoExample);
             if (appDeclareInfos.size() < 1) {
-                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+                return new HttpResult<>(HttpResult.ERROR, "该环节没有办理无法提交", null);
 
             }
             candidate.put("designType", 0 == appDeclareInfos.size() ? null : appDeclareInfos.get(0).getDesignType());
@@ -215,7 +215,7 @@ public class ActivitiController {
             List<AppCircumstance> appCircumstances = appCircumstanceMapper.selectByExample(appCircumstanceExample);
 
             if (appAssems.size() < 1 || appCircumstances.size() < 1) {
-                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+                return new HttpResult<>(HttpResult.ERROR, "该环节没有办理无法提交", null);
 
             }
             //判断文件
@@ -223,7 +223,7 @@ public class ActivitiController {
                     appFileService.existsFile(jsonObject.getString("appId"),
                             jsonObject.getString("taskId"));
             if (!existsFile) {
-                return new HttpResult(HttpResult.ERROR, "该环节没有上传文件", null);
+                return new HttpResult<>(HttpResult.ERROR, "该环节没有上传文件", null);
             }
 
         }
@@ -240,7 +240,7 @@ public class ActivitiController {
             List<AppTransformerInfo> appTransformerInfos =
                     appTransformerInfoMapper.selectByExample(appTransformerInfoExample);
             if (appTransformerInfos.size() < 1) {
-                return new HttpResult(HttpResult.ERROR, "该环节没有办理无法提交", null);
+                return new HttpResult<>(HttpResult.ERROR, "该环节没有办理无法提交", null);
 
             }
             /*按照变压器号去重
@@ -274,12 +274,12 @@ public class ActivitiController {
                                     ArrayList::new));
 
                     if (returnAppTransformer.size() > 1) {
-                        return new HttpResult(HttpResult.ERROR,
+                        return new HttpResult<>(HttpResult.ERROR,
                                 "同一计量点下的变压器组号必须相同，请更改完再传递", null);
                     }
                     if(returnAppTransformer.get(0).getTransformerGroupNo()==null
                             || "".equals(returnAppTransformer.get(0).getTransformerGroupNo())){
-                        return new HttpResult(HttpResult.ERROR,
+                        return new HttpResult<>(HttpResult.ERROR,
                                 "同一计量点下的变压器组号必须相同且不能为空，请更改完再传递", null);
                     }
 
@@ -291,7 +291,7 @@ public class ActivitiController {
                                     ArrayList::new));
 
                     if (returnAppTransformer.size() > 1) {
-                        return new HttpResult(HttpResult.ERROR,
+                        return new HttpResult<>(HttpResult.ERROR,
                                 "同一计量点下的变压器计量方式必须相同，请更改完再传递", null);
                     }
 
@@ -317,7 +317,7 @@ public class ActivitiController {
 
         }
 
-        return new HttpResult(HttpResult.SUCCESS, "提交成功", null);
+        return new HttpResult<>(HttpResult.SUCCESS, "提交成功", null);
     }
 
     /**
@@ -347,7 +347,7 @@ public class ActivitiController {
                     JSONObject.parseObject(writeSectJson).getString("writeSectName"));
         });
 
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", taskList);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", taskList);
 
     }
 
@@ -396,7 +396,7 @@ public class ActivitiController {
             //finishApps=taskListService.queryLowFinishApp(userMap);
         }
         if (finishApps == null || finishApps.size() <= 0) {
-            return new HttpResult(HttpResult.ERROR, "无完成数据", null);
+            return new HttpResult<>(HttpResult.ERROR, "无完成数据", null);
         }
         for (int i = 0; i < finishApps.size(); i++) {
             List<Map<String, Object>> finishTasks = taskListService.queryFinishTask(finishApps.get(i).get("processInstanceId").toString());
@@ -453,7 +453,7 @@ public class ActivitiController {
 
         }
         pageInfo.setList(finishApps);
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", pageInfo);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", pageInfo);
 
     }
 
@@ -472,7 +472,7 @@ public class ActivitiController {
         userMap.put("appNo", userRight.getString("appNo"));
         userMap.put("userName", userRight.getString("userName"));
         finishApps = taskListService.queryFinishAppDate(userMap);
-        return new HttpResult(HttpResult.SUCCESS, "查询成功", finishApps);
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", finishApps);
     }
 
     //流程作废
@@ -491,9 +491,9 @@ public class ActivitiController {
             if (!activitiService.isEnd(stopObject.getString("processInstanceId"))) {
                 activitiService.stopProcessInstance(stopObject.getString("processInstanceId"), BemCommonUtil.getOpeartorId(stopJson));
             }
-            return new HttpResult(HttpResult.SUCCESS, "作废成功", appUserInfo);
+            return new HttpResult<>(HttpResult.SUCCESS, "作废成功", appUserInfo);
         } catch (Exception e) {
-            return new HttpResult(HttpResult.SUCCESS, "作废失败", null);
+            return new HttpResult<>(HttpResult.SUCCESS, "作废失败", null);
         }
     }
 
@@ -535,7 +535,7 @@ public class ActivitiController {
             activitiService.turnTask(taskRollback.getString("taskId"), list.get(0).getId(),
                     BemCommonUtil.getOpeartorId(taskRollbackJson));
         }
-        return new HttpResult(HttpResult.SUCCESS, "回退成功", null);
+        return new HttpResult<>(HttpResult.SUCCESS, "回退成功", null);
     }
 
     @RequestMapping("/getWebStatus")
@@ -597,9 +597,9 @@ public class ActivitiController {
 
         JSONObject resturnJSONObject = JSONObject.parseObject(resturnJson);
         if ("200".equals(resturnJSONObject.getString("statusCode"))) {
-            return new HttpResult(HttpResult.SUCCESS, "更新档案成功", null);
+            return new HttpResult<>(HttpResult.SUCCESS, "更新档案成功", null);
         } else {
-            return new HttpResult(HttpResult.ERROR, "更新档案失败", null);
+            return new HttpResult<>(HttpResult.ERROR, "更新档案失败", null);
         }
 
     }
