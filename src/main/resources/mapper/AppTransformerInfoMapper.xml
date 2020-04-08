@@ -289,7 +289,7 @@
     T.APP_ID=#{appId}
   </select>
 
-  <select id="getTransformeerByAppid" parameterType="java.lang.Long" resultType="com.bem.domain.TransformerInfoEntity">
+  <select id="getTransformeerByAppid" parameterType="java.lang.Long" resultType="com.bem.entity.TransformerInfoEntity">
     SELECT
     <include refid="Base_Column_List" />,
     0 parent,

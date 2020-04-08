@@ -1,8 +1,8 @@
-package com.bem.domain;
+package com.bem.entity;
 
 import javax.persistence.Column;
 //流程关键数据校验
-public class VerificationDomain {
+public class VerificationEntity {
     private String appId;
     private Integer taskId;
     private Long processInstanceId;

@@ -1,4 +1,4 @@
-package com.bem.domain;
+package com.bem.entity;
 
 import java.util.Date;
 //档案更新 变压器关系 实体

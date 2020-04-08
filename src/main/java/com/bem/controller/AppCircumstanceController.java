@@ -3,7 +3,7 @@ package com.bem.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.bem.domain.AppCircumstance;
 import com.bem.domain.AppCircumstanceExample;
-import com.bem.domain.VerificationDomain;
+import com.bem.entity.VerificationEntity;
 import com.bem.mapper.AppCircumstanceMapper;
 import com.bem.mapper.AppCompeleteMapper;
 import com.bem.service.AppFileService;
@@ -71,8 +71,8 @@ public class AppCircumstanceController {
         AppCircumstance appCircumstance = JSONObject.parseObject(appCircumstanceJson, AppCircumstance.class);
 
         //关键数据校验
-        VerificationDomain verificationDomain = JSONObject.parseObject(appCircumstanceJson, VerificationDomain.class);
-        String verificationData = BemCommonUtil.verificationData(verificationDomain);
+        VerificationEntity verificationEntity = JSONObject.parseObject(appCircumstanceJson, VerificationEntity.class);
+        String verificationData = BemCommonUtil.verificationData(verificationEntity);
         if (!"200".equals(verificationData)) {
             return new HttpResult<>(HttpResult.ERROR, "关键数据缺失", null);
         }
@@ -83,11 +83,13 @@ public class AppCircumstanceController {
         appCircumstance.setCreateMan(new Integer(BemCommonUtil.getOpeartorId(appCircumstanceJson)));
         if (isExist) {
             appCircumstance.setSubmitDate(new Date());
+            appCircumstanceMapper.updateByPrimaryKey(appCircumstance);
+
         } else {
             appCircumstance.setCreateDate(new Date());
             appCircumstance.setSubmitDate(new Date());
+            appCircumstanceMapper.insertSelective(appCircumstance);
         }
-        appCircumstanceMapper.insertSelective(appCircumstance);
         return new HttpResult<>(HttpResult.SUCCESS, "保存成功", appCircumstance);
     }
 

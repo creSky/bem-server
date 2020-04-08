@@ -165,6 +165,7 @@
 
     </select>
 
+
     <select id="queryHighFinishApp" parameterType="java.util.Map" resultType="java.util.Map">
        SELECT
             APP_NO appNo,
@@ -233,6 +234,43 @@
             <if test="userName != null and  userName !=''">
                 AND  USER_NAME like CONCAT('%',#{userName},'%')
             </if>
+        order by info.APPLY_DATE desc
+    </select>
+
+    <select id="queryFinishApp" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        APP_NO appNo,
+        PROC_INST_ID processInstanceId,
+        BUSINESS_PLACE_CODE businessPlaceCode,
+        USER_NO userNo,
+        USER_NAME userName,
+        TEMPLATE_ID templateId,
+        APPLY_DATE applyDate,
+        SUBMIT_DATE submitDate,
+        BUSINESS_PLACE_CODE businessPlaceCode
+        FROM
+        APP_USER_INFO info
+        WHERE
+        NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = info.PROC_INST_ID )
+        AND IFNULL(info.APP_STATUS,'Y')  &lt;&gt; 'N'
+        <if test="userDepts != null and userDepts.trim().length()>0">
+            AND info.BUSINESS_PLACE_CODE IN
+            <foreach collection="userDepts.split(',')" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="businessPlaceCode != null and  businessPlaceCode !=''">
+            AND  BUSINESS_PLACE_CODE = #{businessPlaceCode}
+        </if>
+        <if test="appNo != null and  appNo !=''">
+            AND  APP_NO like CONCAT('%',#{appNo},'%')
+        </if>
+        <if test="userName != null and  userName !=''">
+            AND  USER_NAME like CONCAT('%',#{userName},'%')
+        </if>
+        <if test="templateId != null and  templateId !=''">
+            AND  TEMPLATE_ID =#{templateId}
+        </if>
         order by info.APPLY_DATE desc
     </select>
 

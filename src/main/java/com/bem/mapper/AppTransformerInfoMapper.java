@@ -5,7 +5,7 @@ import com.bem.domain.AppTransformerInfo;
 import com.bem.domain.AppTransformerInfoExample;
 import java.util.List;
 
-import com.bem.domain.TransformerInfoEntity;
+import com.bem.entity.TransformerInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;

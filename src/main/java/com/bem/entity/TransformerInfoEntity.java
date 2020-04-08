@@ -1,4 +1,6 @@
-package com.bem.domain;
+package com.bem.entity;
+
+import com.bem.domain.AppTransformerInfo;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -6,7 +8,7 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class TransformerInfoEntity extends AppTransformerInfo{
+public class TransformerInfoEntity extends AppTransformerInfo {
     //前台展示
     private String showName1;
     private String showName2;

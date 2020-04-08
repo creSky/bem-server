@@ -6,6 +6,8 @@
 **/
 package com.bem.domain;
 
+import com.bem.entity.TransformerInfoEntity;
+
 import java.util.List;
 
 public class MeterInformationEntity  extends AppMeterInfo{

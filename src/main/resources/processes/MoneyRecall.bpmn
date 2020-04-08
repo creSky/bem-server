@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/HighVoltageNew" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1585060072426" name="" targetNamespace="http://www.activiti.org/MoneyRecall" typeLanguage="http://www.w3.org/2001/XMLSchema">
+  <process id="MoneyRecall" isClosed="false" isExecutable="true" name="电费退补" processType="None">
+    <startEvent id="startevent1" name="开始"/>
+    <userTask activiti:candidateGroups="10" activiti:exclusive="true" id="bem-f1-p1" name="申请登记"/>
+    <sequenceFlow id="flow2" sourceRef="startevent1" targetRef="bem-f1-p1"/>
+    <userTask activiti:candidateGroups="10" activiti:exclusive="true" id="bem-f1-p28" name="电费退补登记"/>
+    <endEvent id="endevent1" name="End"/>
+    <sequenceFlow id="flow29" sourceRef="bem-f1-p1" targetRef="bem-f1-p28"/>
+    <userTask activiti:candidateGroups="10" activiti:exclusive="true" id="bem-f1-p29" name="电费退补审批"/>
+    <sequenceFlow id="flow30" sourceRef="bem-f1-p29" targetRef="endevent1"/>
+    <sequenceFlow id="flow31" sourceRef="bem-f1-p28" targetRef="bem-f1-p29"/>
+  </process>
+  <bpmndi:BPMNDiagram documentation="background=#FFFFFF;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+    <bpmndi:BPMNPlane bpmnElement="MoneyRecall">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="Shape-startevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="32.0" y="200.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p1" id="Shape-bem-f1-p1">
+        <omgdc:Bounds height="55.0" width="105.0" x="132.0" y="190.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p28" id="Shape-bem-f1-p28">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="190.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="Shape-endevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="700.0" y="200.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bem-f1-p29" id="Shape-bem-f1-p29">
+        <omgdc:Bounds height="55.0" width="105.0" x="480.0" y="190.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29" sourceElement="bem-f1-p1" targetElement="bem-f1-p28">
+        <omgdi:waypoint x="237.0" y="217.5"/>
+        <omgdi:waypoint x="300.0" y="217.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2" sourceElement="startevent1" targetElement="bem-f1-p1">
+        <omgdi:waypoint x="64.0" y="216.0"/>
+        <omgdi:waypoint x="132.0" y="217.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31" sourceElement="bem-f1-p28" targetElement="bem-f1-p29">
+        <omgdi:waypoint x="405.0" y="217.5"/>
+        <omgdi:waypoint x="480.0" y="217.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow30" id="BPMNEdge_flow30" sourceElement="bem-f1-p29" targetElement="endevent1">
+        <omgdi:waypoint x="585.0" y="217.5"/>
+        <omgdi:waypoint x="700.0" y="216.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

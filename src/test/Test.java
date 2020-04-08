@@ -1,35 +1,24 @@
 
-import com.alibaba.fastjson.JSONObject;
-import com.bem.domain.AppCustomerInfo;
-import com.bem.domain.AppUserInfo;
-import com.bem.domain.VerificationDomain;
-import com.bem.util.DateUtil;
-import com.bem.util.PropertiesUtil;
+import com.bem.entity.VerificationEntity;
 
-import java.io.File;
-import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Test {
     public static void main(String[] args) throws ParseException {
-       /* List<VerificationDomain> list =new ArrayList<>();
-        VerificationDomain verificationDomain1=new VerificationDomain();
-        VerificationDomain verificationDomain2=new VerificationDomain();
-        VerificationDomain verificationDomain3=new VerificationDomain();
-        VerificationDomain verificationDomain4=new VerificationDomain();
-        VerificationDomain verificationDomain5=new VerificationDomain();
-        VerificationDomain verificationDomain6=new VerificationDomain();
-        VerificationDomain verificationDomain7=new VerificationDomain();
-        VerificationDomain verificationDomain8=new VerificationDomain();
-        VerificationDomain verificationDomain9=new VerificationDomain();
-        VerificationDomain verificationDomain10=new VerificationDomain();
+       /* List<VerificationEntity> list =new ArrayList<>();
+        VerificationEntity verificationDomain1=new VerificationEntity();
+        VerificationEntity verificationDomain2=new VerificationEntity();
+        VerificationEntity verificationDomain3=new VerificationEntity();
+        VerificationEntity verificationDomain4=new VerificationEntity();
+        VerificationEntity verificationDomain5=new VerificationEntity();
+        VerificationEntity verificationDomain6=new VerificationEntity();
+        VerificationEntity verificationDomain7=new VerificationEntity();
+        VerificationEntity verificationDomain8=new VerificationEntity();
+        VerificationEntity verificationDomain9=new VerificationEntity();
+        VerificationEntity verificationDomain10=new VerificationEntity();
         verificationDomain1.setAppId("1");
         verificationDomain2.setAppId("2");
         verificationDomain3.setAppId("3");
@@ -68,16 +57,64 @@ public class Test {
         priceDataShowDomain.setElecType(v.stream().filter(p -> (p.getPriceTypeId() == priceTypeId || p.getPriceTypeId().equals(priceTypeId)))
                 .map(PriceDataTransformDomain::getElecType).max(String::compareTo).get());*/
 
-        LocalDateTime time = LocalDateTime.now();
-        System.out.println("当前时间=" + time);
+       /* LocalDateTime time = LocalDateTime.now();
+        System.out.println("当前时间=" + time);*/
+
+      /* Map<Integer,List<String>> map=new HashMap<>();*/
+       /*List<String> a=new ArrayList<>();
+       a.add("123");
+       map.put("1",a);
+        (unused)->new ArrayList<>() 等价于 lamda引用
+        ArrayList<String>::new  方法引用
+        */
+ /*      map.computeIfAbsent(1,(unused)->new ArrayList<>()).add("123");
+        System.out.println(map);*/
+
+       /*List<String> list=new ArrayList<>();
+       list.add("a");
+       list.add("b");
+       list.add("c");
+       Map<String,String> maps=
+       list.stream().map(t->t+"a").collect(Collectors.toMap(String::trim,String::trim));
+        System.out.println(maps);*/
+        /*List<Integer> list=new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+       IntStream.rangeClosed(0,list.size()).mapToObj(end->list.subList(0,end)).forEach(
+               t-> System.out.println(t)
+       );*/
+
+        /*List<Integer> list=new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        of(list).forEach(t-> System.out.println(t));*/
+        IntStream.range(0,3).forEach(t-> System.out.println(t+"a"));
+
+
+        PayrollDay.Mon.pay(14,4);
 
     }
 
 
-    public static  void mm(VerificationDomain s){
+    public static  void mm(VerificationEntity s){
         System.out.println(s.getAppId());
 
     }
 
 
+    public static <E>Stream<List<E>> of(List<E> list){
+        return prefixes(list).flatMap(Test::suffixes);
+    }
+    public static <E>Stream<List<E>> prefixes(List<E> list){
+        return IntStream.rangeClosed(1,list.size()).mapToObj(end->list.subList(0,end));
+    }
+    public static <E>Stream<List<E>> suffixes(List<E> list){
+
+        return IntStream.range(0,list.size()).mapToObj(strat->list.subList(strat,list.size()));
+    }
 }

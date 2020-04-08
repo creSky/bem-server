@@ -2,6 +2,7 @@ package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bem.domain.*;
+import com.bem.entity.TransformerMeterRelationEntity;
 import com.bem.mapper.*;
 import com.bem.service.ActivitiService;
 import com.bem.service.AppFileService;
@@ -57,6 +58,9 @@ public class ActivitiController {
 
     @Autowired
     private AppAssemMapper appAssemMapper;
+
+    @Autowired
+    private AppMoneyRecallMapper appMoneyRecallMapper;
 
     @Autowired
     private AppUserInfoMapper appUserInfoMapper;
@@ -228,6 +232,23 @@ public class ActivitiController {
 
         }
 
+        //低压装表接电
+        if ("bem-f1-p28".equals(jsonObject.get("taskDefKey"))) {
+            AppMoneyRecallExample appMoneyRecallExample = new AppMoneyRecallExample();
+            com.bem.domain.AppMoneyRecallExample.Criteria appMoneyRecallExampleCriteria =
+                    appMoneyRecallExample.createCriteria();
+            appMoneyRecallExampleCriteria.andAppIdEqualTo(jsonObject.getString("appId")).
+                    andTaskIdEqualTo(jsonObject.getInteger("taskId"));
+            List<AppMoneyRecall> appMoneyRecalls =
+                    appMoneyRecallMapper.selectByExample(appMoneyRecallExample);
+
+            if (appMoneyRecalls.size() < 1 || appMoneyRecalls.size() < 1) {
+                return new HttpResult<>(HttpResult.ERROR, "该环节没有生成退费记录无法提交",
+                        null);
+
+            }
+        }
+
 
         //增减容
         if ("bem-f1-p25".equals(jsonObject.get("taskDefKey"))) {
@@ -368,6 +389,7 @@ public class ActivitiController {
         userMap.put("businessPlaceCode", userRight.getString("businessPlaceCode"));
         userMap.put("appNo", userRight.getString("appNo"));
         userMap.put("userName", userRight.getString("userName"));
+        userMap.put("templateId", userRight.getString("templateId"));
         //判断分页传入值是不是数字类型
         //出现传参问题 默认查前十条
         boolean isNumeric = BemCommonUtil.isNumeric(userRight.getString("pageCurrent"), userRight.getString("pageSize"));
@@ -382,7 +404,7 @@ public class ActivitiController {
             }
             finishApps = pageInfo.getList();
             //finishApps=taskListService.queryHighFinishApp(userMap);
-        } else {
+        } else if(("low".equals(hignOrlow.getString("val")))) {
             if (isNumeric) {
                 pageInfo =
                         PageHelper.startPage(userRight.getInteger("pageCurrent"), userRight.getInteger("pageSize")).
@@ -394,6 +416,17 @@ public class ActivitiController {
             }
             finishApps = pageInfo.getList();
             //finishApps=taskListService.queryLowFinishApp(userMap);
+        }else{
+            if (isNumeric) {
+                pageInfo =
+                        PageHelper.startPage(userRight.getInteger("pageCurrent"), userRight.getInteger("pageSize")).
+                                doSelectPageInfo(() -> this.taskListService.queryFinishApp(userMap));
+            } else {
+                pageInfo =
+                        PageHelper.startPage(1, 10).
+                                doSelectPageInfo(() -> this.taskListService.queryFinishApp(userMap));
+            }
+            finishApps = pageInfo.getList();
         }
         if (finishApps == null || finishApps.size() <= 0) {
             return new HttpResult<>(HttpResult.ERROR, "无完成数据", null);

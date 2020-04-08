@@ -27,5 +27,7 @@ public interface TaskListMapper extends BemBaseMapper<TaskList> {
 
     List<Map<String,Object>> queryFinishTask(String processInstanceId);
 
+     List<Map<String,Object>> queryFinishApp(Map<String, Object> userMap);
+
 
 }

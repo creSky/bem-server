@@ -2,7 +2,7 @@ package com.bem.util;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.bem.domain.VerificationDomain;
+import com.bem.entity.VerificationEntity;
 import org.apache.commons.lang.StringUtils;
 
 public class BemCommonUtil {
@@ -79,13 +79,13 @@ public class BemCommonUtil {
         return ouJObj.toString();
     }
     //流程关键数据校验
-    public static String verificationData(VerificationDomain verificationDomain){
+    public static String verificationData(VerificationEntity verificationEntity){
         String restultStatus = "200";
         //判断关键参数
-        if ((verificationDomain.getAppId() == "") ||
-                ("".equals(verificationDomain.getAppId())) ||
-                (verificationDomain.getProcessInstanceId().toString() == "") ||
-                ("".equals(verificationDomain.getProcessInstanceId().toString()))){
+        if ((verificationEntity.getAppId() == "") ||
+                ("".equals(verificationEntity.getAppId())) ||
+                (verificationEntity.getProcessInstanceId().toString() == "") ||
+                ("".equals(verificationEntity.getProcessInstanceId().toString()))){
             restultStatus="300";
         }
         return restultStatus;

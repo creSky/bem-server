@@ -2,6 +2,7 @@ package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bem.domain.*;
+import com.bem.entity.VerificationEntity;
 import com.bem.mapper.AppCircumstanceMapper;
 import com.bem.mapper.AppCompeleteMapper;
 import com.bem.mapper.AppFileMapper;
@@ -77,8 +78,8 @@ public class AppCompeleteController {
         List<AppFile> appFiles = appFileService.upload(appCompeleteJson);
         AppCompelete appCompelete = JSONObject.parseObject(appCompeleteJson, AppCompelete.class);
         //关键数据校验
-        VerificationDomain verificationDomain = JSONObject.parseObject(appCompeleteJson, VerificationDomain.class);
-        String verificationData = BemCommonUtil.verificationData(verificationDomain);
+        VerificationEntity verificationEntity = JSONObject.parseObject(appCompeleteJson, VerificationEntity.class);
+        String verificationData = BemCommonUtil.verificationData(verificationEntity);
         if (!"200".equals(verificationData)) {
             return new HttpResult<>(HttpResult.ERROR, "关键数据缺失", null);
         }

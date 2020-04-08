@@ -3,7 +3,7 @@ package com.bem.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.bem.domain.AppTransformerInfo;
 import com.bem.domain.MeterInformationEntity;
-import com.bem.domain.TransformerInfoEntity;
+import com.bem.entity.TransformerInfoEntity;
 import com.bem.mapper.AppMeterInfoMapper;
 import com.bem.mapper.AppTransformerInfoMapper;
 import com.bem.util.PropertiesUtil;

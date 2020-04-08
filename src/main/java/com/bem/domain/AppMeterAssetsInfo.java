@@ -1,7 +1,9 @@
 package com.bem.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import javax.persistence.*;
 
 @Table(name = "APP_METER_ASSETS_INFO")
 public class AppMeterAssetsInfo {
@@ -83,6 +85,7 @@ public class AppMeterAssetsInfo {
      */
     @Column(name = "N_NUM")
     private Integer nNum;
+
 
     /**
      * 获取ID

@@ -2,6 +2,7 @@ package com.bem.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bem.domain.*;
+import com.bem.entity.VerificationEntity;
 import com.bem.mapper.AppAssemMapper;
 import com.bem.mapper.AppCircumstanceMapper;
 import com.bem.mapper.AppFileMapper;
@@ -75,9 +76,9 @@ public class AppAssemController {
     public HttpResult save(@RequestBody String appAssemJson) throws Exception {
         List<AppFile> appFiles = appFileService.upload(appAssemJson);
         AppAssem appAssem = JSONObject.parseObject(appAssemJson, AppAssem.class);
-        VerificationDomain verificationDomain = JSONObject.parseObject(appAssemJson, VerificationDomain.class);
+        VerificationEntity verificationEntity = JSONObject.parseObject(appAssemJson, VerificationEntity.class);
         //关键数据校验
-        String verificationData = BemCommonUtil.verificationData(verificationDomain);
+        String verificationData = BemCommonUtil.verificationData(verificationEntity);
         if (!"200".equals(verificationData)) {
             return new HttpResult<>(HttpResult.ERROR, "关键数据缺失", null);
         }
@@ -120,8 +121,8 @@ public class AppAssemController {
         AppCircumstance appCircumstance = JSONObject.parseObject(saveCirAndcompelete.getString("appCircumstance"), AppCircumstance.class);
 
         //关键数据校验
-        VerificationDomain verificationDomain = JSONObject.parseObject(saveCirAndcompelete.getString("appCircumstance"), VerificationDomain.class);
-        String verificationData = BemCommonUtil.verificationData(verificationDomain);
+        VerificationEntity verificationEntity = JSONObject.parseObject(saveCirAndcompelete.getString("appCircumstance"), VerificationEntity.class);
+        String verificationData = BemCommonUtil.verificationData(verificationEntity);
         if (!"200".equals(verificationData)) {
             return new HttpResult<>(HttpResult.ERROR, "关键数据缺失", null);
         }

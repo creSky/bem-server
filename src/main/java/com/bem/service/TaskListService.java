@@ -40,6 +40,11 @@ public class TaskListService {
 
     }
 
+    public List<Map<String,Object>> queryFinishApp(Map<String, Object> userMap){
+        return taskListMapper.queryFinishApp(userMap);
+
+    }
+
     public List<Map<String,Object>> queryFinishTask(String processInstanceId){
         return taskListMapper.queryFinishTask(processInstanceId);
 

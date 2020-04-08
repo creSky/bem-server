@@ -114,7 +114,7 @@ public class AppBaseInfoController {
         AppUserInfo appUserInfo = JSONObject.parseObject(appBaseInfoObject.getString("user"), AppUserInfo.class);
 
         //得到营业区域no
-        String businessNo = restTemplate.getForObject("http://AUTH-DATA/auth-data/dept/getDeptById/" + appUserInfo.getBusinessPlaceCode(),
+        String businessNo = restTemplate.getForObject("http://AUTH-CENTER/auth/dept/getDeptById/" + appUserInfo.getBusinessPlaceCode(),
                 String.class);
         JSONObject preBusinessJson = JSONObject.parseObject(businessNo);
         JSONObject businessJson = JSONObject.parseObject(preBusinessJson.getString("data"));
@@ -349,7 +349,7 @@ public class AppBaseInfoController {
                 //户下有计量点
                 //根据计量带点查欠费
                 String resultArrearages= restTemplate.postForObject
-                        (PropertiesUtil.getValue("findArrearageByWhere"), meterIds, String.class);
+                        (PropertiesUtil.getValue("findArrearageByMeterIds"), meterIds, String.class);
                 JSONArray arrearagesJsonArray=
                         JSONObject.parseArray(resultArrearages);
                 //判断有无欠费记录
@@ -362,7 +362,7 @@ public class AppBaseInfoController {
                         (PropertiesUtil.getValue("getSettlementByMeterIds"), meterIds, String.class);
 
                 String resultPreCharge= restTemplate.postForObject
-                        (PropertiesUtil.getValue("findPreChargeByWhere"), resultSettlements, String.class);
+                        (PropertiesUtil.getValue("findPreChargeBySettleIds"), resultSettlements, String.class);
 
                 JSONArray preCharge=
                         JSONObject.parseArray(resultPreCharge);

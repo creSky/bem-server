@@ -8,8 +8,8 @@ eureka:
   client:
     serviceUrl:
       #注册中心的地址
-      #defaultZone: http://10.202.67.4:7777/eureka/
       defaultZone: http://172.21.29.55:7777/eureka/
+      #defaultZone: http://10.1.0.192:7777/eureka/
 spring:
   application:
     name: bem-server
