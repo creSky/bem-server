@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bem.mapper.AppMoneyRecallMapper">
+  <resultMap id="BaseResultMap" type="com.bem.domain.AppMoneyRecall">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="APP_ID" jdbcType="VARCHAR" property="appId" />
+    <result column="TASK_ID" jdbcType="INTEGER" property="taskId" />
+    <result column="PROCESS_INSTANCE_ID" jdbcType="DECIMAL" property="processInstanceId" />
+    <result column="USER_ID" jdbcType="BIGINT" property="userId" />
+    <result column="USER_NO" jdbcType="VARCHAR" property="userNo" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="METER_ID" jdbcType="BIGINT" property="meterId" />
+    <result column="METER_NO" jdbcType="VARCHAR" property="meterNo" />
+    <result column="METER_NAME" jdbcType="VARCHAR" property="meterName" />
+    <result column="RP_MON" jdbcType="DECIMAL" property="rpMon" />
+    <result column="RP_MON_SN" jdbcType="SMALLINT" property="rpMonSn" />
+    <result column="ELEC_TYPE_CODE" jdbcType="SMALLINT" property="elecTypeCode" />
+    <result column="TS_FLAG" jdbcType="SMALLINT" property="tsFlag" />
+    <result column="BASE_MONEY_FLAG" jdbcType="SMALLINT" property="baseMoneyFlag" />
+    <result column="COS_TYPE" jdbcType="SMALLINT" property="cosType" />
+    <result column="APPLY_PERSON" jdbcType="VARCHAR" property="applyPerson" />
+    <result column="APPLY_DATE" jdbcType="TIMESTAMP" property="applyDate" />
+    <result column="APPLY_REASON" jdbcType="VARCHAR" property="applyReason" />
+    <result column="PASS_PERSON" jdbcType="VARCHAR" property="passPerson" />
+    <result column="PASS_DATE" jdbcType="TIMESTAMP" property="passDate" />
+    <result column="WRITE_SECT_ID" jdbcType="BIGINT" property="writeSectId" />
+    <result column="WRITE_SECT_NO" jdbcType="VARCHAR" property="writeSectNo" />
+    <result column="WRITE_SECT_NAME" jdbcType="VARCHAR" property="writeSectName" />
+    <result column="MON" jdbcType="DECIMAL" property="mon" />
+    <result column="MON_SN" jdbcType="DECIMAL" property="monSn" />
+    <result column="TOTAL_POWER" jdbcType="DECIMAL" property="totalPower" />
+    <result column="TOTAL_MONEY" jdbcType="DECIMAL" property="totalMoney" />
+    <result column="VOLUME_CHARGE" jdbcType="DECIMAL" property="volumeCharge" />
+    <result column="BASIC_MONEY" jdbcType="DECIMAL" property="basicMoney" />
+    <result column="POWER_RATE_MONEY" jdbcType="DECIMAL" property="powerRateMoney" />
+    <result column="ACTIVE_WRITE_POWER_1" jdbcType="DECIMAL" property="activeWritePower1" />
+    <result column="ACTIVE_WRITE_POWER_2" jdbcType="DECIMAL" property="activeWritePower2" />
+    <result column="ACTIVE_WRITE_POWER_3" jdbcType="DECIMAL" property="activeWritePower3" />
+    <result column="ACTIVE_WRITE_POWER_4" jdbcType="DECIMAL" property="activeWritePower4" />
+    <result column="ADD_MONEY1" jdbcType="DECIMAL" property="addMoney1" />
+    <result column="ADD_MONEY2" jdbcType="DECIMAL" property="addMoney2" />
+    <result column="ADD_MONEY3" jdbcType="DECIMAL" property="addMoney3" />
+    <result column="ADD_MONEY4" jdbcType="DECIMAL" property="addMoney4" />
+    <result column="ADD_MONEY5" jdbcType="DECIMAL" property="addMoney5" />
+    <result column="ADD_MONEY6" jdbcType="DECIMAL" property="addMoney6" />
+    <result column="ADD_MONEY7" jdbcType="DECIMAL" property="addMoney7" />
+    <result column="ADD_MONEY8" jdbcType="DECIMAL" property="addMoney8" />
+    <result column="ADD_MONEY9" jdbcType="DECIMAL" property="addMoney9" />
+    <result column="ADD_MONEY10" jdbcType="DECIMAL" property="addMoney10" />
+    <result column="RP_MODE" jdbcType="INTEGER" property="rpMode" />
+    <result column="PRICE_TYPE" jdbcType="SMALLINT" property="priceType" />
+    <result column="PAID_FLAG" jdbcType="INTEGER" property="paidFlag" />
+    <result column="PASS_RESULT" jdbcType="INTEGER" property="passResult" />
+    <result column="PASS_REASON" jdbcType="VARCHAR" property="passReason" />
+    <result column="SETTLEMENT_ID" jdbcType="BIGINT" property="settlementId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_ID, TASK_ID, PROCESS_INSTANCE_ID, USER_ID, USER_NO, USER_NAME, METER_ID, 
+    METER_NO, METER_NAME, RP_MON, RP_MON_SN, ELEC_TYPE_CODE, TS_FLAG, BASE_MONEY_FLAG, 
+    COS_TYPE, APPLY_PERSON, APPLY_DATE, APPLY_REASON, PASS_PERSON, PASS_DATE, WRITE_SECT_ID, 
+    WRITE_SECT_NO, WRITE_SECT_NAME, MON, MON_SN, TOTAL_POWER, TOTAL_MONEY, VOLUME_CHARGE, 
+    BASIC_MONEY, POWER_RATE_MONEY, ACTIVE_WRITE_POWER_1, ACTIVE_WRITE_POWER_2, ACTIVE_WRITE_POWER_3, 
+    ACTIVE_WRITE_POWER_4, ADD_MONEY1, ADD_MONEY2, ADD_MONEY3, ADD_MONEY4, ADD_MONEY5, 
+    ADD_MONEY6, ADD_MONEY7, ADD_MONEY8, ADD_MONEY9, ADD_MONEY10, RP_MODE, PRICE_TYPE, 
+    PAID_FLAG, PASS_RESULT, PASS_REASON, SETTLEMENT_ID
+  </sql>
+  <select id="selectByExample" parameterType="com.bem.domain.AppMoneyRecallExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_MONEY_RECALL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.bem.domain.AppMoneyRecallExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from APP_MONEY_RECALL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.bem.domain.AppMoneyRecallExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from APP_MONEY_RECALL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_MONEY_RECALL
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appId != null">
+        APP_ID = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskId != null">
+        TASK_ID = #{record.taskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.processInstanceId != null">
+        PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.userId != null">
+        USER_ID = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userNo != null">
+        USER_NO = #{record.userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null">
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meterId != null">
+        METER_ID = #{record.meterId,jdbcType=BIGINT},
+      </if>
+      <if test="record.meterNo != null">
+        METER_NO = #{record.meterNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meterName != null">
+        METER_NAME = #{record.meterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rpMon != null">
+        RP_MON = #{record.rpMon,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rpMonSn != null">
+        RP_MON_SN = #{record.rpMonSn,jdbcType=SMALLINT},
+      </if>
+      <if test="record.elecTypeCode != null">
+        ELEC_TYPE_CODE = #{record.elecTypeCode,jdbcType=SMALLINT},
+      </if>
+      <if test="record.tsFlag != null">
+        TS_FLAG = #{record.tsFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="record.baseMoneyFlag != null">
+        BASE_MONEY_FLAG = #{record.baseMoneyFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="record.cosType != null">
+        COS_TYPE = #{record.cosType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.applyPerson != null">
+        APPLY_PERSON = #{record.applyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyDate != null">
+        APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.applyReason != null">
+        APPLY_REASON = #{record.applyReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passPerson != null">
+        PASS_PERSON = #{record.passPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passDate != null">
+        PASS_DATE = #{record.passDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.writeSectId != null">
+        WRITE_SECT_ID = #{record.writeSectId,jdbcType=BIGINT},
+      </if>
+      <if test="record.writeSectNo != null">
+        WRITE_SECT_NO = #{record.writeSectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.writeSectName != null">
+        WRITE_SECT_NAME = #{record.writeSectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mon != null">
+        MON = #{record.mon,jdbcType=DECIMAL},
+      </if>
+      <if test="record.monSn != null">
+        MON_SN = #{record.monSn,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalPower != null">
+        TOTAL_POWER = #{record.totalPower,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalMoney != null">
+        TOTAL_MONEY = #{record.totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.volumeCharge != null">
+        VOLUME_CHARGE = #{record.volumeCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="record.basicMoney != null">
+        BASIC_MONEY = #{record.basicMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.powerRateMoney != null">
+        POWER_RATE_MONEY = #{record.powerRateMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.activeWritePower1 != null">
+        ACTIVE_WRITE_POWER_1 = #{record.activeWritePower1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.activeWritePower2 != null">
+        ACTIVE_WRITE_POWER_2 = #{record.activeWritePower2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.activeWritePower3 != null">
+        ACTIVE_WRITE_POWER_3 = #{record.activeWritePower3,jdbcType=DECIMAL},
+      </if>
+      <if test="record.activeWritePower4 != null">
+        ACTIVE_WRITE_POWER_4 = #{record.activeWritePower4,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addMoney1 != null">
+        ADD_MONEY1 = #{record.addMoney1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addMoney2 != null">
+        ADD_MONEY2 = #{record.addMoney2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addMoney3 != null">
+        ADD_MONEY3 = #{record.addMoney3,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addMoney4 != null">
+        ADD_MONEY4 = #{record.addMoney4,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addMoney5 != null">
+        ADD_MONEY5 = #{record.addMoney5,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addMoney6 != null">
+        ADD_MONEY6 = #{record.addMoney6,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addMoney7 != null">
+        ADD_MONEY7 = #{record.addMoney7,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addMoney8 != null">
+        ADD_MONEY8 = #{record.addMoney8,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addMoney9 != null">
+        ADD_MONEY9 = #{record.addMoney9,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addMoney10 != null">
+        ADD_MONEY10 = #{record.addMoney10,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rpMode != null">
+        RP_MODE = #{record.rpMode,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceType != null">
+        PRICE_TYPE = #{record.priceType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.paidFlag != null">
+        PAID_FLAG = #{record.paidFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.passResult != null">
+        PASS_RESULT = #{record.passResult,jdbcType=INTEGER},
+      </if>
+      <if test="record.passReason != null">
+        PASS_REASON = #{record.passReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.settlementId != null">
+        SETTLEMENT_ID = #{record.settlementId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_MONEY_RECALL
+    set ID = #{record.id,jdbcType=BIGINT},
+      APP_ID = #{record.appId,jdbcType=VARCHAR},
+      TASK_ID = #{record.taskId,jdbcType=INTEGER},
+      PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
+      USER_ID = #{record.userId,jdbcType=BIGINT},
+      USER_NO = #{record.userNo,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      METER_ID = #{record.meterId,jdbcType=BIGINT},
+      METER_NO = #{record.meterNo,jdbcType=VARCHAR},
+      METER_NAME = #{record.meterName,jdbcType=VARCHAR},
+      RP_MON = #{record.rpMon,jdbcType=DECIMAL},
+      RP_MON_SN = #{record.rpMonSn,jdbcType=SMALLINT},
+      ELEC_TYPE_CODE = #{record.elecTypeCode,jdbcType=SMALLINT},
+      TS_FLAG = #{record.tsFlag,jdbcType=SMALLINT},
+      BASE_MONEY_FLAG = #{record.baseMoneyFlag,jdbcType=SMALLINT},
+      COS_TYPE = #{record.cosType,jdbcType=SMALLINT},
+      APPLY_PERSON = #{record.applyPerson,jdbcType=VARCHAR},
+      APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
+      APPLY_REASON = #{record.applyReason,jdbcType=VARCHAR},
+      PASS_PERSON = #{record.passPerson,jdbcType=VARCHAR},
+      PASS_DATE = #{record.passDate,jdbcType=TIMESTAMP},
+      WRITE_SECT_ID = #{record.writeSectId,jdbcType=BIGINT},
+      WRITE_SECT_NO = #{record.writeSectNo,jdbcType=VARCHAR},
+      WRITE_SECT_NAME = #{record.writeSectName,jdbcType=VARCHAR},
+      MON = #{record.mon,jdbcType=DECIMAL},
+      MON_SN = #{record.monSn,jdbcType=DECIMAL},
+      TOTAL_POWER = #{record.totalPower,jdbcType=DECIMAL},
+      TOTAL_MONEY = #{record.totalMoney,jdbcType=DECIMAL},
+      VOLUME_CHARGE = #{record.volumeCharge,jdbcType=DECIMAL},
+      BASIC_MONEY = #{record.basicMoney,jdbcType=DECIMAL},
+      POWER_RATE_MONEY = #{record.powerRateMoney,jdbcType=DECIMAL},
+      ACTIVE_WRITE_POWER_1 = #{record.activeWritePower1,jdbcType=DECIMAL},
+      ACTIVE_WRITE_POWER_2 = #{record.activeWritePower2,jdbcType=DECIMAL},
+      ACTIVE_WRITE_POWER_3 = #{record.activeWritePower3,jdbcType=DECIMAL},
+      ACTIVE_WRITE_POWER_4 = #{record.activeWritePower4,jdbcType=DECIMAL},
+      ADD_MONEY1 = #{record.addMoney1,jdbcType=DECIMAL},
+      ADD_MONEY2 = #{record.addMoney2,jdbcType=DECIMAL},
+      ADD_MONEY3 = #{record.addMoney3,jdbcType=DECIMAL},
+      ADD_MONEY4 = #{record.addMoney4,jdbcType=DECIMAL},
+      ADD_MONEY5 = #{record.addMoney5,jdbcType=DECIMAL},
+      ADD_MONEY6 = #{record.addMoney6,jdbcType=DECIMAL},
+      ADD_MONEY7 = #{record.addMoney7,jdbcType=DECIMAL},
+      ADD_MONEY8 = #{record.addMoney8,jdbcType=DECIMAL},
+      ADD_MONEY9 = #{record.addMoney9,jdbcType=DECIMAL},
+      ADD_MONEY10 = #{record.addMoney10,jdbcType=DECIMAL},
+      RP_MODE = #{record.rpMode,jdbcType=INTEGER},
+      PRICE_TYPE = #{record.priceType,jdbcType=SMALLINT},
+      PAID_FLAG = #{record.paidFlag,jdbcType=INTEGER},
+      PASS_RESULT = #{record.passResult,jdbcType=INTEGER},
+      PASS_REASON = #{record.passReason,jdbcType=VARCHAR},
+      SETTLEMENT_ID = #{record.settlementId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="billingFindAppMoneyRecall" parameterType="com.bem.domain.AppMoneyRecall" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_MONEY_RECALL M
+    where exists(select 1 from APP_USER_INFO APP where APP.ID=M.APP_ID and
+    APP.APP_STATUS='C')
+    AND M.MON is null
+    <if test="meterId != null">
+      AND  M.METER_ID = #{meterId}
+    </if>
+    <if test="writeSectId != null">
+      AND  M.WRITE_SECT_ID = #{writeSectId}
+    </if>
+
+  </select>
+</mapper>
