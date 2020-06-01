@@ -355,6 +355,15 @@ public class AppMoneyRecallController {
         return new HttpResult<>(HttpResult.SUCCESS, "查询成功", appMoneyRecalls);
     }
 
+
+    @RequestMapping(value = "/billingFindFinishAppMoneyRecall")
+    @ResponseBody
+    public HttpResult billingFindFinishAppMoneyRecall(@RequestBody(required = false) String appMoneyRecallJson) {
+        Map map=JSONObject.parseObject(appMoneyRecallJson,Map.class);
+        int num=appMoneyRecallMapper.backAppMoneyRecall(map);
+        return new HttpResult<>(HttpResult.SUCCESS, "回退成功");
+    }
+
     @RequestMapping(value = "/updateBillingMoneyRecall")
     @ResponseBody
     public HttpResult updateBillingMoneyRecall(@RequestBody String appMoneyRecallJson) {

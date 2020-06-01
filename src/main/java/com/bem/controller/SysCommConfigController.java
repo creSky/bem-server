@@ -51,7 +51,7 @@ public class SysCommConfigController {
     @ResponseBody
     @RequestMapping(value = "/getUserInfomation")
     public void getUserInfomation() {
-        String result = restTemplate.getForObject("http://AUTH-DATA/auth-data/user/name/sysadmin", String.class);
+        String result = restTemplate.getForObject("http://AUTH-CENTER/auth/user/name/sysadmin", String.class);
         System.out.println(result);
     }
 

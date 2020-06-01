@@ -20,7 +20,7 @@ public  class HistoricTaskInstanceEntityExt extends HistoricTaskInstanceEntityIm
     @Override
     public String getAssignee() {
         System.out.println(historicTaskInstance.getAssignee());
-        String assignName=restTemplate.getForObject("http://AUTH-DATA/auth-data/user/name/sysadmin", String.class);
+        String assignName=restTemplate.getForObject("http://AUTH-CENTER/auth/user/name/sysadmin", String.class);
         System.out.println(assignName);
         return assignName;
     }

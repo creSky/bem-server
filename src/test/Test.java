@@ -2,6 +2,7 @@
 import com.bem.entity.VerificationEntity;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -93,10 +94,15 @@ public class Test {
         list.add(5);
         list.add(6);
         of(list).forEach(t-> System.out.println(t));*/
-        IntStream.range(0,3).forEach(t-> System.out.println(t+"a"));
+        /*IntStream.range(0,3).forEach(t-> System.out.println(t+"a"));
 
 
-        PayrollDay.Mon.pay(14,4);
+        PayrollDay.Mon.pay(14,4);*/
+
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        String string = simpleDateFormat.format(date);
+        System.out.println(string);
 
     }
 

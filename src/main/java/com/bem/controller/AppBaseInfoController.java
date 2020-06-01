@@ -117,7 +117,8 @@ public class AppBaseInfoController {
         String businessNo = restTemplate.getForObject("http://AUTH-CENTER/auth/dept/getDeptById/" + appUserInfo.getBusinessPlaceCode(),
                 String.class);
         JSONObject preBusinessJson = JSONObject.parseObject(businessNo);
-        JSONObject businessJson = JSONObject.parseObject(preBusinessJson.getString("data"));
+        JSONObject businessJson =
+                JSONObject.parseObject(preBusinessJson.getString("resultData"));
 
         JSONObject postData = new JSONObject();
         postData.put("busi", businessJson.getString("deptId"));
@@ -223,11 +224,12 @@ public class AppBaseInfoController {
         AppUserInfo appUserInfo = JSONObject.parseObject(appBaseInfoObject.getString("user"), AppUserInfo.class);
 
         //得到营业区域no
-        String businessNo = restTemplate.getForObject("http://AUTH-DATA/auth-data/dept/getDeptById/" + appUserInfo.getBusinessPlaceCode(),
+        String businessNo = restTemplate.getForObject("http://AUTH-CENTER/auth/dept/getDeptById/" + appUserInfo.getBusinessPlaceCode(),
                 String.class);
         JSONObject preBusinessJson = JSONObject.parseObject(businessNo);
 
-        JSONObject businessJson = JSONObject.parseObject(preBusinessJson.getString("data"));
+        JSONObject businessJson =
+                JSONObject.parseObject(preBusinessJson.getString("resultData"));
 
         //生成户号和流程号 采用从档案服务读取的方式
         JSONObject postData = new JSONObject();

@@ -406,6 +406,7 @@
     where exists(select 1 from APP_USER_INFO APP where APP.ID=M.APP_ID and
     APP.APP_STATUS='C')
     AND M.MON is null
+    AND M.MON_SN is null
     <if test="meterId != null">
       AND  M.METER_ID = #{meterId}
     </if>
@@ -414,4 +415,15 @@
     </if>
 
   </select>
+
+  <update id="backAppMoneyRecall" parameterType="java.util.Map"
+          flushCache="true">
+  update APP_MONEY_RECALL
+    set mon=null,mon_sn=null
+  <where>
+    and MON_SN = ${monSn}
+    and SETTLEMENT_ID in (${settlementIds})
+    and MON= ${mon}
+  </where>
+  </update>
 </mapper>

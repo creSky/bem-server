@@ -3,6 +3,7 @@ package com.bem.mapper;
 import com.bem.domain.AppMoneyRecall;
 import com.bem.domain.AppMoneyRecallExample;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,5 +24,5 @@ public interface AppMoneyRecallMapper extends BaseMapper<AppMoneyRecall> {
 
     List<AppMoneyRecall> billingFindAppMoneyRecall(AppMoneyRecall appMoneyRecall);
 
-    int updatebillingAppMoneyRecall(String ids);
+    int backAppMoneyRecall(Map map);
 }

@@ -35,14 +35,14 @@
           <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28" sourceElement="bem-f1-p22" targetElement="endevent1">
+      <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28" sourceElement="bem-f1-p24" targetElement="endevent1">
         <omgdi:waypoint x="425.0" y="217.5"/>
         <omgdi:waypoint x="560.0" y="215.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29" sourceElement="bem-f1-p1" targetElement="bem-f1-p22">
+      <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29" sourceElement="bem-f1-p1" targetElement="bem-f1-p24">
         <omgdi:waypoint x="237.0" y="217.5"/>
         <omgdi:waypoint x="320.0" y="217.5"/>
         <bpmndi:BPMNLabel>
