@@ -2,11 +2,9 @@ package com.bem.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.bem.domain.AppCustomerInfo;
-import com.bem.domain.AppMeterInfo;
-import com.bem.domain.AppUserInfo;
-import com.bem.domain.AppWebLog;
+import com.bem.domain.*;
 import com.bem.mapper.AppCustomerInfoMapper;
+import com.bem.mapper.AppSettlementInfoMapper;
 import com.bem.mapper.AppUserInfoMapper;
 import com.bem.mapper.AppWebLogMapper;
 import com.bem.service.ActivitiService;
@@ -51,6 +49,9 @@ public class AppBaseInfoController {
 
     @Autowired
     private AppWebLogMapper appWebLogMapper;
+
+    @Autowired
+    private AppSettlementInfoMapper appSettlementInfoMapper;
 
     @RequestMapping("/getSystemTime")
     @ResponseBody
@@ -98,7 +99,7 @@ public class AppBaseInfoController {
     }
 
     /**
-     * 保存流程基本信息
+     * 保存业扩流程基本信息
      *
      * @param appBaseInfoJson
      * @return
@@ -124,9 +125,11 @@ public class AppBaseInfoController {
         postData.put("busi", businessJson.getString("deptId"));
 
         //生成户号和流程号 采用从档案服务读取的方式
-        if(appUserInfo.getUserNo()==null || "".equals(appUserInfo.getUserNo())) {
-            String userNo = restTemplate.postForObject(PropertiesUtil.getValue("generateUserNo"), postData, String.class);
+        if (appUserInfo.getUserNo() == null || "".equals(appUserInfo.getUserNo())) {
+            String userNo =
+                    restTemplate.postForObject(PropertiesUtil.getValue("generateUserNo"), postData, String.class);
             appUserInfo.setUserNo(userNo);
+            appCustomerInfo.setCustomerNo(userNo);
         }
 
         appUserInfo.setSource("4");
@@ -134,8 +137,8 @@ public class AppBaseInfoController {
 
         //判断客户是否存在
         boolean isExists = false;
-        if(appCustomerInfo.getCustomerNo()!=null&&!"".equals(appCustomerInfo.getCustomerNo())){
-             isExists = appCustomerInfoMapper.existsWithPrimaryKey(appCustomerInfo);
+        if (appCustomerInfo.getCustomerNo() != null && !"".equals(appCustomerInfo.getCustomerNo())) {
+            isExists = appCustomerInfoMapper.existsWithPrimaryKey(appCustomerInfo);
             if (isExists) {
                 appCustomerInfoMapper.updateByPrimaryKeySelective(appCustomerInfo);
             } else {
@@ -237,7 +240,7 @@ public class AppBaseInfoController {
         String userNo = restTemplate.postForObject(PropertiesUtil.getValue("generateUserNo"), postData, String.class);
         appUserInfo.setUserNo(userNo);
 
-        appUserInfo.setSource("4");
+        //appUserInfo.setSource("4");
         String appNo = restTemplate.postForObject(PropertiesUtil.getValue("generateAppNo"), postData, String.class);
 
         //增加流程运行标识
@@ -330,47 +333,50 @@ public class AppBaseInfoController {
     @RequestMapping("/getUserByCim")
     @ResponseBody
     public HttpResult getUserByCim(@RequestBody(required = false) String userJson) throws Exception {
-        Integer templateId=JSONObject.parseObject(userJson).getInteger("templateId");
-        if(Objects.equals(templateId, 8)){
+        Integer templateId = JSONObject.parseObject(userJson).getInteger("templateId");
+        if (Objects.equals(templateId, 8)) {
             //销户查看是否有欠费-- 查看户号对应的计量点
-            JSONObject userJsonObject=JSONObject.parseObject(userJson);
+            JSONObject userJsonObject = JSONObject.parseObject(userJson);
             JSONObject paramJsonObject = new JSONObject();
-            paramJsonObject.put("no",userJsonObject.getString("userNo"));
-            paramJsonObject.put("chargeObject","1");
-            paramJsonObject.put("name",userJsonObject.getString("userName"));
+            paramJsonObject.put("no", userJsonObject.getString("userNo"));
+            paramJsonObject.put("chargeObject", "1");
+            paramJsonObject.put("name", userJsonObject.getString("userName"));
+            paramJsonObject.put("chargeModeType", null);
+            paramJsonObject.put("businessPlaceCode", null);
+            paramJsonObject.put("bankNo", null);
             String resultMeters = restTemplate.postForObject
                     (PropertiesUtil.getValue("getMeters"), paramJsonObject, String.class);
-            List<AppMeterInfo>  appMeterInfos=
+            List<AppMeterInfo> appMeterInfos =
                     JSONObject.parseArray(resultMeters, AppMeterInfo.class);
             List<String> meterIds = new ArrayList<>();
             meterIds = appMeterInfos.stream().map(t -> {
                 return t.getId().toString();
             }).collect(Collectors.toList());
 
-            if(meterIds!=null && meterIds.size()>0){
+            if (meterIds != null && meterIds.size() > 0) {
                 //户下有计量点
                 //根据计量带点查欠费
-                String resultArrearages= restTemplate.postForObject
+                String resultArrearages = restTemplate.postForObject
                         (PropertiesUtil.getValue("findArrearageByMeterIds"), meterIds, String.class);
-                JSONArray arrearagesJsonArray=
+                JSONArray arrearagesJsonArray =
                         JSONObject.parseArray(resultArrearages);
                 //判断有无欠费记录
-                if (arrearagesJsonArray!=null && arrearagesJsonArray.size()>0){
+                if (arrearagesJsonArray != null && arrearagesJsonArray.size() > 0) {
                     return new HttpResult<>(HttpResult.ERROR,
-                            "当前用户存在欠费记录，无法销户！",null);
+                            "当前用户存在欠费记录，无法销户！", null);
                 }
                 //判断计量点所在结算户有无余额
-                String resultSettlements= restTemplate.postForObject
+                String resultSettlements = restTemplate.postForObject
                         (PropertiesUtil.getValue("getSettlementByMeterIds"), meterIds, String.class);
 
-                String resultPreCharge= restTemplate.postForObject
+                String resultPreCharge = restTemplate.postForObject
                         (PropertiesUtil.getValue("findPreChargeBySettleIds"), resultSettlements, String.class);
 
-                JSONArray preCharge=
+                JSONArray preCharge =
                         JSONObject.parseArray(resultPreCharge);
 
                 //判断有无欠费记录
-                if (preCharge!=null && preCharge.size()>0){
+                if (preCharge != null && preCharge.size() > 0) {
                     return new HttpResult<>(HttpResult.ERROR, "当前用户有余额，无法销户！",
                             null);
                 }
@@ -383,7 +389,7 @@ public class AppBaseInfoController {
                 (PropertiesUtil.getValue("getUserInfo"), userJson, String.class);
         //获取用户对象
         AppUserInfo appUserInfo =
-                JSONObject.parseArray(JSONObject.parseObject(appUserInfoJson).getString("list"),AppUserInfo.class).get(0);
+                JSONObject.parseArray(JSONObject.parseObject(appUserInfoJson).getString("list"), AppUserInfo.class).get(0);
         // 将id替换到userid 清空主键 赋值业务类别
         appUserInfo.setUserId(appUserInfo.getId());
         appUserInfo.setId(null);
@@ -391,12 +397,12 @@ public class AppBaseInfoController {
         appUserInfo.setTemplateId(templateId);
 
         //查询客户
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.put("id",appUserInfo.getCustomerId());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", appUserInfo.getCustomerId());
         String appCustomerInfoJson = restTemplate.postForObject
                 (PropertiesUtil.getValue("getCustomerInfo"), jsonObject, String.class);
-        AppCustomerInfo appCustomerInfo=
-                JSONObject.parseObject(appCustomerInfoJson,AppCustomerInfo.class);
+        AppCustomerInfo appCustomerInfo =
+                JSONObject.parseObject(appCustomerInfoJson, AppCustomerInfo.class);
         appCustomerInfo.setCustomerId(appCustomerInfo.getId());
         appCustomerInfo.setId(null);
 
@@ -405,5 +411,7 @@ public class AppBaseInfoController {
         returnMap.put("customer", appCustomerInfo);
         return new HttpResult<>(HttpResult.SUCCESS, "查询成功", returnMap);
     }
+
+
 
 }

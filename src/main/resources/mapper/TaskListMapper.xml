@@ -63,7 +63,7 @@
         WRITE_TYPE writeType,
         USER_TYPE userType,
         REMARK remark,
-        STATUS status,
+        APP_STATUS appStatus,
         CUSTOMER_ID customerId,
         PHONE_NUMBER phoneNumber,
         A.USER_ID userId,
@@ -77,7 +77,7 @@
         V.GROUP_ID groupId,
         V.USER_ID operatorId,
         V.BUSINESS_KEY businessKey
-        from V_TASKLIST V,APP_USER_INFO A
+        from V_TASKLIST V,APP_BASE_INFO A
         WHERE V.BUSINESS_KEY = A.APP_NO
         AND IFNULL(A.APP_STATUS,'Y') &lt;&gt; 'N'
         <if test="userDepts != null and userDepts.trim().length()>0">
@@ -93,6 +93,7 @@
                 #{item}
             </foreach>
         </if>
+        )
         <if test="businessPlaceCode != null and  businessPlaceCode !=''">
         AND  A.BUSINESS_PLACE_CODE = #{businessPlaceCode}
         </if>
@@ -102,7 +103,7 @@
         <if test="userName != null and  userName !=''">
             AND  USER_NAME like CONCAT('%',#{userName},'%')
         </if>
-        )
+
         ORDER BY A.APPLY_DATE desc
     </select>
 
@@ -129,7 +130,7 @@
         b.USER_TYPE userType,
         b.REMARK remark,
         b.user_id userId,
-        b.status status,
+        b.app_status appStatus,
         b.phone_number phoneNumber,
         a.START_TIME_ startTime,
         a.END_TIME_ endTime,
@@ -139,7 +140,7 @@
         a.ID_ taskId,
         a.PROC_INST_ID_ processInstanceId,
         a.EXECUTION_ID_ executionId
-        from ACT_HI_TASKINST a,APP_USER_INFO b
+        from ACT_HI_TASKINST a,APP_BASE_INFO b
         where a.PROC_INST_ID_=b.PROC_INST_ID
         AND IFNULL(b.APP_STATUS,'Y') &lt;&gt; 'N'
         AND b.PROC_INST_ID = #{processInstanceId}
@@ -157,7 +158,7 @@
             ACT_HI_TASKINST taskinst
         WHERE
              NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = taskinst.PROC_INST_ID_ )
-             AND EXISTS ( SELECT 1 FROM APP_USER_INFO act WHERE
+             AND EXISTS ( SELECT 1 FROM APP_BASE_INFO act WHERE
               act.PROC_INST_ID = taskinst.PROC_INST_ID_ and
              IFNULL(act.APP_STATUS,'Y')  &lt;&gt; 'N')
              AND taskinst.PROC_INST_ID_= #{processInstanceId}
@@ -178,7 +179,7 @@
             SUBMIT_DATE submitDate,
             BUSINESS_PLACE_CODE businessPlaceCode
         FROM
-            APP_USER_INFO info
+           APP_BASE_INFO info
         WHERE
              NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = info.PROC_INST_ID )
              AND IFNULL(info.APP_STATUS,'Y')  &lt;&gt; 'N'
@@ -214,7 +215,7 @@
             SUBMIT_DATE submitDate,
             BUSINESS_PLACE_CODE businessPlaceCode
         FROM
-            APP_USER_INFO info
+           APP_BASE_INFO info
         WHERE
              NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = info.PROC_INST_ID )
              AND IFNULL(info.APP_STATUS,'Y')  &lt;&gt; 'N'
@@ -249,7 +250,7 @@
         SUBMIT_DATE submitDate,
         BUSINESS_PLACE_CODE businessPlaceCode
         FROM
-        APP_USER_INFO info
+        APP_BASE_INFO info
         WHERE
         NOT EXISTS ( SELECT 1 FROM ACT_RU_TASK act WHERE act.PROC_INST_ID_ = info.PROC_INST_ID )
         AND IFNULL(info.APP_STATUS,'Y')  &lt;&gt; 'N'
@@ -295,7 +296,7 @@
 	r.POWER_SUPPLY_DATE powerSupplyDate,
 	r.CIRCUMSTANCE_DATE circumstanceDate
 FROM
-	APP_USER_INFO i
+        APP_BASE_INFO i
 LEFT JOIN (
 	SELECT
         id_ ,

@@ -22,9 +22,9 @@
 
         <!--数据库连接 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://172.21.29.55:3306/titan-cim"
+                        connectionURL="jdbc:mysql://172.21.29.55:3307/titan-bem"
                         userId="root"
-                        password="df6100">
+                        password="wisdom.df6100">
         </jdbcConnection>
         <!--默认false Java type resolver will always use java.math.BigDecimal if
             the database column is of type DECIMAL or NUMERIC. -->
@@ -51,8 +51,8 @@
         </javaClientGenerator>
 
         <!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等 -->
-        <table tableName="APP_MONEY_RECALL"
-               domainObjectName="AppMoneyRecall">
+        <table tableName="APP_BULK_REFUND"
+               domainObjectName="AppBulkRefund">
            <!-- <ignoreColumn column="writeSectName" delimitedColumnName=""/>
             <ignoreColumn column="customerName" delimitedColumnName=""/>-->
         </table>

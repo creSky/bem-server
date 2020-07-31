@@ -1,6 +1,11 @@
 
+import com.alibaba.excel.metadata.BaseRowModel;
+import com.bem.bemEnum.BemEnum;
+import com.bem.entity.BulkRefundEntity;
 import com.bem.entity.VerificationEntity;
+import com.bem.util.ExcelUtil;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -99,11 +104,22 @@ public class Test {
 
         PayrollDay.Mon.pay(14,4);*/
 
-        Date date = new Date(System.currentTimeMillis());
+        /*Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
         String string = simpleDateFormat.format(date);
-        System.out.println(string);
+        System.out.println(string);*/
+       /* Map<String, List<? extends BaseRowModel>> maps=
+                ExcelUtil.readExcelByModel("C:\\Users\\ZJD-PC\\Desktop\\55服务器.xlsx",BulkRefundEntity.class);
 
+        System.out.println(maps);*/
+
+       List<BulkRefundEntity> bulkRefundEntities=new ArrayList<>();
+        BulkRefundEntity bulkRefundEntity=new BulkRefundEntity();
+        bulkRefundEntity.setRefundMoney(BigDecimal.valueOf(2));
+        bulkRefundEntity.setSettlementNo("123");
+        bulkRefundEntities.add(bulkRefundEntity);
+       ExcelUtil.writeExcelByModel("F:\\solfware\\1.xlsx",
+               "sheet1",bulkRefundEntities ,BulkRefundEntity.class);
     }
 
 

@@ -171,7 +171,7 @@ public class AppCustomerInfo {
      * @param customerNo 客户编号
      */
     public void setCustomerNo(String customerNo) {
-        this.customerNo = customerNo == null ? null : customerNo.trim();
+        this.customerNo = (customerNo == null ? null : customerNo.trim());
     }
 
     /**
