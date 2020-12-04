@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bem.mapper.AppBulkRefundMapper">
+  <resultMap id="BaseResultMap" type="com.bem.domain.AppBulkRefund">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="APP_ID" jdbcType="VARCHAR" property="appId" />
+    <result column="TASK_ID" jdbcType="INTEGER" property="taskId" />
+    <result column="PROCESS_INSTANCE_ID" jdbcType="DECIMAL" property="processInstanceId" />
+    <result column="SETTLEMENT_ID" jdbcType="BIGINT" property="settlementId" />
+    <result column="SETTLEMENT_NO" jdbcType="VARCHAR" property="settlementNo" />
+    <result column="SETTLEMENT_NAME" jdbcType="VARCHAR" property="settlementName" />
+    <result column="BUSINESS_PLACE_CODE" jdbcType="INTEGER" property="businessPlaceCode" />
+    <result column="APPLY_MAN" jdbcType="INTEGER" property="applyMan" />
+    <result column="APPLY_DATE" jdbcType="TIMESTAMP" property="applyDate" />
+    <result column="PASS_MAN" jdbcType="INTEGER" property="passMan" />
+    <result column="PASS_DATE" jdbcType="TIMESTAMP" property="passDate" />
+    <result column="REFUND_MONEY" jdbcType="DECIMAL" property="refundMoney" />
+    <result column="PASS_OPTION" jdbcType="INTEGER" property="passOption" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_ID, TASK_ID, PROCESS_INSTANCE_ID, SETTLEMENT_ID, SETTLEMENT_NO, SETTLEMENT_NAME,
+    BUSINESS_PLACE_CODE, APPLY_MAN, APPLY_DATE, PASS_MAN, PASS_DATE, REFUND_MONEY, PASS_OPTION
+  </sql>
+  <select id="selectByExample" parameterType="com.bem.domain.AppBulkRefundExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_BULK_REFUND
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.bem.domain.AppBulkRefundExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from APP_BULK_REFUND
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.bem.domain.AppBulkRefundExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from APP_BULK_REFUND
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_BULK_REFUND
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appId != null">
+        APP_ID = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskId != null">
+        TASK_ID = #{record.taskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.processInstanceId != null">
+        PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settlementId != null">
+        SETTLEMENT_ID = #{record.settlementId,jdbcType=BIGINT},
+      </if>
+      <if test="record.settlementNo != null">
+        SETTLEMENT_NO = #{record.settlementNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.settlementName != null">
+        SETTLEMENT_NAME = #{record.settlementName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessPlaceCode != null">
+        BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyMan != null">
+        APPLY_MAN = #{record.applyMan,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyDate != null">
+        APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.passMan != null">
+        PASS_MAN = #{record.passMan,jdbcType=INTEGER},
+      </if>
+      <if test="record.passDate != null">
+        PASS_DATE = #{record.passDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.refundMoney != null">
+        REFUND_MONEY = #{record.refundMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.passOption != null">
+        PASS_OPTION = #{record.passOption,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update APP_BULK_REFUND
+    set ID = #{record.id,jdbcType=BIGINT},
+      APP_ID = #{record.appId,jdbcType=VARCHAR},
+      TASK_ID = #{record.taskId,jdbcType=INTEGER},
+      PROCESS_INSTANCE_ID = #{record.processInstanceId,jdbcType=DECIMAL},
+      SETTLEMENT_ID = #{record.settlementId,jdbcType=BIGINT},
+      SETTLEMENT_NO = #{record.settlementNo,jdbcType=VARCHAR},
+      SETTLEMENT_NAME = #{record.settlementName,jdbcType=VARCHAR},
+      BUSINESS_PLACE_CODE = #{record.businessPlaceCode,jdbcType=INTEGER},
+      APPLY_MAN = #{record.applyMan,jdbcType=INTEGER},
+      APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
+      PASS_MAN = #{record.passMan,jdbcType=INTEGER},
+      PASS_DATE = #{record.passDate,jdbcType=TIMESTAMP},
+      REFUND_MONEY = #{record.refundMoney,jdbcType=DECIMAL},
+      PASS_OPTION = #{record.passOption,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+
+  <insert id="batchInsert" keyProperty="id" useGeneratedKeys="true">
+    INSERT INTO APP_BULK_REFUND (APP_ID,TASK_ID,PROCESS_INSTANCE_ID,SETTLEMENT_ID,SETTLEMENT_NO,SETTLEMENT_NAME,
+    BUSINESS_PLACE_CODE,APPLY_MAN,APPLY_DATE,PASS_MAN,PASS_DATE,REFUND_MONEY)
+    VALUES
+    <foreach collection="list" index="index" item="item" separator=",">
+      (
+      #{item.appId},#{item.taskId},#{item.processInstanceId},#{item.settlementId},
+      #{item.settlementNo},#{item.settlementName},#{item.businessPlaceCode},
+      #{item.applyMan},#{item.applyDate},#{item.passMan},#{item.passDate},#{item.refundMoney}
+      )
+    </foreach>
+  </insert>
+
+  <select id="billingFindAppBulkRefund"
+          parameterType="com.bem.domain.AppBulkRefund" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APP_BULK_REFUND M
+    where exists(select 1 from APP_SETTLEMENT_INFO APP where APP.ID=M.APP_ID and
+    APP.APP_STATUS='C')
+    AND M.MON is null
+    AND M.MON_SN is null
+    <if test="settlementIds != null and settlementIds.size > 0">
+      and SETTLEMENT_ID in
+      <foreach item="item" index="index" collection="settlementIds" open="("
+               separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+
+  </select>
+
+
+    <update id="backAppBulkRefund" parameterType="java.util.Map"
+            flushCache="true">
+        update APP_BULK_REFUND
+        set mon=null,mon_sn=null
+        <where>
+            and MON_SN = ${monSn}
+            and SETTLEMENT_ID in (${settlementIds})
+            and MON= ${mon}
+        </where>
+    </update>
+</mapper>
