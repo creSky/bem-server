@@ -3,6 +3,7 @@ package com.bem.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.bem.bemEnum.BemEnum;
 import com.bem.domain.*;
+import com.bem.entity.SettlementEntity;
 import com.bem.entity.SystemCommonConfigEntity;
 import com.bem.entity.TransformerMeterRelationEntity;
 import com.bem.mapper.*;
@@ -329,10 +330,7 @@ public class ActivitiController {
                 }
             }
         }
-        //提交设置当前提交人为办理人
-        activitiService.setAssignee(taskId.toString(), BemCommonUtil.getOpeartorId(submitJson));
-        activitiService.compleTask(taskId.toString(), candidate);
-
+        //如果是最后一个环节 同步档案
         //获取电费还是业扩流程
         SystemCommonConfigEntity paramCommonConfigEntity = new SystemCommonConfigEntity();
 
@@ -348,15 +346,14 @@ public class ActivitiController {
         Map<Long, SystemCommonConfigEntity> templateTypeMap =
                 systemCommonConfigEntities.stream().collect(Collectors.toMap(SystemCommonConfigEntity::getParamKey, a -> a, (k1, k2) -> k1));
 
-        SystemCommonConfigEntity systemCommonConfigEntity =         templateTypeMap.get(templateId);
+        SystemCommonConfigEntity systemCommonConfigEntity = templateTypeMap.get(templateId);
 
 
-        //判断流程是否结束 加结束标识
         //电费流程
         if (systemCommonConfigEntity.getRemark1() != null && "DF".equals(systemCommonConfigEntity.getRemark1())) {
             AppSettlementInfo appSettlementInfo = new AppSettlementInfo();
             appSettlementInfo.setId(Long.valueOf(appId));
-            if (null != jsonObject.getString("processInstanceId") && activitiService.isEnd(jsonObject.getString("processInstanceId"))) {
+            if (null != jsonObject.getString("processInstanceId") && activitiService.judgeLastTask(taskId.toString())) {
                 appSettlementInfo.setAppStatus("C");
             } else {
                 appSettlementInfo.setAppStatus("Y");
@@ -366,24 +363,29 @@ public class ActivitiController {
             //业扩流程
             AppUserInfo appUserInfo = new AppUserInfo();
             appUserInfo.setId(Long.valueOf(appId));
-            if (null != jsonObject.getString("processInstanceId") && activitiService.isEnd(jsonObject.getString("processInstanceId"))) {
+            if (null != jsonObject.getString("processInstanceId") &&activitiService.judgeLastTask(taskId.toString())) {
                 appUserInfo.setAppStatus("C");
+                appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
+
                 //流程结束自动更新档案
                 if (BemEnum.getEnumByKey(templateId.toString()).getIsBuild() == 1) {
-                    HttpResult httpResult=
+                    HttpResult httpResult =
                             updateFiles(jsonObject.toJSONString());
-                    if(httpResult.getStatusCode()!=HttpResult.SUCCESS){
+                    if (httpResult.getStatusCode() != HttpResult.SUCCESS) {
                         return httpResult;
                     }
                 }
             } else {
                 appUserInfo.setAppStatus("Y");
+                appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
             }
-            appUserInfoMapper.updateByPrimaryKeySelective(appUserInfo);
         }
 
-        return new HttpResult<>(HttpResult.SUCCESS, "提交成功", null);
-    }
+        activitiService.setAssignee(taskId.toString(), BemCommonUtil.getOpeartorId(submitJson));
+        activitiService.compleTask(taskId.toString(), candidate);
+
+        return new HttpResult<>(HttpResult.SUCCESS,"提交成功",null);
+}
 
     /**
      * 某一次流程执行了多少步
@@ -403,14 +405,100 @@ public class ActivitiController {
         JSONObject processInstanceIdObject = JSONObject.parseObject(processInstanceIdJson);
         List<Map<String, Object>> taskList =
                 taskListService.queryHistoricTask(processInstanceIdObject.getString("processInstanceId"));
+        List<Long> assignees = new ArrayList<>();
         taskList.forEach(t -> {
+            assignees.add(t.get("assignee") == null ? null : Long.valueOf(t.get("assignee").toString()));
+        });
+
+        //得到营业区域no
+        String assigneesJson =
+                restTemplate.postForObject("http://TITAN-REPORT/report/auth/findUSerByIds", assignees, String.class);
+        List<UserDomain> userDomains =
+                JSONObject.parseArray(assigneesJson, UserDomain.class);
+        Map<String, String> userDomainMap =
+                userDomains.stream().collect(Collectors.toMap(o -> o.getId().toString(), a -> a.getUserName(), (k1, k2) -> k1));
+
+        //倒序赋值
+        for (int i = 0; i < taskList.size(); i++) {
+            Map<String, Object> t = taskList.get(i);
+            Map<String, Object> prTaskt = taskList.get(i == 0 ? 0 : i - 1);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", t.get("writeSectId"));
             String writeSectJson =
                     restTemplate.postForObject(PropertiesUtil.getValue("getWriteSectByKey"), jsonObject, String.class);
             t.put("writeSectName",
                     JSONObject.parseObject(writeSectJson).getString("writeSectName"));
-        });
+            t.put("assigneeName", userDomainMap.get(t.get("assignee")));
+            t.put("preAssigneeName", userDomainMap.get(prTaskt.get("assignee")));
+            t.put("taskStartTime",t.get("startTime"));
+            t.put("taskEndTime",t.get("endTime"));
+
+            switch (t.get("taskDefKey").toString()) {
+                case "bem-f1-p1":
+                    AppUserInfoExample appUserInfoExample = new AppUserInfoExample();
+                    AppUserInfoExample.Criteria appUserInfoExampleCriteria =
+                            appUserInfoExample.createCriteria();
+                    appUserInfoExampleCriteria.andProcInstIdEqualTo(t.get("processInstanceId").toString());
+                    List<AppUserInfo> returnAppUserInfo = new ArrayList<>();
+                    returnAppUserInfo =
+                            appUserInfoMapper.selectByExample(appUserInfoExample);
+                    if (returnAppUserInfo.size() >= 1) {
+                        t.put("taskStartTime",
+                                returnAppUserInfo.get(0).getApplyDate());
+                        t.put("taskEndTime",
+                                returnAppUserInfo.get(0).getSubmitDate());
+                    }
+                    break;
+                case "bem-f1-p19":
+                    AppCircumstanceExample appCircumstanceExample = new AppCircumstanceExample();
+                    AppCircumstanceExample.Criteria circumCriteria = appCircumstanceExample.createCriteria();
+                    circumCriteria.andProcessInstanceIdEqualTo(Long.parseLong(t.get("processInstanceId").toString()));
+                    List<AppCircumstance> returnAppCircumstance = new ArrayList<>();
+                    returnAppCircumstance = appCircumstanceMapper.selectByExample(appCircumstanceExample);
+                    if (returnAppCircumstance.size() >= 1) {
+                        t.put("taskEndTime",
+                                returnAppCircumstance.get(0).getPowerSupplyDate());
+                    }
+                    break;
+                case "bem-f1-p9":
+                    AppCompeleteExample appCompeleteExample = new AppCompeleteExample();
+                    AppCompeleteExample.Criteria compeleteCriteria = appCompeleteExample.createCriteria();
+                    compeleteCriteria.andProcessInstanceIdEqualTo(Long.parseLong(t.get("processInstanceId").toString()));
+                    List<AppCompelete> returnAppCompelete = new ArrayList<>();
+                    returnAppCompelete = appCompeleteMapper.selectByExample(appCompeleteExample);
+                    if (returnAppCompelete.size() >= 1) {
+                        t.put("taskEndTime",
+                                returnAppCompelete.get(0).getConstructionDate());
+                    }
+                    break;
+                case "bem-f1-p23":
+                    AppAssemExample appAssemExample = new AppAssemExample();
+                    AppAssemExample.Criteria assemCriteria = appAssemExample.createCriteria();
+                    assemCriteria.andProcessInstanceIdEqualTo(Long.parseLong(t.get("processInstanceId").toString()));
+                    List<AppAssem> returnAppAssem = new ArrayList<>();
+                    returnAppAssem = appAssemMapper.selectByExample(appAssemExample);
+                    if (returnAppAssem.size() >= 1) {
+                        t.put("taskEndTime",
+                                returnAppAssem.get(0).getAssemDate());
+                    }
+                    break;
+                case "bem-f1-p21":
+                    AppAssemExample appAssemExample21 = new AppAssemExample();
+                    AppAssemExample.Criteria assemCriteria21 = appAssemExample21.createCriteria();
+                    assemCriteria21.andProcessInstanceIdEqualTo(Long.parseLong(t.get("processInstanceId").toString()));
+                    List<AppAssem> returnAppAssem21 = new ArrayList<>();
+                    returnAppAssem21 = appAssemMapper.selectByExample(appAssemExample21);
+                    if (returnAppAssem21.size() >= 1) {
+                        t.put("taskEndTime",
+                                returnAppAssem21.get(0).getAssemDate());
+                    }
+                    break;
+            }
+            if (!"bem-f1-p1".equals(t.get("taskDefKey").toString())) {
+                t.put("taskStartTime", prTaskt.get("taskEndTime"));
+            }
+
+        }
 
         return new HttpResult<>(HttpResult.SUCCESS, "查询成功", taskList);
 
@@ -434,6 +522,7 @@ public class ActivitiController {
         userMap.put("appNo", userRight.getString("appNo"));
         userMap.put("userName", userRight.getString("userName"));
         userMap.put("templateId", userRight.getString("templateId"));
+        userMap.put("userNo", userRight.getString("userNo"));
         //判断分页传入值是不是数字类型
         //出现传参问题 默认查前十条
         boolean isNumeric = BemCommonUtil.isNumeric(userRight.getString("pageCurrent"), userRight.getString("pageSize"));
@@ -557,7 +646,7 @@ public class ActivitiController {
     @ResponseBody
     public HttpResult stopProcessInstance(@RequestBody(required = false) String stopJson) {
         JSONObject stopObject = JSONObject.parseObject(stopJson);
-        Long templateId =stopObject.getLong("templateId");
+        Long templateId = stopObject.getLong("templateId");
         Long appId = new Long(stopObject.getString("appId"));
 
         //获取电费还是业扩流程
@@ -665,17 +754,19 @@ public class ActivitiController {
                 appCustomerInfoMapper.selectByPrimaryKey(updateAppUserInfo.getCustomerId());
 
         //结算户信息
-        AppSettlementInfo appSettlementInfo=new AppSettlementInfo();
+        AppSettlementInfo appSettlementInfo = new AppSettlementInfo();
         appSettlementInfo.setSettlementNo(updateAppUserInfo.getUserNo());
         appSettlementInfo.setSettlementName(updateAppUserInfo.getUserName());
         appSettlementInfo.setAddress(updateAppUserInfo.getAddress());
         appSettlementInfo.setSettlementPhone(updateAppUserInfo.getPhoneNumber());
-        appSettlementInfo.setCuscc(updateAppCustomer.getCardNo());
-        appSettlementInfo.setBusinessPlaceCode((long)updateAppUserInfo.getBusinessPlaceCode());
-        appSettlementInfo.setStatus((long)1);
+        if (updateAppCustomer != null) {
+            appSettlementInfo.setCuscc(updateAppCustomer.getCardNo());
+        }
+        appSettlementInfo.setBusinessPlaceCode((long) updateAppUserInfo.getBusinessPlaceCode());
+        appSettlementInfo.setStatus((long) 1);
 
         //计量点信息
-        /* AppMeterInfo appMeterInfo = new AppMeterInfo();
+        AppMeterInfo appMeterInfo = new AppMeterInfo();
         appMeterInfo.setAppId(appId);
         List<AppMeterInfo> updateAppMeterInfos = appMeterInfoMapper.select(appMeterInfo);
         //变压器信息
@@ -698,15 +789,17 @@ public class ActivitiController {
             transformerMeterRelationEntity.setLoadChangeSign(t.getLoadChangeSign());
             transformerMeterRelationEntity.setStatus((byte) 1);
             updateTransMeterRelEntities.add(transformerMeterRelationEntity);
-        });*/
+        });
 
         JSONObject postData = new JSONObject();
-        postData.put("userInfo", updateAppUserInfo);
-        postData.put("customerInfo", updateAppCustomer);
-        /*postData.put("meterInfo", updateAppMeterInfos);*/
-        postData.put("settlement", appSettlementInfo);
+        postData.put("userInfo", updateAppUserInfo==null?null:updateAppUserInfo);
+        postData.put("customerInfo", updateAppCustomer==null?null:updateAppCustomer);
+        postData.put("meterInfo",
+                updateAppMeterInfos==null||updateAppMeterInfos.size()<1?null:updateAppMeterInfos);
+        postData.put("settlement", appSettlementInfo==null?null:appSettlementInfo);
         postData.put("templateId", updateAppUserInfo.getTemplateId());
-        /*postData.put("transformerRel", updateTransMeterRelEntities);*/
+        postData.put("transformerRel",
+                updateTransMeterRelEntities==null||updateTransMeterRelEntities.size()<1?null:updateTransMeterRelEntities);
 
         //发送到cim 更新档案
         String resturnJson =
@@ -717,7 +810,7 @@ public class ActivitiController {
             return new HttpResult<>(HttpResult.SUCCESS, "更新档案成功");
         } else {
             return new HttpResult<>(HttpResult.ERROR,
-                    "更新档案失败"+resturnJSONObject.getString("message"));
+                    "更新档案失败" + resturnJSONObject.getString("message"));
         }
 
     }

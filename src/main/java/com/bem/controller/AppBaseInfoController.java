@@ -3,6 +3,8 @@ package com.bem.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bem.domain.*;
+import com.bem.entity.AppInfoQueryEntity;
+import com.bem.entity.AppInfoQueryReturnEntity;
 import com.bem.mapper.AppCustomerInfoMapper;
 import com.bem.mapper.AppSettlementInfoMapper;
 import com.bem.mapper.AppUserInfoMapper;
@@ -412,6 +414,17 @@ public class AppBaseInfoController {
         return new HttpResult<>(HttpResult.SUCCESS, "查询成功", returnMap);
     }
 
+    //业扩信息查询报表
+    @RequestMapping("/getAppInfoByParam")
+    @ResponseBody
+    public HttpResult getAppInfoByParam(@RequestBody(required = false) String appBaseInfoJson) throws Exception {
 
+        AppInfoQueryEntity appInfoQueryEntity =
+                JSONObject.parseObject(appBaseInfoJson,AppInfoQueryEntity.class);
 
+        List<AppInfoQueryReturnEntity> appInfoQueryReturnEntities =
+                appUserInfoMapper.getAppInfoByParam(appInfoQueryEntity);
+
+        return new HttpResult<>(HttpResult.SUCCESS, "查询成功", appInfoQueryReturnEntities);
+    }
 }

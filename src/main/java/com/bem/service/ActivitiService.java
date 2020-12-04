@@ -363,4 +363,41 @@ public class ActivitiService {
         flowNode.setOutgoingFlows(oriSequenceFlows);
     }
 
+
+
+
+    /**
+     * 判断是不是最后一个环节
+     */
+    public boolean judgeLastTask(String fromTaskID) {
+        // 当前环节 act_ru_task
+        Task task = processEngine.getTaskService().createTaskQuery().taskId(fromTaskID).singleResult();
+        if (task == null) {
+            System.out.println("流程未启动或已执行完成");
+        }
+
+        // 找到流程定义
+        String processDefinitionId = task.getProcessDefinitionId();
+
+        BpmnModel bpmnModel = processEngine.getRepositoryService().getBpmnModel(processDefinitionId);
+
+
+        Execution execution = processEngine.getRuntimeService().createExecutionQuery()
+                .executionId(task.getExecutionId()).singleResult();
+
+        String activityId = execution.getActivityId();
+
+        // 节点信息
+        FlowNode flowNode = (FlowNode) bpmnModel.getMainProcess().getFlowElement(activityId);
+
+        // 记录原活动方向
+        if(flowNode.getOutgoingFlows()!=null && flowNode.getOutgoingFlows().size()>0){
+            if(!"endevent1".equals(flowNode.getOutgoingFlows().get(0).getTargetRef())){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

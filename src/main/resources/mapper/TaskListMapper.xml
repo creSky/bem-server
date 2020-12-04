@@ -144,7 +144,7 @@
         where a.PROC_INST_ID_=b.PROC_INST_ID
         AND IFNULL(b.APP_STATUS,'Y') &lt;&gt; 'N'
         AND b.PROC_INST_ID = #{processInstanceId}
-        order by a.START_TIME_ desc
+        order by a.START_TIME_
     </select>
 
     <select id="queryFinishTask" parameterType="java.lang.String" resultType="java.util.Map">
@@ -235,6 +235,9 @@
             <if test="userName != null and  userName !=''">
                 AND  USER_NAME like CONCAT('%',#{userName},'%')
             </if>
+            <if test="userNo != null and  userNo !=''">
+                AND  USER_NO =#{userNo}
+            </if>
         order by info.APPLY_DATE desc
     </select>
 
@@ -271,6 +274,9 @@
         </if>
         <if test="templateId != null and  templateId !=''">
             AND  TEMPLATE_ID =#{templateId}
+        </if>
+        <if test="userNo != null and  userNo !=''">
+            AND  USER_NO =#{userNo}
         </if>
         order by info.APPLY_DATE desc
     </select>

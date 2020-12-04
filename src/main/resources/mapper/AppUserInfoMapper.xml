@@ -295,4 +295,64 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+
+  <select id="getAppInfoByParam"
+          parameterType="com.bem.entity.AppInfoQueryEntity"
+          resultType="com.bem.entity.AppInfoQueryReturnEntity">
+    SELECT
+    a.APP_NO appNo,
+    a.USER_NO userNo,
+    a.USER_NAME userName,
+    a.ADDRESS address,
+    a.TEMPLATE_ID templateId,
+    a.APPLY_DATE applyDate,
+    a.ELEC_TYPE elecType,
+    a.ALL_CAPACITY allCapacity,
+    case when a.APP_STATUS='C' then '结束' else '未结束' end appStatus,
+    a.phone_number phoneNumber,
+    ( SELECT c.ASSEM_MAN FROM APP_ASSEM c WHERE a.id = c.APP_ID limit 1)  finishMan,
+    ( SELECT c.ASSEM_DATE FROM APP_ASSEM c WHERE a.id = c.APP_ID limit 1)   finishDate
+    FROM
+    APP_USER_INFO a
+    where
+    a.TEMPLATE_ID in(1,2,3)
+    and a.APP_STATUS in('Y','C')
+    <if test="startApplyDate != null">
+      and a.APPLY_DATE &gt;= #{startApplyDate}
+    </if>
+    <if test="endApplyDate != null">
+      and a.APPLY_DATE &lt;= #{endApplyDate}
+    </if>
+    <if test="startFinishDate != null">
+     and (
+      ( SELECT c.ASSEM_DATE FROM APP_ASSEM c WHERE a.id = c.APP_ID limit 1)) &gt;= #{startFinishDate}
+    </if>
+    <if test="endFinishDate != null">
+      and (
+      ( SELECT c.ASSEM_DATE FROM APP_ASSEM c WHERE a.id = c.APP_ID limit 1) ) &lt;= #{endFinishDate}
+    </if>
+    <if test="businessPlaceCodes != null and businessPlaceCodes.size >0">
+      AND a.BUSINESS_PLACE_CODE IN
+      <foreach collection="businessPlaceCodes" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+
+    <if test="templateType != null">
+      and a.TEMPLATE_ID = #{templateType}
+    </if>
+
+    <if test="elecTypeCode != null">
+      and a.ELEC_TYPE = #{elecTypeCode}
+    </if>
+    <if test="appStatus != null and appStatus == 1">
+      and a.APP_STATUS = 'C'
+    </if>
+    <if test="appStatus != null and appStatus == 0">
+      and a.APP_STATUS = 'Y'
+    </if>
+    order by a.APPLY_DATE desc
+  </select>
+
 </mapper>

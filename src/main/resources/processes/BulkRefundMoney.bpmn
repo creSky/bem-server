@@ -3,7 +3,7 @@
   <process id="BulkRefundMoney" name="批量" isExecutable="true">
     <userTask id="bem-f1-p30" name="申请登记" activiti:candidateGroups="10"></userTask>
     <userTask id="bem-f1-p34" name="批量退款登记" activiti:candidateGroups="10"></userTask>
-    <userTask id="bem-f1-p35" name="批量退款确认" activiti:candidateGroups="10"></userTask>
+    <userTask id="bem-f1-p35" name="批量退款确认" activiti:candidateGroups="68"></userTask>
     <startEvent id="startevent1" name="Start"></startEvent>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="bem-f1-p30"></sequenceFlow>
     <endEvent id="endevent1" name="End"></endEvent>
