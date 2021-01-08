@@ -1,3 +1,4 @@
+/*
 package com.bem.config;
 
 import org.springframework.context.annotation.Bean;
@@ -7,12 +8,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 
+*/
 /**
  * @author ：zjd
  * @date ：Created in 2019/3/6 19:29
  * 跨域问题
  * @modified By：
- */
+ *//*
+
 @Configuration
 public class CorsConfig {
     private CorsConfiguration buildConfig() {
@@ -30,3 +33,4 @@ public class CorsConfig {
         return new CorsFilter(source);
     }
 }
+*/
