@@ -411,8 +411,10 @@ public class ActivitiController {
         });
 
         //得到营业区域no
+        //得到营业区域no
         String assigneesJson =
-                restTemplate.postForObject("http://TITAN-REPORT/report/auth/findUSerByIds", assignees, String.class);
+                restTemplate.postForObject("http://AUTH-CENTER/auth/user" +
+                        "/findUSerByIds", assignees, String.class);
         List<UserDomain> userDomains =
                 JSONObject.parseArray(assigneesJson, UserDomain.class);
         Map<String, String> userDomainMap =
